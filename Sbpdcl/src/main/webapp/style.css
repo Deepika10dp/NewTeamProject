@@ -2,19 +2,22 @@
 .header {
     		display:flex;
       		align-items:center;
-    		justify-content: space-between;
+    		justify-content: flex-start;
     		background-color: white;
     		padding: 10px 20px;
+    		background-color: pink;
   
 }
 .header img {
     		height: 70px;
 }
 .header h1 {
-    		flex-grow: 1;
+    		color: #333;
     		text-align: center;
-    		margin: 0;
-    		font-size: 24px;
+    		margin-left: 15px;
+    		font-size: 28px;
+    		font-family: inherit;
+    		font-weight: bold;
 }
  html, body {
             margin: 0;
@@ -36,11 +39,13 @@
 }
 .carousel-caption {
 			position:absolute;
-			top: 76%;
-			left: 50%;
-			transform: translate(-50%,-50%);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
+			top: 50%;
+			left: 10%;
+			transform: translateY(-50%);
+            color: black;
+            font-family: 'arial';
+            text-align: left;
+            max-width: 40%;
+           
            
 }
