@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Connection Form</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <div class="container">
+        <h2>New Connection Form</h2>
+        <form action="sbpdcl" method="post" >
+            <label for="connectionType">Connection Type: <span style="color:red;">*</span></label>
+            <select id="connectionType" required>
+            	<option value="">--Select--</option>
+                <option value="domestic">Domestic</option>
+                <option value="commercial">Commercial</option>
+            </select>
+            
+            <label for="consumer_id">Consumer ID:<span style="color: red;">*</span></label>
+            <input type="text" id="consumer_id" placeholder="Enter Consumer ID" required>
+            
+         <h3>1.Connection Details : </h3>
+         	<label for="connectionDetails">Low Tension Supply / High Tension Supply</label>
+            <select id="connectionDetails">
+            	<option value="">--Select--</option>
+                <option value="lowTension">Low Tension</option>
+                <option value="HighTension">High Tension</option>
+            </select>
+         	
+          <h3>2.Contact Details of Applicant : </h3>
+            <label for="mobile">Mobile No:<span style="color:red;">*</span></label>
+            <input type="text" id="mobile" placeholder="Enter Mobile No." required>
+
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" placeholder="Enter Email ID">
+            
+            
+		  <h3>3.Address Details : </h3>
+		  <p>Location of premises where supply is required</p>
+		  
+		  	<label for="house">House No:</label>
+           	<input type="text" id="house" placeholder="Enter House number">
+           	 
+            <label for="street">Street:<span style="color:red;">*</span></label>
+            <input type="text" id="street" placeholder="Enter Street Name" required>
+             
+            <label for="address1">Address Line 1:</label>
+            <input type="text" id="address1" placeholder="Enter Address">
+             
+            <label for="address2">Address Line 2:</label>
+            <input type="text" id="address2" placeholder="Enter Address">
+             
+            <label for="address3">Address Line 3:</label>
+            <input type="text" id="address3" placeholder="Enter Address">
+		  	
+            <label for="city">City:<span style="color: red;">*</span></label>
+            <input type="text" id="city" placeholder="Enter City" required>
+            
+             <label for="pincode">Pin code:<span style="color: red;">*</span></label>
+             <input type="text" id="pincode" placeholder="Enter Pin code" required>
+
+            <label for="district">District:<span style="color: red;">*</span></label>
+    		<select id="district" required>
+    			<option value="">--Select--</option>
+        		<option value="arwal">Arwal</option>
+		        <option value="aurangabad">Aurangabad</option>
+		        <option value="banka">Banka</option>
+		        <option value="bhagalpur">Bhagalpur</option>
+		        <option value="buxar">Buxar</option>
+		        <option value="gaya">Gaya</option>
+		        <option value="jamui">Jamui</option>
+		        <option value="jehanabad">Jehanabad</option>
+		        <option value="kaimur">Kaimur</option>
+		        <option value="lakhisarai">Lakhisarai</option>
+		        <option value="munger">Munger</option>
+		        <option value="nalanda">Nalanda</option>
+		        <option value="nawada">Nawada</option>
+		        <option value="patna">Patna</option>
+		        <option value="rohtas">Rohtas</option>
+		        <option value="sheikhpura">Sheikhpura</option>
+		     </select>
+
+			 <label for="block">Block:<span style="color: red;">*</span></label>
+       		 <select id="block"> <!--required-->
+            	<option value="">---Select---</option>
+            	<!-- Add block options dynamically -->
+        	 </select>
+        
+
+        	<label for="panchayat">Panchayat:<span style="color: red;">*</span></label>
+        	<select id="panchayat"> <!--  required-->
+          	  	<option value="">---Select---</option>
+            	<!-- Add panchayat options dynamically -->
+        	</select>
+
+        	<label for="village">Village/Ward:<span style="color: red;">*</span></label>
+        	<select id="village"> <!-- required-->
+            	<option value="">---Select---</option>
+            	<!-- Add village options dynamically -->
+        	</select>
+
+        	<label for="division">Division:<span style="color:red;">*</span></label>
+        	<select id="division"> <!-- required-->
+            	<option value="">---Select---</option>
+            	<!-- Add division options dynamically -->
+        	</select>
+        
+        	<label for="subdivision">SubDivision:<span style="color: red;">*</span></label>
+       	 	<select id="subdivision"> <!-- required-->
+            	<option value="">---Select---</option>
+            	<!-- Add subdivision options dynamically -->
+        	</select>
+        
+        	<label for="section">Section:<span style="color: red;">*</span></label>
+        	<select id="section"> <!-- required-->
+            	<option value="">---Select---</option>
+            	<!-- Add section options dynamically -->
+        	</select>
+        
+        	<label for="tariff">Tariff:<span style="color: red;">*</span></label>
+        	<select id="tariff" required>
+            	<option value="">---Select---</option>
+            	<option value="domestic">Domestic</option>
+            	<option value="commercial">Commercial</option>
+            	<option value="industrial">Industrial</option>
+        	</select>
+      
+        	<label for="phase">Phase:<span style="color: red;">*</span></label>
+        	<select id="phase" required>
+            	<option value="">---Select---</option>
+            	<option value="single">Single Phase</option>
+            	<option value="three">Three Phase</option>
+        	</select>
+        
+        	<label for="load">Load:<span style="color: red;">*</span></label>
+        	<input type="text" id="load"  placeholder="Enter Load" required>
+        	
+        	<h3>4.Applicant Details : </h3>
+			
+            <label for="gender">Gender:<span style="color: red;">*</span></label>
+            <select id="gender" required>
+                <option value="">--Select--</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="applicantName">Applicant Name:<span style="color: red;">*</span></label>
+            <input type="text" id="applicantName" placeholder="Enter Name" required>
+
+            <label for="fatherName">Husband/Father Name:<span style="color: red;">*</span></label>
+            <input type="text" id="fatherName" placeholder="Enter Father/Husband Name" required>
+            
+            <h3>5.ID Proof of Applicant : </h3>
+            <p>[JPEG/JPG Document size must be less than 500 KB and PDF Document size must be less than 10000 KB]</p>
+
+            <label for="document_typeI">Document Type:<span style="color: red;">*</span></label>
+        	<select id="document_typeI" name="document_typeI" required>
+	            <option value="">---Select---</option>
+	            <option value="passport">Passport</option>
+	            <option value="pan_card">PAN Card</option>
+	            <option value="aadhaar_card">Aadhaar Card</option>
+	            <option value="voter_id">Voter ID</option>
+	            <option value="driving_license">Driving License</option>
+	            <option value="id_issued_govt">ID issued by Government</option>
+	            <option value="ration_card">Ration Card</option>
+	            <option value="bpl_card">Below Poverty Line - BPL Card</option>
+        	</select>
+        	<input type="file" id="document_fileI" name="document_fileI" accept=".jpeg, .jpg"> <!-- required-->
+        	
+            <h3>6.Address Proof of Applicant : </h3>
+            <p>(In JPEG/JPG format,  Document size must be less than 500 KB) </p>
+               
+               <label for="document_typeII">Document Type:<span style="color: red;">*</span></label>
+        	   <select id="document_typeII" name="document_typeII" required>
+		            <option value="">---Select---</option>
+		            <option value="passport">Passport</option>
+		            <option value="pan_card">PAN Card</option>
+		            <option value="aadhaar_card">Aadhaar Card</option>
+		            <option value="voter_id">Voter ID</option>
+		            <option value="driving_license">Driving License</option>
+		            <option value="id_issued_govt">ID issued by Government</option>
+		            <option value="ration_card">Gas Connection Card</option>
+		            <option value="bpl_card">Bill of Government Landline Connection</option>
+        		</select>
+        		<label for="front_page">Front Page of Address Proof </label>
+        		<input type="file" id="front_page" name="front_page" accept=".jpeg, .jpg"> <!-- required-->
+    
+        		<label for="last_page">Last Page of Address Proof </label>
+        		<input type="file" id="last_page" name="last_page" accept=".jpeg, .jpg" >
+			
+			<h3>7.Photo of Applicant :<span style="color: red;">*</span> </h3>
+                 <input type="file" id="photo" accept="image/jpeg, image/jpg"> <!-- required-->
+                 
+             <h3>8.Photo of Ownership(First page of Lease Deed/Rent Agreement/Others) :<span style="color: red;">*</span> </h3>
+				  <input type="file" id="fir_page" name="fir_page" accept=".jpeg, .jpg"> <!-- required-->
+			
+			<h3>9.Photo of Ownership(Second page of Lease Deed/Rent Agreement/Others) :<span style="color: red;">*</span> </h3>
+				  <input type="file" id="sec_page" name="sec_page" accept=".jpeg, .jpg"> <!-- required-->	  
+				  
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    
+</body>
+</html>
