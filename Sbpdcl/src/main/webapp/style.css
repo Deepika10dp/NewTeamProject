@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body {
+	
+}
 .header {
     		display:flex;
       		align-items:center;
@@ -6,6 +9,7 @@
     		background-color: white;
     		padding: 10px 20px;
     		background-color: pink;
+    		
   
 }
 .header img {
@@ -23,7 +27,7 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
+            overflow-y: auto; 
 }
 .carousel {
 	height: 100vh;
