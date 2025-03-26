@@ -63,25 +63,26 @@ public class UserDAO {
 	            return false;
 	        }
 	    }
-	
-	public boolean changePassword(String userId, String newPassword) {
-		// TODO Auto-generated method stub
-		 boolean status = false;
-	        try (Connection con = DBConnection.getConnection()) {
-	            String query = "UPDATE users SET password = ? WHERE user_id = ?";
-	            PreparedStatement ps = con.prepareStatement(query);
-	            ps.setString(1, newPassword);
-	            ps.setString(2, userId);
-	            int rowsUpdated = ps.executeUpdate();
-	            if (rowsUpdated > 0) {
-	                status = true;
+	 public User getUserById(String userId) {
+	        User user = null;
+	        try (Connection conn = DBConnection.getConnection();
+	             PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE user_id = ?")) {
+
+	            ps.setString(1, userId);
+	            ResultSet rs = ps.executeQuery();
+
+	            if (rs.next()) {
+	                user = new User();
+	                user.setUserId(rs.getString("user_id"));
+	                user.setPassword(rs.getString("password")); // Already hashed
 	            }
-	        } catch (SQLException e) {
+	        } catch (Exception e) {
 	            e.printStackTrace();
-	        } catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	        return status;
-	}
+	        }
+	        return user;
+	    }
+
+	    
+	
+	
 }
