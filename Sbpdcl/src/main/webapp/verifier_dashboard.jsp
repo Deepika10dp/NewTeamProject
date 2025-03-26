@@ -14,6 +14,7 @@
 </head>
 <body>
 	<h2>Welcome Verifier: <%= user.getName() %></h2>
+	<a href="changePassword.jsp">Change Password</a>
     <a href="LogoutServlet">Logout</a>
 </body>
 </html>

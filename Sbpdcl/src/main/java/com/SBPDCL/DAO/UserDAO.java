@@ -3,6 +3,7 @@ package com.SBPDCL.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.SBPDCL.bean.User;
 import com.SBPDCL.util.DBConnection;
@@ -47,4 +48,40 @@ public class UserDAO {
 	        }
 	        return user;
 	 }
+	 public static boolean registerConsumer(User user) {
+	        try (Connection conn = DBConnection.getConnection()) {
+	            String query = "INSERT INTO users (user_id, name, phone_no, password, role_id) VALUES (?, ?, ?, ?, ?)";
+	            PreparedStatement ps = conn.prepareStatement(query);
+	            ps.setString(1, user.getUserId());
+	            ps.setString(2, user.getName());
+	            ps.setString(3, user.getPhoneNo());
+	            ps.setString(4, user.getPassword());
+	            ps.setInt(5, user.getRoleId());
+	            return ps.executeUpdate() > 0;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	
+	public boolean changePassword(String userId, String newPassword) {
+		// TODO Auto-generated method stub
+		 boolean status = false;
+	        try (Connection con = DBConnection.getConnection()) {
+	            String query = "UPDATE users SET password = ? WHERE user_id = ?";
+	            PreparedStatement ps = con.prepareStatement(query);
+	            ps.setString(1, newPassword);
+	            ps.setString(2, userId);
+	            int rowsUpdated = ps.executeUpdate();
+	            if (rowsUpdated > 0) {
+	                status = true;
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	        return status;
+	}
 }

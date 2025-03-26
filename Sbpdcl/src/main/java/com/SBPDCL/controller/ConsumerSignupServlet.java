@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.SBPDCL.services.UserService;
+
 /**
  * Servlet implementation class ConsumerSignupServlet
  */
@@ -35,7 +37,17 @@ public class ConsumerSignupServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String name = request.getParameter("name");
+        String phoneNo = request.getParameter("phone");
+        String password = request.getParameter("password");
+
+        boolean isSuccess = UserService.registerConsumer(name, phoneNo, password);
+        if (isSuccess) {
+            response.sendRedirect("index.html");
+        } else {
+            response.sendRedirect("consumerSignup.jsp?error=Registration failed!");
+        }
+		//doGet(request, response);
 	}
 
 }
