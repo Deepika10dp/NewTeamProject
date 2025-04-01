@@ -1,15 +1,23 @@
 @charset "UTF-8";
-body {
-	
+body, html {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f4;
+            overflow: hidden;
+            
 }
 .header {
     		display:flex;
       		align-items:center;
     		justify-content: flex-start;
-    		background-color: white;
+    		position: fixed;
+    		top: 0;
+    		width: 100%;
     		padding: 10px 20px;
     		background-color: pink;
-    		
+    		z-index: 1000;
   
 }
 .header img {
@@ -23,12 +31,16 @@ body {
     		font-family: inherit;
     		font-weight: bold;
 }
- html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+  .sidebar {
+            height: calc(100vh-80px);
+            background: #343a40;
+            padding-top: 20px;
+            position: fixed;
+            width: 200px;
+            top: 80px;
+            left: 0;
             overflow-y: auto; 
-}
+        }
 .carousel {
 	height: 100vh;
 }
@@ -38,8 +50,8 @@ body {
 .carousel-item img {
             width: 100%;
             height:100%; 
-            object-fit: fill;
-            filter: blur(1px);
+            object-fit: cover;
+            
 }
 .carousel-caption {
 			position:absolute;
@@ -47,9 +59,30 @@ body {
 			left: 10%;
 			transform: translateY(-50%);
             color: black;
-            font-family: 'arial';
+            font-family: Arial,sans-serif;
             text-align: left;
             max-width: 40%;
-           
+ }
+  .content {
+            margin-left: 200px;
+            height: calc(100vh-80px);
+            overflow-y: auto;
+            padding: 120px 20px 20px 20px;
            
 }
+.navbar {
+	position: fixed;
+	top: 80px;
+	width: 100%;
+	z-index: 999;
+}
+        .image-frame {
+            border: 2px solid #0056b3;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .image-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
