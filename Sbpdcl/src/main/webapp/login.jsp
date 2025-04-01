@@ -38,12 +38,15 @@
     </style>
 </head>
 <body>
+		
+
+
     <div class="container">
         <h2 class="text-center">Login</h2>
         <form action="LoginServlet" method="post">
             <div class="mb-3">
-                <label for="username" class="form-label">User Name:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <label for="user_id " class="form-label">User Id:</label>
+                <input type="text" class="form-control" id="user_id" name="user_id" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
@@ -54,5 +57,6 @@
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
