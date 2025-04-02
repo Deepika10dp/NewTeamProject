@@ -18,7 +18,7 @@ public class UserService {
 	        user.setName(name);
 	        user.setPhoneNo(phoneNo);
 	        user.setPassword(password);
-	        user.setRoleId(6); // Role ID for Consumer
+	        user.setRoleId(5); // Role ID for Consumer
 
 	        boolean isRegistered = UserDAO.registerConsumer(user);
 	        if (isRegistered) {

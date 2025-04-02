@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import="com.SBPDCL.bean.User"%>
     <%
     User user = (User) session.getAttribute("user");
-    if (user == null || user.getRoleId() != 6) {
+    if (user == null || user.getRoleId() != 5) {
         response.sendRedirect("unauthorized.jsp");
     }
 %>
