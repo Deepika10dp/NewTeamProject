@@ -86,8 +86,8 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="image-container">
+<div class=container>
+	<div class="image-container">
         <img src="images/about.jpg" alt="About Us Image">
     </div>
     <div class="content-container">
@@ -112,9 +112,11 @@
    <div class="new-image">
    		 <img src="images/about2.jpg" alt="Call center assistance">
    </div>
+</div>
+    
        
     
-</div>
+
 
 </body>
 </html>
