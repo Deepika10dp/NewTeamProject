@@ -7,7 +7,11 @@ import java.sql.SQLException;
 public class DBConnection {
 	static  String url = "jdbc:mysql://localhost:3306/projectdb";
     static String user = "root";
+<<<<<<< HEAD
     static String password = "chand@3002";
+=======
+    static String password = "da_1014";
+>>>>>>> branch 'master' of https://github.com/Deepika10dp/NewTeamProject
     
     
     public static Connection getConnection() throws SQLException, ClassNotFoundException
