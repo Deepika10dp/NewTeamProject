@@ -40,7 +40,7 @@
         <p class="text-danger">*Mandatory Fields (Please upload all documents in jpeg/jpg format. Document size must be less than
         500 KB and PDF document size must be less than 10000 KB.)</p>
 
-        <form action="sbpdcl" method="post"><!-- Connection Type & Consumer ID -->
+        <form action="NewConnectionServlet" method="post" onsubmit="disableButton()">
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="connectionType" class="form-label">Connection Type: <span class="text-danger">*</span></label>
@@ -51,8 +51,8 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <label for="consumer_id" class="form-label">Consumer ID:<span class="text-danger">*</span></label>
-                <input type="text" id="consumer_id" name="E_consumerId"  class="form-control" placeholder="Enter Consumer ID" required>
+                <label for="consumerId" class="form-label">Consumer ID:<span class="text-danger">*</span></label>
+                <input type="text" id="consumerId" name="consumerId"  class="form-control" placeholder="Enter Consumer ID" required>
             </div>
         </div>
         
@@ -72,27 +72,27 @@
         <h4>Address Details:</h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                <label for="house" class="form-label">House No:</label>
-                <input type="text" id="house" name="houseNo" class="form-control" placeholder="Enter House Number">
+                <label for="houseNo" class="form-label">House No:</label>
+                <input type="text" id="houseNo" name="houseNo" class="form-control" placeholder="Enter House Number">
             </div>
             <div class="col-md-3">
                 <label for="street" class="form-label">Street:<span class="text-danger">*</span></label>
                 <input type="text" id="street" name="street" class="form-control" placeholder="Enter Street Name" required>
             </div>
              <div class="col-md-3">
-               <label for="address1" class="form-label">Address Line 1:</label>
-           	   <input type="text" id="address1" name="addressLine1" class="form-control" placeholder="Enter address" >
+               <label for="addressLine1" class="form-label">Address Line 1:</label>
+           	   <input type="text" id="addressLine1" name="addressLine1" class="form-control" placeholder="Enter address" >
             </div>
         </div>
          <div class="row mb-3">
            
             <div class="col-md-3">
-                 <label for="address2" class="form-label">Address Line 2:</label>
-            <input type="text" id="address2" name="addressLine2" class="form-control" placeholder="Enter address" >
+                 <label for="addressLine2" class="form-label">Address Line 2:</label>
+            <input type="text" id="addressLine2" name="addressLine2" class="form-control" placeholder="Enter address" >
             </div>
             <div class="col-md-3">
-               <label for="address3" class="form-label">Address Line 3:</label>
-            <input type="text" id="address3" name="addressLine3" class="form-control" placeholder="Enter address" >
+               <label for="addressLine3" class="form-label">Address Line 3:</label>
+            <input type="text" id="addressLine3" name="addressLine3" class="form-control" placeholder="Enter address" >
             </div>
             <div class="col-md-3">
                <label for="city" class="form-label">City:<span class="text-danger">*</span></label>
@@ -160,8 +160,8 @@
         </div>
          <div class="row mb-3">
             <div class="col-md-3">
-                <label for="subdivision" class="form-label">SubDivision:<span class="text-danger">*</span></label>
-	            <select id="subdivision" name="subDivision" class="form-select" required>
+                <label for="subDivision" class="form-label">SubDivision:<span class="text-danger">*</span></label>
+	            <select id="subDivision" name="subDivision" class="form-select" required>
 	                <option value="">--Select--</option>
 	                <option value="arwal">Arwal</option>
 	            </select>
@@ -221,8 +221,8 @@
         
         <div class="row mb-3">
             <div class="col-md-3">
-                <label for="fatherName" class="form-label">Husband/Father Name <span class="text-danger">*</span></label>
-                <input type="text" id="fatherName" name="f/hName" class="form-control" placeholder="Enter Father/Husband Name" required>
+                <label for="f_hName" class="form-label">Husband/Father Name <span class="text-danger">*</span></label>
+                <input type="text" id="f_hName" name="f_hName" class="form-control" placeholder="Enter Father/Husband Name" required>
             </div>
         </div>
 
@@ -230,8 +230,8 @@
         <h4>ID Proof:</h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                <label for="document_typeI" class="form-label">Document Type <span class="text-danger">*</span></label>
-                <select id="document_typeI" name="documentType1" class="form-select" required>
+                <label for="idProof" class="form-label">Document Type <span class="text-danger">*</span></label>
+                <select id="idProof" name="idProof" class="form-select" required>
                     <option value="">---Select---</option>
                     <option value="passport">Passport</option>
                     <option value="pan_card">PAN Card</option>
@@ -245,7 +245,7 @@
             </div>
             <div class="col-md-3">
                 <label for="document_fileI" class="form-label"></label>
-                <input type="file" id="document_fileI" name="documentFile" class="form-control" accept=".jpeg, .jpg" required>
+                <input type="file" id="document_fileI" name="documentFile" class="form-control" accept=".jpeg, .jpg"  >
             </div>
         </div>
         
@@ -253,8 +253,8 @@
         <h4>Address Proof:</h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                <label for="document_typeII" class="form-label">Document Type <span class="text-danger">*</span></label>
-                <select id="document_typeII" name="documentType2" class="form-select" required>
+                <label for="addressProof" class="form-label">Document Type <span class="text-danger">*</span></label>
+                <select id="addressProof" name="addressProof" class="form-select" required>
                     <option value="">---Select---</option>
                     <option value="passport">Passport</option>
                     <option value="pan_card">PAN Card</option>
@@ -269,32 +269,32 @@
             </div>
             <div class="col-md-3">
                 <label for="front_page" class="form-label">Front Page</label>
-                <input type="file" id="front_page" name="frontPage" class="form-control" accept=".jpeg, .jpg" required>
+                <input type="file" id="front_page" name="frontPage" class="form-control" accept=".jpeg, .jpg" >
             </div>
             <div class="col-md-3">
                 <label for="last_page" class="form-label">Last Page</label>
-                <input type="file" id="last_page" name="lastPage" class="form-control" accept=".jpeg, .jpg" required>
+                <input type="file" id="last_page" name="lastPage" class="form-control" accept=".jpeg, .jpg" >
             </div>
         </div>
         
          <h4>Photo of Applicant:<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                 <input type="file" id="photo" name="photo" class="form-control" accept="image/jpeg, image/jpg" required>
+                 <input type="file" id="photo" name="photo" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
         
          <h4>Photo of Ownership(First page of Lease Deed/Rent Agreement/Others):<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                <input type="file" id="photo" name="photoOwnerFirst" class="form-control" accept="image/jpeg, image/jpg" required>
+                <input type="file" id="photo" name="photoOwnerFirst" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
         
          <h4>Photo of Ownership(Second page of Lease Deed/Rent Agreement/Others):<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                  <input type="file" id="photo" name="photoOwnerSecond" class="form-control" accept="image/jpeg, image/jpg" required>
+                  <input type="file" id="photo" name="photoOwnerSecond" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
         
@@ -303,6 +303,11 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+    <script>
+        	function disableButton(){
+        		document.getElementById('submitBtn').disabled=true;
+        	}
+        </script>
 	</div>
         
     </div>
