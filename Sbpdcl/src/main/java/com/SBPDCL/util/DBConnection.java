@@ -1,24 +1,45 @@
 package com.SBPDCL.util;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBConnection {
-	static  String url = "jdbc:mysql://localhost:3306/projectdb";
-    static String user = "root";
-    static String password = "da_1014";
-    
+  
     
     public static Connection getConnection() throws SQLException, ClassNotFoundException
+      
     {
-    	 try {
-    		    Class.forName("com.mysql.cj.jdbc.Driver");
-    		   } catch (ClassNotFoundException e) {
-    		    // TODO Auto-generated catch block
-    		    e.printStackTrace();
-    		   }
-    		      Connection connection =DriverManager.getConnection(url,user,password);
-    		      return connection;
-    		     }
+      Connection conn = null;
+
+        try {
+            Properties props = new Properties();
+            InputStream in = DBConnection.class.getClassLoader().getResourceAsStream("db.properties");
+            URL url1 = DBConnection.class.getClassLoader().getResource("db.properties");
+            System.out.println("Found at: " + url1);
+            if (in == null) {
+                System.out.println("db.properties not found in classpath!");
+                return null;
+            }
+
+            props.load(in);
+
+            String driver = props.getProperty("db.driver");
+            String url = props.getProperty("db.url");
+            String username = props.getProperty("db.username");
+            String password = props.getProperty("db.password");
+
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, username, password);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return conn;
+    }
+
 }
