@@ -8,12 +8,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
-	
+  
     
     public static Connection getConnection() throws SQLException, ClassNotFoundException
-    	
+      
     {
-    	Connection conn = null;
+      Connection conn = null;
 
         try {
             Properties props = new Properties();

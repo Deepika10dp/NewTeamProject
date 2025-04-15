@@ -92,6 +92,54 @@ LOCK TABLES `division` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `new_connection_request`
+--
+
+DROP TABLE IF EXISTS `new_connection_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `new_connection_request` (
+  `app_id` varchar(100) DEFAULT 'APP123',
+  `connectionType` varchar(50) DEFAULT NULL,
+  `consumerId` varchar(50) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `houseNo` varchar(100) DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `addressLine1` varchar(100) DEFAULT NULL,
+  `addressLine2` varchar(100) DEFAULT NULL,
+  `addressLine3` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `pincode` varchar(10) DEFAULT NULL,
+  `district` varchar(100) DEFAULT NULL,
+  `block` varchar(100) DEFAULT NULL,
+  `panchayat` varchar(100) DEFAULT NULL,
+  `village` varchar(100) DEFAULT NULL,
+  `division` varchar(100) DEFAULT NULL,
+  `subDivision` varchar(100) DEFAULT NULL,
+  `section` varchar(100) DEFAULT NULL,
+  `tariff` varchar(50) DEFAULT NULL,
+  `E_phase` varchar(50) DEFAULT NULL,
+  `E_load` varchar(50) DEFAULT NULL,
+  `gender` varchar(50) DEFAULT NULL,
+  `applicantName` varchar(255) DEFAULT NULL,
+  `f_hName` varchar(255) DEFAULT NULL,
+  `idProof` varchar(50) DEFAULT NULL,
+  `addressProof` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `new_connection_request`
+--
+
+LOCK TABLES `new_connection_request` WRITE;
+/*!40000 ALTER TABLE `new_connection_request` DISABLE KEYS */;
+INSERT INTO `new_connection_request` VALUES ('APP123','domestic','CON5678','9142101898','abc@gmail.com','123','Saristabad','Patna','Gardanibagh','Anisabad','Patna','80004','aurangabad','arwal','arwal','arwal','arwal','arwal','arwal','domestic','single','220','female','shrii','Ram','aadhar_card','aadhar_card'),('APP1744335123083','domestic','CON5678','9142101898','abc@gmail.com','123','Saristabad','Patna','Gardanibagh','Anisabad','Patna','80004','aurangabad','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','shrii','hari','aadhar_card','passport'),('APP1744335416076','commercial','CON123456','6754345678','def@gmail.com','9AB34','Gaziabad','Aara','Punjab','Haryana','Patna','80004','kaimur','arwal','arwal','arwal','arwal','arwal','arwal','commercial','three','220','male','Deepak','Hansmukh','pan_card','voter_id');
+/*!40000 ALTER TABLE `new_connection_request` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `panchayat`
 --
 
@@ -250,14 +298,6 @@ LOCK TABLES `village_ward` WRITE;
 INSERT INTO `village_ward` VALUES (1,'Abgila',1),(2,'Goura',1),(3,'Itawa',1),(4,'Rajpur Bishunpur',1),(5,'Haibatpur',1),(6,'Mohammadpurgahna',2),(7,'Kansupur',2),(8,'Pipra Bangla',2),(9,'Hasanpur Pipra',2),(10,'Bania Bigha',2),(11,'Amra',2),(12,'Bhusura',3),(13,'Saifabad',4),(14,'Bhadasi',4),(15,'Jalpura',4),(16,'Pheku Bigha',4),(17,'Chiraia Tanr',5),(18,'Gaddopur',5),(19,'Madanpur Dhawa',5),(20,'Makbulpur Raja',5),(21,'Bhermpur Khapura',5),(22,'Rampur',5),(23,'Fakharpur',5),(24,'Dhoraha',5),(25,'Khamhaini',6),(26,'Harna',6),(27,'Yakubpur',6),(28,'Nasirpur Sarwar',6),(29,'Bichlagawan',7),(30,'Sumera',7),(31,'Chakia',7),(32,'Parasi',7),(33,'Dangra Ahar',8),(34,'Piare Chak',8),(35,'Darwesh Pura',8),(36,'Sarwan',8),(37,'Bazidpur',8),(38,'Rampur Waina',9),(39,'Fatehpur Saurha',9),(40,'Saidpur',9),(41,'Bahadurpur',9),(42,'Konika',10),(43,'Sakri',10),(44,'Sonbarsa Makbulpur Alauddin',10),(45,'Madan Singhka Bigha',10),(46,'Sonbarsa',10),(47,'Aslampur Dullah',10),(48,'Sarauti',11),(49,'Ranapur',11),(50,'Rampur Chauram',11),(51,'Koriam',12),(52,'Bara',12),(53,'Satpura',12),(54,'Sonbarsa',12),(55,'Nawada',13),(56,'Belawan',13),(57,'Sarwarpur',14),(58,'Durgapur',14),(59,'Rajpura',14),(60,'Belsar',14),(61,'Chauki',14),(62,'Injor',15),(63,'Shahbajpur Dhawai',15),(64,'Khaira',15),(65,'Goind',15),(66,'Kalandara',15),(67,'Rupaich',15),(68,'Niranjanpur',16),(69,'Khushdihra',16),(70,'Jamuhari',16),(71,'Ismailpur Koil',16),(72,'Turkharsa',16),(73,'Koilbhupat',16),(74,'Koni',17),(75,'Jaipur',17),(76,'Simbhua',17),(77,'Bakhtar',17),(78,'Parasrampur',18),(79,'Bath',18),(80,'Kamta',18),(81,'Lodipur',19),(82,'Musepur',19),(83,'Mainpura',19),(84,'Upadhea Bigha',19),(85,'Kathrain',19),(86,'Wojha Bigha',19),(87,'	Agnur ',20),(88,'Mehdiyabad',21),(89,'Pahleja',21),(90,'Fatehabad',21),(91,'Masadpur',22),(92,'Bhagwanpur',22),(93,'Sohsa',22),(94,'Kharsa',22),(95,'Kaler',23),(96,'Kaler',23),(97,'Pasrampur',24),(98,'Hirdai Chak',24),(99,'Teri',24),(100,'Hardia',25),(101,'Maraila',25),(102,'Usri',25),(103,'Maneri Bigha',25),(104,'Ballopur',26),(105,'Makhmulpur',26),(106,'Sikandarpur Dhawai',26),(107,'Bhikhanpur Dhawai',26),(108,'Daulatpur Dhawai',26),(109,'Walidad',26),(110,'Mahrauli',26),(111,'Tawakala',27),(112,'Gorkatta',27),(113,'Sakri',27),(114,'Chauki',27),(115,'Masuda',27),(116,'Dariyapur',28),(117,'Inglish Gulab Singh',28),(118,'Patak Chak',28),(119,'Aiyara',28),(120,'Laraua',28),(121,'Kasauti',29),(122,'Abgila',29),(123,'Bambhai',29),(124,'Shekhpura',30),(125,'Belkharakhas',30),(126,'Chauhar',31),(127,'Chauhar Chak',31),(128,'Kudrasi',31),(129,'Pakri',31),(130,'Bazidpur',31),(131,'Kutubpur Tera',32),(132,'Durra',32),(133,'Bara Nathu',32),(134,'Rasulpur Tetara',32),(135,'Karpi ',33),(136,'Keal',34),(137,'Kinjar',35),(138,'Sohsa',35),(139,'Karehri',35),(140,'Khojan',35),(141,'Nagla',35),(142,'Murarhi',36),(143,'Mahasi Chak',36),(144,'Samanpur Baddo',36),(145,'Bara',36),(146,'Jhikatia',36),(147,'Salarpur',36),(148,'Manirampur',36),(149,'Bhagwatipur',36),(150,'Milki',36),(151,'Nagawan',37),(152,'Tekari',37),(153,'Jhunathi',37),(154,'Hajipur',37),(155,'Rasulpur Pariyari',37),(156,'Salempur',37),(157,'Belkhari Chak',38),(158,'Nadi Khurd',38),(159,'Belkari',38),(160,'Narga',38),(161,'Kusre',38),(162,'Hajipur',38),(163,'Mahmadpur Bara',39),(164,'Gainari',39),(165,'Majidpur',39),(166,'Mahmadpura',39),(167,'Pariyari',39),(168,'Mirzapur',39),(169,'Kanaia Chak',39),(170,'Purainia Ruknuddin',40),(171,'Purainia Shekha',40),(172,'Latifpur Paraha',40),(173,'Lodipur',40),(174,'Masudpur Bara',40),(175,'Katesar',41),(176,'Puran',41),(177,'Jonha',41),(178,'Baghra',41),(179,'Piraho',42),(180,'Rampurchae',42),(181,'Khalslpura',43),(182,'Kohraul',43),(183,'Baroha',43),(184,'Bazidpur Karwa',43),(185,'Mahpur Bara',43),(186,'Rohai',43),(187,'Manjhupur',43),(188,'Bakhtari',43),(189,'Shahar Telpa',44),(190,'Khajuri',45),(191,'Sarmastpur Newana',45),(192,'Karwahankar',45),(193,'Ghazipur',45),(194,'Pachkesar',45),(195,'Makbulpur Angari',46),(196,'Angari',46),(197,'Angarichak',46),(198,'Kochahsa',46),(199,'Bazidpur',46),(200,'Alawalpur',47),(201,'Utranwan',47),(202,'Basatpur',47),(203,'Ahmadpur Harna',47),(204,'Jagdispur',47),(205,'Shahopur',47),(206,'Lari',47),(207,'Makhdumpur',48),(208,'Sura',48),(209,'Kubri',48),(210,'Bara',48),(211,'Benipur',48),(212,'Khaira',49),(213,'Helalpur',49),(214,'Ibrahimpur',49),(215,'Qamariya Chak',49),(216,'Qamariya',49),(217,'Dakra',49),(218,'Kimdar Chak',49),(219,'Narhi',49),(220,'Musarhi',50),(221,'Madarpur',50),(222,'Painathi',50),(223,'Dhondar',50),(224,'Alawalpur',50),(225,'Saidpur',50),(226,'Kod Marai',50),(227,'Jogiyanala',50),(228,'Molna Chak',50),(229,'Darheta',50),(230,'Manikpur',51),(231,'Pirhi',51),(232,'Bishunpur',51),(233,'Rajepur',51),(234,'Koni',51),(235,'Gokhulpur',52),(236,'Belbhadarpur',52),(237,'Harpur',52),(238,'Nadaura',52),(239,'Salehpur',52),(240,'Semuara',52),(241,'Shahbazpur',52),(242,'Barahiya',52),(243,'Baid Bigha',52),(244,'Tali',52),(245,'Bahbalpur',52),(246,'Milki',52),(247,'Mahmadpur',52),(248,'Salempur',52),(249,'Lodipur',53),(250,'Chhatoi',53),(251,'Nighwan',53),(252,'Motipur',54),(253,'Gangea',54),(254,'Pinjranwan',54),(255,'Manikpur',54),(256,'Kurkuri',54),(257,'Mohibullah Chak',54),(258,'Kothiya',54),(259,'Molha Chak',55),(260,'Partappur',55),(261,'Gangapur',55),(262,'Phulsathar',55),(263,'Sachai',55),(264,'Sikaria',55),(265,'Nezampur',55),(266,'Dharnai',56),(267,'Gangapur',56),(268,'Anuan',56),(269,'Bhagwatipur',56),(270,'Sarfar Pur',56),(271,'Rampur',56),(272,'Doniala',56),(273,'Rainath',56),(274,'Belaura',57),(275,'Saidrampur',57),(276,'Koni',57),(277,'Sonari',57),(278,'Kurmanwan',57),(279,'Chand Bigha',58),(280,'Chamardih',58),(281,'Dharampur',58),(282,'Gobindpur',58),(283,'Pondil',58),(284,'Kutubpur',58),(285,'Barahia',58),(286,'Bithra',58),(287,'Paharpur',59),(288,'Kharasin',59),(289,'Akranga',59),(290,'Akraunja Chak',59),(291,'Zindapur',59),(292,'Gonpura',60),(293,'Majhiawan',60),(294,'Dewa Bigha',60),(295,'Mobarakpur',60),(296,'Khatangi',60),(297,'Turuk Telpa',61),(298,'Mali',61),(299,'Sarbali',62),(300,'Daudpur',62),(301,'Makhmilpur',62),(302,'Sherpur',62),(303,'Karwa Balram',62),(304,'Gangapur',62),(305,'Moglapur',63),(306,'Sadipur',63),(307,'Sonbhadar',63),(308,'Ghazipur',63),(309,'Bansi Surajpur',63),(310,'Wor Bigha',63),(311,'Inguna',64),(312,'Tetaria',64),(313,'Kusi',64),(314,'Parsa',64),(315,'Morauli',64),(316,'Dhobaul',64),(317,'Jarma Khap',64),(318,'Bela',64),(319,'Bisrampur',64),(320,'Tendua',64);
 /*!40000 ALTER TABLE `village_ward` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'projectdb'
---
-
---
--- Dumping routines for database 'projectdb'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -268,4 +308,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-08 10:47:31
+-- Dump completed on 2025-04-11 13:25:52

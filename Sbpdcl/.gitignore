@@ -1,2 +1,3 @@
 /build/
-/src/db.properties
+/src/main/resources/db.properties
+
