@@ -1,4 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8" import="com.SBPDCL.bean.User" %>
+
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null || user.getRoleId() != 2) {
+        response.sendRedirect("unauthorized.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +79,7 @@
   </style>
 </head>
 <body>
-
+ <h2>Welcome JEE: <%= user.getName() %></h2>
 <!-- Navbar -->
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
@@ -89,7 +97,7 @@
       <a href="#" class="menu-link" data-status="Pending Inspection">Verify Site Inspection</a>
       <a href="#" class="menu-link" data-status="Report Pending">Pending Reports</a>
       <a href="#" class="menu-link" data-status="Ready for Meter">Meter Installation</a>
-      <a href="#" class="menu-link" data-status="checks dues">Checks Previous Dues</a>
+      <a href="#" class="menu-link" data-status="checks dues">Check Dues</a>
       <a href="#" class="menu-link" data-status="Logout">Logout</a>
     </div>
 

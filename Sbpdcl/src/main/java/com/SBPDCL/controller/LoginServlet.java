@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 	        String password = request.getParameter("password");
 	        System.out.println("User ID: " +userId + ", Password: "+password);
 	        if(userId==null || userId.isEmpty()) {
-	        	response.sendRedirect("login.jsp?error=Please enter User ID");
+	        	response.sendRedirect("index.html?error=Invalid credentials");
 	        	return;
 	        }
 
@@ -56,22 +56,20 @@ public class LoginServlet extends HttpServlet {
 	            System.out.println("Redirecting based on Role ID: "+roleId);
 	            // Redirect based on role
 	            switch (user.getRoleId()) {
+	               
 	                case 1:
-	                    response.sendRedirect("admin_dashboard.jsp");
+	                    response.sendRedirect("miDashboard.jsp");
 	                    break;
 	                case 2:
-	                    response.sendRedirect("jee_dashboard.jsp");
-	                    break;
-	                case 3:
-	                    response.sendRedirect("mi_dashboard.jsp");
+	                    response.sendRedirect("jeeDashboard.jsp");
 	                    break;
 
-	                case 4:
-	                    response.sendRedirect("aee_dashboard.jsp");
+	                case 3:
+	                    response.sendRedirect("aeeDashboard.jsp");
 	                    break;
 	               
-	                case 5:
-	                    response.sendRedirect("consumer_dashboard.jsp");
+	                case 4:
+	                    response.sendRedirect("consumerDashboard.jsp");
 	                    break;
 	                default:
 	                    response.sendRedirect("unauthorized.jsp");

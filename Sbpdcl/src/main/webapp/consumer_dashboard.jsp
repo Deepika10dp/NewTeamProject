@@ -14,7 +14,8 @@
 </head>
 <body>
 	 <h2>Welcome Consumer: <%= user.getName() %></h2>
-	 <a href="changePassword.jsp">Change Password</a>
-    <a href="LogoutServlet">Logout</a>
+	 <a href="changePassword.jsp">Change Password</a><br>
+	 <a href="form.html">New Connection</a><br>
+    <a href="LogoutServlet">Logout</a><br>
 </body>
 </html>
