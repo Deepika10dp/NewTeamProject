@@ -1,11 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 
-	pageEncoding="UTF-8" import="com.SBPDCL.bean.User" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="com.SBPDCL.bean.User,javax.servlet.http.HttpSession" %>
 
 <%
     User user = (User) session.getAttribute("user");
-    if (user == null || user.getRoleId() != 2) {
+    if (user == null || user.getRoleId() != 1) {
         response.sendRedirect("unauthorized.jsp");
+        return;
     }
+
+    HttpSession sess = request.getSession(false);
+    if (sess == null || sess.getAttribute("user_id") == null) {
+        response.sendRedirect("index.html");
+        return;
+    }
+
+    String userId = (String) sess.getAttribute("user_id");
+    String pageParam = request.getParameter("page");
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,12 +109,23 @@
       <a href="#" class="menu-link" data-status="Report Pending">Pending Reports</a>
       <a href="#" class="menu-link" data-status="Ready for Meter">Meter Installation</a>
       <a href="#" class="menu-link" data-status="checks dues">Check Dues</a>
-      <a href="#" class="menu-link" data-status="Logout">Logout</a>
+      <a href="jeeDashboard.jsp?page=change_password" >Change Password</a>
+      <a href="LogoutServlet">Logout</a>
     </div>
 
     <!-- Main Content -->
     <div class="col-md-10 p-4">
+	  <!-- Include Change Password JSP if selected -->
+	  <%
+	      if ("change_password".equals(pageParam)) {
+	  %>
+	      <jsp:include page="change_password.jsp" />
+	  <%
+	      }
+	  %>
+	 
 
+	  
       <!-- Applications Table -->
       <div>
         <h5>Recent Applications</h5>
@@ -138,6 +160,7 @@
           </tbody>
         </table>
       </div>
+	  
     </div>
   </div>
 </div>
@@ -187,4 +210,15 @@
 </script>
 
 </body>
+	 <%
+	    String msg = (String) request.getAttribute("msg");
+	    if (msg != null) {
+	   %>
+	    <script>
+	        alert("<%= msg.replaceAll("\"", "\\\\\"") %>");
+	    </script>
+	  <%
+	    }
+	  %>
+	
 </html>

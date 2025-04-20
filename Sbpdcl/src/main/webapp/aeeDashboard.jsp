@@ -1,4 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="com.SBPDCL.bean.User,javax.servlet.http.HttpSession" %>
+
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null || user.getRoleId() != 3) {
+        response.sendRedirect("unauthorized.jsp");
+        return;
+    }
+
+    HttpSession sess = request.getSession(false);
+    if (sess == null || sess.getAttribute("user_id") == null) {
+        response.sendRedirect("index.html");
+        return;
+    }
+
+    String userId = (String) sess.getAttribute("user_id");
+    String pageParam = request.getParameter("page");
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,9 +68,18 @@
       <a href="#">JEE Reports</a>
       <a href="#">Approve/Reject</a>
       <a href="#">Track Applications</a>
-      <a href="#">Logout</a>
+       <a href="aeeDashboard.jsp?page=change_password" >Change Password</a>
+      <a href="LogoutServlet">Logout</a>
     </div>
-
+	
+	<!-- Include Change Password JSP if selected -->
+	  <%
+	      if ("change_password".equals(pageParam)) {
+	  %>
+	      <jsp:include page="change_password.jsp" />
+	  <%
+	      }
+	  %>
     <!-- Main Content -->
     <div class="col-md-10 p-4">
       <h3>Welcome, AEE</h3>
@@ -135,4 +163,14 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+		 <%
+	    String msg = (String) request.getAttribute("msg");
+	    if (msg != null) {
+	   %>
+	    <script>
+	        alert("<%= msg.replaceAll("\"", "\\\\\"") %>");
+	    </script>
+	  <%
+	    }
+	  %>
 </html>

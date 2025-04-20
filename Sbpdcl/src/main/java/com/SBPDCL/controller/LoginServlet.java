@@ -49,36 +49,34 @@ public class LoginServlet extends HttpServlet {
 
 	        User user = userService.loginUser(userId, password);
 	        if (user != null) {
-	        	System.out.println("Log in successful: "+ user.getName() + "- Role ID: "+user.getRoleId());
+	            System.out.println("Log in successful: " + user.getName() + " - Role ID: " + user.getRoleId());
 	            HttpSession session = request.getSession();
-	            session.setAttribute("user", user);
-	            int roleId=user.getRoleId();
-	            System.out.println("Redirecting based on Role ID: "+roleId);
+	            session.setAttribute("user", user); // already there
+	            session.setAttribute("user_id", user.getUserId()); // ✅ Add this line
+
+	            int roleId = user.getRoleId();
+	            System.out.println("Redirecting based on Role ID: " + roleId);
+
 	            // Redirect based on role
-	            switch (user.getRoleId()) {
-	               
+	            switch (roleId) {
 	                case 1:
-	                    response.sendRedirect("miDashboard.jsp");
+	                	response.sendRedirect("jeeDashboard.jsp");
 	                    break;
 	                case 2:
-	                    response.sendRedirect("jeeDashboard.jsp");
+	                    response.sendRedirect("miDashboard.jsp");
 	                    break;
-
 	                case 3:
 	                    response.sendRedirect("aeeDashboard.jsp");
 	                    break;
-	               
 	                case 4:
-	                    response.sendRedirect("consumerDashboard.jsp");
+	                    response.sendRedirect("consumer_dashboard.jsp");
 	                    break;
 	                default:
 	                    response.sendRedirect("unauthorized.jsp");
 	                    break;
 	            }
-	        } else {
-	        	System.out.println("Invalid credentials for user ID: "+userId);
-	            response.sendRedirect("login.jsp?error=Invalid credentials");
 	        }
+
 		
 		//doGet(request, response);
 	}
