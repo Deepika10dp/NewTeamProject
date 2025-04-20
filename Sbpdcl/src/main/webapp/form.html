@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,33 +65,23 @@
         .form-group {
             margin-bottom: 1.5rem;
         }
+        #previewSection {
+            display: none;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container form-wrapper">
         <h2 class="text-center mb-4">New Connection Form</h2>
+       
+        <!-- ALL FORM FIELDS FROM YOUR ORIGINAL CODE (KEEP UNCHANGED) -->
+        <!-- For brevity, the full original form content should go here, unchanged -->
+         <form id="connectionForm" action="NewConnectionServlet" method="post" enctype="multipart/form-data" onsubmit="disableButton()">
+
         <p class="text-danger">*Mandatory Fields (Please upload all documents in jpeg/jpg format. 
         Document size must be less than 500 KB and PDF document size must be less than 10000 KB.)</p>
-        <form action="sbpdcl" method="post" enctype="multipart/form-data">
-            <!-- Place your actual form fields here -->
-    
-          <div class="row mb-3">
-              <div class="col-md-3">
-                  <label for="connectionType" class="form-label">Connection Type: <span class="text-danger">*</span></label>
-                  <select id="connectionType" name="connectionType" class="form-select" required>
-                      <option value="">--Select--</option>
-                      <option value="domestic">Domestic</option>
-                      <option value="commercial">Commercial</option>
-                  </select>
-              </div>
-              <div class="col-md-3">
-                  <label for="consumer_id" class="form-label">Consumer ID:<span class="text-danger">*</span></label>
-                  <input type="text" id="consumer_id" name="E_consumerId"  class="form-control" placeholder="Enter Consumer ID" required>
-              </div>
-          </div>
-          
-        <form action="NewConnectionServlet" method="post" onsubmit="disableButton()">
+
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="connectionType" class="form-label">Connection Type: <span class="text-danger">*</span></label>
@@ -109,37 +98,38 @@
         </div>
 
         
-          <!-- Mobile No & Email -->
-          <div class="row mb-3">
-              <div class="col-md-3">
-                  <label for="mobile" class="form-label">Mobile No:<span class="text-danger">*</span></label>
-                  <input type="text" id="mobile" name="mobile" class="form-control" placeholder="Enter Mobile No." required>
-              </div>
-              <div class="col-md-3">
-                  <label for="email" class="form-label">Email ID:</label>
-                  <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email ID">
-              </div>
-          </div>
+	        <!-- Mobile No & Email -->
+	        <div class="row mb-3">
+	            <div class="col-md-3">
+	                <label for="mobile" class="form-label">Mobile No:<span class="text-danger">*</span></label>
+	                <input type="text" id="mobile" name="mobile" class="form-control" placeholder="Enter Mobile No." required>
+	            </div>
+	            <div class="col-md-3">
+	                <label for="email" class="form-label">Email ID:</label>
+	                <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email ID">
+	            </div>
+	        </div>
 
 
-          <!-- Address Details -->
-          <h4>Address Details:</h4>
-          <div class="row mb-3">
-              <div class="col-md-3">
-                  <label for="house" class="form-label">House No:</label>
-                  <input type="text" id="house" name="houseNo" class="form-control" placeholder="Enter House Number">
-              </div>
-              <div class="col-md-3">
-                  <label for="street" class="form-label">Street:<span class="text-danger">*</span></label>
-                  <input type="text" id="street" name="street" class="form-control" placeholder="Enter Street Name" required>
-              </div>
-               <div class="col-md-3">
-                 <label for="address1" class="form-label">Address Line 1:</label>
-                  <input type="text" id="address1" name="addressLine1" class="form-control" placeholder="Enter address" >
-              </div>
-          </div>
-           <div class="row mb-3">
-           <!-- Address Details -->
+	        <!-- Address Details -->
+	        <h4>Address Details:</h4>
+	        <div class="row mb-3">
+	            <div class="col-md-3">
+	                <label for="house" class="form-label">House No:</label>
+	                <input type="text" id="house" name="houseNo" class="form-control" placeholder="Enter House Number">
+	            </div>
+	            <div class="col-md-3">
+	                <label for="street" class="form-label">Street:<span class="text-danger">*</span></label>
+	                <input type="text" id="street" name="street" class="form-control" placeholder="Enter Street Name" required>
+	            </div>
+	             <div class="col-md-3">
+	               <label for="address1" class="form-label">Address Line 1:</label>
+	           	   <input type="text" id="address1" name="addressLine1" class="form-control" placeholder="Enter address" >
+	            </div>
+	        </div>
+	        
+
+        <!-- Address Details -->
         <h4>Address Details:</h4>
         <div class="row mb-3">
             <div class="col-md-3">
@@ -152,7 +142,7 @@
             </div>
              <div class="col-md-3">
                <label for="addressLine1" class="form-label">Address Line 1:</label>
-                <input type="text" id="addressLine1" name="addressLine1" class="form-control" placeholder="Enter address" >
+           	   <input type="text" id="addressLine1" name="addressLine1" class="form-control" placeholder="Enter address" >
             </div>
         </div>
          <div class="row mb-3">
@@ -185,75 +175,75 @@
             </div>
             <div class="col-md-3">
                 <label for="block" class="form-label">Block:<span class="text-danger">*</span></label>
-              <select id="block" name="block" class="form-select" required>
-                    <option value="">--Select--</option>
-                   
-              </select>
+            	<select id="block" name="block" class="form-select" required>
+               		 <option value="">--Select--</option>
+               		
+            	</select>
             </div>
         </div>
          <div class="row mb-3">
             
             <div class="col-md-3">
                 <label for="panchayat" class="form-label">Panchayat:<span class="text-danger">*</span></label>
-                <select id="panchayat" name="panchayat" class="form-select" required>
-                  <option value="">--Select--</option>
-                 
-               </select>
+           		 <select id="panchayat" name="panchayat" class="form-select" required>
+		              <option value="">--Select--</option>
+		             
+            	 </select>
             </div>
              <div class="col-md-3">
                 <label for="village_ward" class="form-label">Village/Ward:<span class="text-danger">*</span></label>
-              <select id="village_ward" name="village_ward" class="form-select" required>
-                    <option value="">--Select--</option>
-         
-              </select>
+	            <select id="village_ward" name="village_ward" class="form-select" required>
+	                  <option value="">--Select--</option>
+	       
+	            </select>
             </div>
             <div class="col-md-3">
                  <label for="division" class="form-label">Division:<span class="text-danger">*</span></label>
-               <select id="division" name="division" class="form-select" disabled>
-                    <option value="">--Select--</option>
-                   
-               </select>
+	             <select id="division" name="division" class="form-select" disabled>
+	                  <option value="">--Select--</option>
+					  <option value="bhagalpur">Bhagalpur</option>
+				 </select>
             </div>
         </div>
          <div class="row mb-3">
             <div class="col-md-3">
                 <label for="subdivision" class="form-label">SubDivision:<span class="text-danger">*</span></label>
-                <select id="subdivision" name="subdivision" class="form-select" disabled>
-                  <option value="">--Select--</option>
-             
-              </select>
+	            <select id="subdivision" name="subdivision" class="form-select" disabled>
+	                <option value="">--Select--</option>
+	           
+	            </select>
             </div>
             <div class="col-md-3">
                 <label for="section" class="form-label">Section:<span class="text-danger">*</span></label>
-              <select id="section" name="section" class="form-select" disabled>
-                  <option value="">--Select--</option>
-                
-              </select>
+	            <select id="section" name="section" class="form-select" disabled>
+	                <option value="">--Select--</option>
+	              
+	            </select>
             </div>
             <!-- Hidden inputs to store actual values for form submission -->
-      <input type="hidden" name="division_id" id="hiddenDivision" />
-      <input type="hidden" name="subdivision_id" id="hiddenSubdivision" />
-      <input type="hidden" name="section_id" id="hiddenSection" />
-      
+			<input type="hidden" name="division_id" id="hiddenDivision" />
+			<input type="hidden" name="subdivision_id" id="hiddenSubdivision" />
+			<input type="hidden" name="section_id" id="hiddenSection" />
+			
             <div class="col-md-3">
                 <label for="tariff" class="form-label">Tariff:<span class="text-danger">*</span></label>
-              <select id="tariff" name="tariff" class="form-select" required>
-                  <option value="">--Select--</option>
-                  <option value="domestic">Domestic</option>
-                  <option value="commercial">Commercial</option>
-                  <option value="industrial">Industrial</option>
-              </select>
+	            <select id="tariff" name="tariff" class="form-select" required>
+	                <option value="">--Select--</option>
+	                <option value="domestic">Domestic</option>
+	                <option value="commercial">Commercial</option>
+	                <option value="industrial">Industrial</option>
+	            </select>
             </div>
         </div>
          <div class="row mb-3">
             
             <div class="col-md-3">
                 <label for="phase" class="form-label">Phase:<span class="text-danger">*</span></label>
-              <select id="phase" name="E_phase" class="form-select" required>
-                  <option value="">--Select--</option>
-                  <option value="single">Single</option>
-                  <option value="three">Three</option>
-              </select>
+	            <select id="phase" name="E_phase" class="form-select" required>
+	                <option value="">--Select--</option>
+	                <option value="single">Single</option>
+	                <option value="three">Three</option>
+	            </select>
             </div>
              <div class="col-md-3">
                <label for="load" class="form-label">Load:<span class="text-danger">*</span></label>
@@ -287,6 +277,7 @@
                 <input type="text" id="f_hName" name="f_hName" class="form-control" placeholder="Enter Father/Husband Name" required>
             </div>
         </div>
+
         <!-- ID Proof -->
         <h4>ID Proof:</h4>
         <div class="row mb-3">
@@ -300,8 +291,8 @@
                     <option value="voter_id">Voter ID</option>
                     <option value="driving_license">Driving License</option>                    
                     <option value="ration_card">Ration Card</option>
-          <option value="bpl_card">Below Poverty Line-BPL Card</option>
-          <option value="id_government">ID Issued By Government</option>
+					<option value="bpl_card">Below Poverty Line-BPL Card</option>
+					<option value="id_government">ID Issued By Government</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -324,8 +315,8 @@
                     <option value="driving_license">Driving License</option>                    
                     <option value="ration_card">Ration Card</option>
                     <option value="id_government">ID Issued By Government</option>
-          <option value="bpl_card">Bill of Government Landline Connection</option>
-          
+					<option value="bpl_card">Bill of Government Landline Connection</option>
+					
                 </select>
             </div>
             <div class="col-md-3">
@@ -341,39 +332,81 @@
          <h4>Photo of Applicant:<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                 <input type="file" id="photo" name="photo" class="form-control" accept="image/jpeg, image/jpg" >
+                 <input type="file" id="photoApplicant" name="photo" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
         
          <h4>Photo of Ownership(First page of Lease Deed/Rent Agreement/Others):<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                <input type="file" id="photo" name="photoOwnerFirst" class="form-control" accept="image/jpeg, image/jpg" >
+                <input type="file" id="photoOwnerFirst" name="photoOwnerFirst" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
         
          <h4>Photo of Ownership(Second page of Lease Deed/Rent Agreement/Others):<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                  <input type="file" id="photo" name="photoOwnerSecond" class="form-control" accept="image/jpeg, image/jpg" >
+                  <input type="file" id="photoOwnerSecond" name="photoOwnerSecond" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
 
-          
-            <!-- Submit Button -->
+            <!-- Submit Button 
             <div class="text-start mt-4">
                 <button type="submit" class="btn btn-primary px-5 py-2">Submit</button>
             </div>
-        </form>
+        </form>   -->
+
+
         <!-- Submit Button -->
         <div class="text-left">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="showPreview()">Submit</button>
         </div>
     </form>
+
+
+    <!-- Preview Section -->
+    <div id="previewSection">
+        <h4 class="mt-4">Preview Your Details</h4>
+        <div id="previewContent"></div>
+        <button class="btn btn-secondary mt-3" onclick="goBackToForm()">Back</button>
+        <button class="btn btn-success mt-3" onclick="finalSubmit()">Final Submit</button>
+    </div>
+
+</div>
+
+	<script>
+	    function showPreview() {
+	        const form = document.getElementById('connectionForm');
+	        const formData = new FormData(form);
+	        let previewHTML = '<ul class="list-group">';
+	
+	        for (const [name, value] of formData.entries()) {
+	            if (value && name !== 'photo' && name !== 'photoOwnerFirst' && name !== 'photoOwnerSecond' && name !== 'frontPage' && name !== 'lastPage' && name !== 'documentFile') {
+	                const label = form.querySelector(`[name="${name}"]`).closest('.form-group, .col-md-3').querySelector('label').textContent;
+	                previewHTML += `<li class="list-group-item"><strong>${label}</strong>: ${value}</li>`;
+	            }
+	        }
+	
+	        previewHTML += '</ul>';
+	        document.getElementById('previewContent').innerHTML = previewHTML;
+	        document.getElementById('connectionForm').style.display = 'none';
+	        document.getElementById('previewSection').style.display = 'block';
+	    }
+	
+	    function goBackToForm() {
+	        document.getElementById('previewSection').style.display = 'none';
+	        document.getElementById('connectionForm').style.display = 'block';
+	    }
+	
+	    function finalSubmit() {
+	        document.getElementById('connectionForm').submit();
+	    }
+	</script>
+
     <script>
-        $(document).ready(function () {
-            // Load districts on page load
-            $.ajax({
+		    $(document).ready(function () {
+		        // Load districts on page load
+		        $.ajax({
                 url: "DivisionAutoFillServlet",
                 type: "POST",
                 data: { action: "getDistricts" },
@@ -388,127 +421,124 @@
                     console.error("AJAX error:", error);
                 }
             });
-            // District -> Block
-            $('#district').change(function () {
-                let districtId = $(this).val();
-                clearDropdowns(['#block', '#panchayat', '#village_ward', '#division', '#subdivision', '#section']);
-                if (districtId) {
-                    $.ajax({
-                        url: "DivisionAutoFillServlet?action=getBlocks&districtId=" + districtId,
-                        method: "POST",
-                        dataType: "json",
-                        success: function (response) {
-                         //   $('#block').append('<option value="">Select Block</option>');
-                            $.each(response, function (i, item) {
-                                $('#block').append('<option value="' + item.id + '">' + item.name + '</option>');
-                            });
-                        }
-                    });
-                }
-            });
-    
-            // Block -> Panchayat
-            $('#block').change(function () {
-                let blockId = $(this).val();
-                clearDropdowns(['#panchayat', '#village_ward', '#division', '#subdivision', '#section']);
-                if (blockId) {
-                    $.ajax({
-                        url: "DivisionAutoFillServlet?action=getPanchayats&blockId=" + blockId,
-                        method: "POST",
-                        dataType: "json",
-                        success: function (response) {
-                          //  $('#panchayat').append('<option value="">Select Panchayat</option>');
-                            $.each(response, function (i, item) {
-                                $('#panchayat').append('<option value="' + item.id + '">' + item.name + '</option>');
-                            });
-                        }
-                    });
-                }
-            });
-    
-            // Panchayat -> Village/Ward
-            $('#panchayat').change(function () {
-            let panchayatId = $(this).val();
-            clearDropdowns(['#village_ward', '#division', '#subdivision', '#section']);
-            if (panchayatId) {
-                $.ajax({
-                    url: "DivisionAutoFillServlet?action=getVillages&panchayatId=" + panchayatId,
-                    method: "POST",
-                    dataType: "json",
-                    success: function (response) {
-                      //  $('#village_ward').append('<option value="">Select Village/Ward</option>');
-                        $.each(response, function (i, item) {
-                            $('#village_ward').append('<option value="' + item.id + '">' + item.name + '</option>');
-                        });
-                    }
-                });
-            }
-        });
-        // Village -> Auto-fill Division/Subdivision/Section
-               // Village -> Auto-fill Division/Subdivision/Section
-          $(document).ready(function () {
-            $('#village_ward').change(function () {
-                let villageId = $(this).val();
-        
-                if (villageId) {
-                    $.ajax({
-                        url: "DivisionAutoFillServlet?action=getHierarchy&villageId=" + villageId,
-                        method: "POST",
-                        dataType: "json",
-                        success: function (data) {
-                            // Clear old options
-                            $('#division').empty();
-                            $('#subdivision').empty();
-                            $('#section').empty();
-        
-                            // Fill & disable Division
-                            $('#division').append('<option value="' + data.division.id + '" selected>' + data.division.name + '</option>');
-                            $('#division').prop('disabled', true);
-                            $('#hiddenDivision').val(data.division.id);
-        
-                            // Fill & disable Sub Division
-                            $('#subdivision').append('<option value="' + data.subdivision.id + '" selected>' + data.subdivision.name + '</option>');
-                            $('#subdivision').prop('disabled', true);
-                            $('#hiddenSubdivision').val(data.subdivision.id);
-        
-                            // Fill & disable Section
-                            $('#section').append('<option value="' + data.section.id + '" selected>' + data.section.name + '</option>');
-                            $('#section').prop('disabled', true);
-                            $('#hiddenSection').val(data.section.id);
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error loading data:", error);
-                        }
-                    });
-                } else {
-                    // Reset selects and hidden values
-                    $('#division, #subdivision, #section').empty().append('<option value="">-- Select --</option>').prop('disabled', true);
-                    $('#hiddenDivision, #hiddenSubdivision, #hiddenSection').val('');
-                }
-            });
-        });
+		        // District -> Block
+		        $('#district').change(function () {
+		            let districtId = $(this).val();
+		            clearDropdowns(['#block', '#panchayat', '#village_ward', '#division', '#subdivision', '#section']);
+		            if (districtId) {
+		                $.ajax({
+		                    url: "DivisionAutoFillServlet?action=getBlocks&districtId=" + districtId,
+		                    method: "POST",
+		                    dataType: "json",
+		                    success: function (response) {
+		                     //   $('#block').append('<option value="">Select Block</option>');
+		                        $.each(response, function (i, item) {
+		                            $('#block').append('<option value="' + item.id + '">' + item.name + '</option>');
+		                        });
+		                    }
+		                });
+		            }
+		        });
+		
+		        // Block -> Panchayat
+		        $('#block').change(function () {
+		            let blockId = $(this).val();
+		            clearDropdowns(['#panchayat', '#village_ward', '#division', '#subdivision', '#section']);
+		            if (blockId) {
+		                $.ajax({
+		                    url: "DivisionAutoFillServlet?action=getPanchayats&blockId=" + blockId,
+		                    method: "POST",
+		                    dataType: "json",
+		                    success: function (response) {
+		                      //  $('#panchayat').append('<option value="">Select Panchayat</option>');
+		                        $.each(response, function (i, item) {
+		                            $('#panchayat').append('<option value="' + item.id + '">' + item.name + '</option>');
+		                        });
+		                    }
+		                });
+		            }
+		        });
+		
+		        // Panchayat -> Village/Ward
+		        $('#panchayat').change(function () {
+				    let panchayatId = $(this).val();
+				    clearDropdowns(['#village_ward', '#division', '#subdivision', '#section']);
+				    if (panchayatId) {
+				        $.ajax({
+				            url: "DivisionAutoFillServlet?action=getVillages&panchayatId=" + panchayatId,
+				            method: "POST",
+				            dataType: "json",
+				            success: function (response) {
+				              //  $('#village_ward').append('<option value="">Select Village/Ward</option>');
+				                $.each(response, function (i, item) {
+				                    $('#village_ward').append('<option value="' + item.id + '">' + item.name + '</option>');
+				                });
+				            }
+				        });
+				    }
+				});
 
-            
+		
+		        // Village -> Auto-fill Division/Subdivision/Section
+		           // Village -> Auto-fill Division/Subdivision/Section
+			    $(document).ready(function () {
+				    $('#village_ward').change(function () {
+				        let villageId = $(this).val();
+				
+				        if (villageId) {
+				            $.ajax({
+				                url: "DivisionAutoFillServlet?action=getHierarchy&villageId=" + villageId,
+				                method: "POST",
+				                dataType: "json",
+				                success: function (data) {
+				                    // Clear old options
+				                    $('#division').empty();
+				                    $('#subdivision').empty();
+				                    $('#section').empty();
+				
+				                    // Fill & disable Division
+				                    $('#division').append('<option value="' + data.division.id + '" selected>' + data.division.name + '</option>');
+				                    $('#division').prop('disabled', true);
+				                    $('#hiddenDivision').val(data.division.id);
+				
+				                    // Fill & disable Sub Division
+				                    $('#subdivision').append('<option value="' + data.subdivision.id + '" selected>' + data.subdivision.name + '</option>');
+				                    $('#subdivision').prop('disabled', true);
+				                    $('#hiddenSubdivision').val(data.subdivision.id);
+				
+				                    // Fill & disable Section
+				                    $('#section').append('<option value="' + data.section.id + '" selected>' + data.section.name + '</option>');
+				                    $('#section').prop('disabled', true);
+				                    $('#hiddenSection').val(data.section.id);
+				                },
+				                error: function (xhr, status, error) {
+				                    console.error("Error loading data:", error);
+				                }
+				            });
+				        } else {
+				            // Reset selects and hidden values
+				            $('#division, #subdivision, #section').empty().append('<option value="">-- Select --</option>').prop('disabled', true);
+				            $('#hiddenDivision, #hiddenSubdivision, #hiddenSection').val('');
+				        }
+				    });
+				});
 
-          function clearDropdowns(ids) {
-              ids.forEach(function (id) {
-                  $(id).empty().append('<option value="">--Select--</option>');
-              });
-          }
+		        
 
-        });
+			    function clearDropdowns(ids) {
+			        ids.forEach(function (id) {
+			            $(id).empty().append('<option value="">--Select--</option>');
+			        });
+			    }
 
-    
-            function disableButton(){
-              document.getElementById('submitBtn').disabled=true;
-            }
+		    });
+
+	  
+	        	function disableButton(){
+	        		document.getElementById('submitBtn').disabled=true;
+	        	}
         </script>
-  </div>
-        
-
-    </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
 </body>
 </html>
