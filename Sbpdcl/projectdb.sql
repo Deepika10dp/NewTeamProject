@@ -136,7 +136,7 @@ CREATE TABLE `new_connection_request` (
 
 LOCK TABLES `new_connection_request` WRITE;
 /*!40000 ALTER TABLE `new_connection_request` DISABLE KEYS */;
-INSERT INTO `new_connection_request` VALUES ('APP123','domestic','CON5678','9142101898','abc@gmail.com','123','Saristabad','Patna','Gardanibagh','Anisabad','Patna','80004','aurangabad','arwal','arwal','arwal','arwal','arwal','arwal','domestic','single','220','female','shrii','Ram','aadhar_card','aadhar_card'),('APP1744335123083','domestic','CON5678','9142101898','abc@gmail.com','123','Saristabad','Patna','Gardanibagh','Anisabad','Patna','80004','aurangabad','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','shrii','hari','aadhar_card','passport'),('APP1744335416076','commercial','CON123456','6754345678','def@gmail.com','9AB34','Gaziabad','Aara','Punjab','Haryana','Patna','80004','kaimur','arwal','arwal','arwal','arwal','arwal','arwal','commercial','three','220','male','Deepak','Hansmukh','pan_card','voter_id');
+INSERT INTO `new_connection_request` VALUES ('APP123','domestic','CON5678','9142101898','abc@gmail.com','123','Saristabad','Patna','Gardanibagh','Anisabad','Patna','80004','aurangabad','arwal','arwal','arwal','arwal','arwal','arwal','domestic','single','220','female','shrii','Ram','aadhar_card','aadhar_card'),('APP1744335123083','domestic','CON5678','9142101898','abc@gmail.com','123','Saristabad','Patna','Gardanibagh','Anisabad','Patna','80004','aurangabad','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','shrii','hari','aadhar_card','passport'),('APP1744335416076','commercial','CON123456','6754345678','def@gmail.com','9AB34','Gaziabad','Aara','Punjab','Haryana','Patna','80004','kaimur','arwal','arwal','arwal','arwal','arwal','arwal','commercial','three','220','male','Deepak','Hansmukh','pan_card','voter_id'),('APP1745175056708',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `new_connection_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +188,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'Admin'),(4,'AEE'),(5,'Consumer'),(2,'JEE'),(3,'MI');
+INSERT INTO `roles` VALUES (3,'AEE'),(4,'Consumer'),(1,'JEE'),(2,'MI');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,8 +260,7 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `role_id` int NOT NULL,
   PRIMARY KEY (`user_id`),
-  KEY `role_id` (`role_id`),
-  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+  KEY `role_id` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -271,7 +270,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('ADM001','Admin','9876543210','admin123',1),('AEE001','AEE','9876543203','aee123',4),('CNSA1B38C','Yasrab','9608540582','yasrab123',5),('JEE001','JEE','9876543201','jee123',2),('MI001','MI','9876543202','mi123',3);
+INSERT INTO `users` VALUES ('AEE001','AEE','9876543203','aee123',3),('CNSA1B38C','Yasrab','9608540582','yasrab456',4),('JEE001','JEE','9876543201','jee456',1),('JEE002','Raghav','9876543210','iamraghav456',1),('MI001','MI','9876543202','mi123',2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,4 +313,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-19 23:43:31
+-- Dump completed on 2025-04-21  0:40:37
