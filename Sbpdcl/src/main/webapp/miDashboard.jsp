@@ -16,7 +16,6 @@
 
     String userId = (String) sess.getAttribute("user_id");
     String pageParam = request.getParameter("page");
-
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,27 +24,70 @@
   <title>Meter Installer Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
   <style>
     body {
       background-color: #f8f9fa;
     }
+
     .sidebar {
       height: 100vh;
       background-color: #343a40;
       color: white;
+      padding-top: 20px;
     }
+
     .sidebar a {
       color: white;
-      padding: 15px;
+      padding: 10px 20px;
       display: block;
       text-decoration: none;
     }
-    .sidebar a:hover {
+
+    .sidebar a:hover,
+    .sidebar a.active {
       background-color: #495057;
     }
-    .card {
-      border-radius: 10px;
+
+    .profile-toggle {
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      color: white;
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1060;
     }
+
+    .profile-panel {
+      position: fixed;
+      top: 0; /* height of navbar */
+      right: -320px;
+      width: 300px;
+      height: 100%;
+      background-color: #343a40;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+      transition: right 0.4s ease;
+      padding: 80px 20px 20px 20px;
+      z-index: 1050;
+      color: white;
+      overflow-y: auto;
+    }
+
+    .profile-panel.open {
+      right: 0;
+    }
+
+    .profile-panel a {
+      color: #fff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+   
   </style>
 </head>
 <body>
@@ -54,6 +96,10 @@
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
     <span class="navbar-brand mb-0 h1">Meter Installer Dashboard</span>
+    <button class="profile-toggle" onclick="toggleProfile()">
+      <span id="profileName"><%= user.getName() %></span>
+      <i class="bi bi-person-circle ms-2" style="font-size: 1.8rem;"></i>
+    </button>
   </div>
 </nav>
 
@@ -67,57 +113,15 @@
       <a href="#">Assigned Installations</a>
       <a href="#">Update Meter Status</a>
       <a href="#">Schedule Installation</a>
-      <a href="miDashboard.jsp?page=change_password" >Change Password</a>
-     <a href="LogoutServlet">Logout</a>
+      <a href="LogoutServlet">Logout</a>
     </div>
-    
-     <%
-	      if ("change_password".equals(pageParam)) {
-	  %>
-	      <jsp:include page="change_password.jsp" />
-	  <%
-	      }
-	  %>
 
     <!-- Main Content -->
     <div class="col-md-10 p-4">
-      <h3>Welcome, Meter Installer</h3>
-      <p class="text-muted">Track and manage your assigned installations.</p>
-
-      <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="card bg-primary text-white">
-            <div class="card-body">
-              <h5>Total Assigned</h5>
-              <h3>18</h3>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-          <div class="card bg-success text-white">
-            <div class="card-body">
-              <h5>Completed</h5>
-              <h3>12</h3>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-          <div class="card bg-warning text-dark">
-            <div class="card-body">
-              <h5>Pending</h5>
-              <h3>6</h3>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- Assigned Installations Table -->
       <div class="card mt-4">
-        <div class="card-header">
-          Assigned Installations
-        </div>
+        
         <div class="card-body">
           <table class="table table-bordered">
             <thead>
@@ -162,21 +166,60 @@
           </table>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
+<!-- Profile Panel -->
+<div class="profile-panel" id="profilePanel">
+  <p><strong>Name:</strong> <%= user.getName() %></p>
+  <p><strong>Role:</strong> Meter Installer</p>
+  <p><strong>ID:</strong> <%= userId %></p>
+  <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
+
+  <div id="profileContent"></div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function toggleProfile() {
+    const panel = document.getElementById("profilePanel");
+    panel.classList.toggle("open");
+  }
+
+  function loadChangePassword(event) {
+    event.preventDefault();
+
+    const panel = document.getElementById("profilePanel");
+    panel.classList.add("open"); // Keep panel open
+
+    const contentDiv = document.getElementById("profileContent");
+
+    // Load JSP via AJAX
+    fetch("change_password.jsp")
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to load change password");
+        return response.text();
+      })
+      .then(html => {
+        contentDiv.innerHTML = html;
+      })
+      .catch(err => {
+        contentDiv.innerHTML = "<p style='color:red;'>Error loading content.</p>";
+        console.error(err);
+      });
+  }
+</script>
+
+<%
+    String msg = (String) request.getAttribute("msg");
+    if (msg != null) {
+%>
+  <script>
+    alert("<%= msg.replaceAll("\"", "\\\\\"") %>");
+  </script>
+<%
+    }
+%>
 </body>
-	 <%
-	    String msg = (String) request.getAttribute("msg");
-	    if (msg != null) {
-	   %>
-	    <script>
-	        alert("<%= msg.replaceAll("\"", "\\\\\"") %>");
-	    </script>
-	  <%
-	    }
-	  %>
 </html>
