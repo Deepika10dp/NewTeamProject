@@ -114,7 +114,7 @@
       <a href="#" class="menu-link" data-status="Report Pending">Pending Reports</a>
       <a href="#" class="menu-link" data-status="Ready for Meter">Meter Installation</a>
       <a href="#" class="menu-link" data-status="checks dues">Check Dues</a>
-      <a href="LogoutServlet">Logout</a>
+      
     </div>
 
     <!-- Main Content -->
@@ -165,6 +165,7 @@
   <p><strong>Section:</strong> East Division</p>
   <p><strong>ID:</strong> <%= userId %></p>
   <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
+  <p><a href="LogoutServlet">Logout</a></p>
 
   <div id="profileContent"></div>
 </div>
@@ -177,10 +178,7 @@
     panel.classList.toggle("open");
   }
 
-  function loadChangePassword() {
-    window.location.href = "jeeDashboard.jsp?page=change_password";
-  }
-
+ 
   // Handle menu click and filtering
   const menuLinks = document.querySelectorAll('.menu-link');
   const rows = document.querySelectorAll('#applicationsTable tbody tr');

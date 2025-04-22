@@ -113,7 +113,7 @@
       <a href="#">Assigned Installations</a>
       <a href="#">Update Meter Status</a>
       <a href="#">Schedule Installation</a>
-      <a href="LogoutServlet">Logout</a>
+      
     </div>
 
     <!-- Main Content -->
@@ -176,6 +176,7 @@
   <p><strong>Role:</strong> Meter Installer</p>
   <p><strong>ID:</strong> <%= userId %></p>
   <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
+  <p><a href="LogoutServlet">Logout</a></p>
 
   <div id="profileContent"></div>
 </div>

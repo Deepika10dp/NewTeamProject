@@ -118,7 +118,7 @@
       <a href="#">JEE Reports</a>
       <a href="#">Approve/Reject</a>
       <a href="#">Track Applications</a>
-      <a href="LogoutServlet">Logout</a>
+      
     </div>
 
     <!-- Include Change Password JSP if selected -->
@@ -185,6 +185,7 @@
   <p><strong>Section:</strong> East Division</p>
   <p><strong>ID:</strong> <%= userId %></p>
   <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
+  <p><a href="LogoutServlet">Logout</a></p>
 
   <div id="profileContent"></div>
 </div>
