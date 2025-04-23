@@ -45,7 +45,8 @@ public class ConsumerSignupServlet extends HttpServlet {
         if (isSuccess) {
             response.sendRedirect("index.html");
         } else {
-            response.sendRedirect("consumerSignup.jsp?error=Registration failed!");
+        	response.sendRedirect("index.html?error=RegistrationFailed");
+
         }
 		//doGet(request, response);
 	}
