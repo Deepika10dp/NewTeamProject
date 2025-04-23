@@ -68,6 +68,83 @@
     html {
       scroll-behavior:smooth;
     }
+  
+     .custom-modal {
+    background: rgba(255, 255, 255, 0.4); /* Semi-transparent white */
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    color: #333;
+  }
+
+  .custom-modal label {
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+    color: #222;
+  }
+
+  .custom-modal .form-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .custom-modal .form-control {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px 40px 10px 40px;
+    width: 100%;
+    color: #000;
+    font-size: 16px;
+  }
+
+  .custom-modal .form-control::placeholder {
+    color: #777;
+  }
+
+  .custom-modal .form-group i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #888;
+  }
+
+  .custom-btn {
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .custom-btn:hover {
+    background: #0056b3;
+  }
+
+  .create-link {
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: center;
+    color: #333;
+  }
+
+  .create-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .create-link a:hover {
+    text-decoration: underline;
+  }
   </style>
 </head>
 <body>
@@ -275,6 +352,7 @@
     </div>
   </div>
 </section>
+<<<<<<< HEAD
 <!-- Shared Modal Style -->
  
 <style>
@@ -355,6 +433,9 @@
     text-decoration: underline;
   }
 </style>
+=======
+
+>>>>>>> d8534a093d4368bafdbc2da1dc470b2d9064ad5e
 
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">

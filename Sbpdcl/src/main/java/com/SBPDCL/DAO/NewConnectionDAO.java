@@ -12,7 +12,7 @@ public class NewConnectionDAO {
 	 public boolean processNewConnection(NewConnectionRequest request) throws ClassNotFoundException{
 	        try (Connection con = DBConnection.getConnection()) {
 	        	
-	        	 PreparedStatement ps = con.prepareStatement("insert into new_connection_request(app_id, connectionType, consumerId, mobile, email, houseNo, street, addressLine1, addressLine2, addressLine3, city, pincode, district, block, panchayat, village, division, subDivision, section, tariff, E_phase, E_load, gender, applicantName, f_hName, idProof, addressProof ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	        	 PreparedStatement ps = con.prepareStatement("insert into new_connection_requests(app_id, connectionType, consumerId, mobile, email, houseNo, street, addressLine1, addressLine2, addressLine3, city, pincode, district, block, panchayat, village, division, subDivision, section, tariff, E_phase, E_load, gender, applicantName, f_hName, idProof, addressProof ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	        	 ps.setString(1, request.getApp_id());
 	        	 ps.setString(2, request.getConnectionType());
 	        	 ps.setString(3, request.getConsumerId());

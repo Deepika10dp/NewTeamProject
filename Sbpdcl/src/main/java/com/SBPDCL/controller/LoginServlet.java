@@ -43,44 +43,40 @@ public class LoginServlet extends HttpServlet {
 	        String password = request.getParameter("password");
 	        System.out.println("User ID: " +userId + ", Password: "+password);
 	        if(userId==null || userId.isEmpty()) {
-	        	response.sendRedirect("login.jsp?error=Please enter User ID");
+	        	response.sendRedirect("index.html?error=Invalid credentials");
 	        	return;
 	        }
 
 	        User user = userService.loginUser(userId, password);
 	        if (user != null) {
-	        	System.out.println("Log in successful: "+ user.getName() + "- Role ID: "+user.getRoleId());
+	            System.out.println("Log in successful: " + user.getName() + " - Role ID: " + user.getRoleId());
 	            HttpSession session = request.getSession();
-	            session.setAttribute("user", user);
-	            int roleId=user.getRoleId();
-	            System.out.println("Redirecting based on Role ID: "+roleId);
+	            session.setAttribute("user", user); // already there
+	            session.setAttribute("user_id", user.getUserId()); // ✅ Add this line
+
+	            int roleId = user.getRoleId();
+	            System.out.println("Redirecting based on Role ID: " + roleId);
+
 	            // Redirect based on role
-	            switch (user.getRoleId()) {
+	            switch (roleId) {
 	                case 1:
-	                    response.sendRedirect("admin_dashboard.jsp");
+	                	response.sendRedirect("jeeDashboard.jsp");
 	                    break;
 	                case 2:
-	                    response.sendRedirect("jee_dashboard.jsp");
+	                    response.sendRedirect("miDashboard.jsp");
 	                    break;
 	                case 3:
-	                    response.sendRedirect("mi_dashboard.jsp");
+	                    response.sendRedirect("aeeDashboard.jsp");
 	                    break;
-
 	                case 4:
-	                    response.sendRedirect("aee_dashboard.jsp");
-	                    break;
-	               
-	                case 5:
 	                    response.sendRedirect("consumer_dashboard.jsp");
 	                    break;
 	                default:
 	                    response.sendRedirect("unauthorized.jsp");
 	                    break;
 	            }
-	        } else {
-	        	System.out.println("Invalid credentials for user ID: "+userId);
-	            response.sendRedirect("login.jsp?error=Invalid credentials");
 	        }
+
 		
 		//doGet(request, response);
 	}

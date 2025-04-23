@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,34 +65,23 @@
         .form-group {
             margin-bottom: 1.5rem;
         }
+        #previewSection {
+            display: none;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container form-wrapper">
         <h2 class="text-center mb-4">New Connection Form</h2>
-        <p class="text-danger">*Mandatory Fields (Please upload all documents in jpeg/jpg format. Document size must be less than 500 KB and PDF document size must be less than 10000 KB.)</p>
+       
+        <!-- ALL FORM FIELDS FROM YOUR ORIGINAL CODE (KEEP UNCHANGED) -->
+        <!-- For brevity, the full original form content should go here, unchanged -->
+         <form id="connectionForm" action="NewConnectionServlet" method="post" enctype="multipart/form-data" onsubmit="disableButton()">
 
+        <p class="text-danger">*Mandatory Fields (Please upload all documents in jpeg/jpg format. 
+        Document size must be less than 500 KB and PDF document size must be less than 10000 KB.)</p>
 
-        <form action="sbpdcl" method="post" enctype="multipart/form-data">
-            <!-- Place your actual form fields here -->
-		
-	        <div class="row mb-3">
-	            <div class="col-md-3">
-	                <label for="connectionType" class="form-label">Connection Type: <span class="text-danger">*</span></label>
-	                <select id="connectionType" name="connectionType" class="form-select" required>
-	                    <option value="">--Select--</option>
-	                    <option value="domestic">Domestic</option>
-	                    <option value="commercial">Commercial</option>
-	                </select>
-	            </div>
-	            <div class="col-md-3">
-	                <label for="consumer_id" class="form-label">Consumer ID:<span class="text-danger">*</span></label>
-	                <input type="text" id="consumer_id" name="E_consumerId"  class="form-control" placeholder="Enter Consumer ID" required>
-	            </div>
-	        </div>
-	        
-        <form action="NewConnectionServlet" method="post" onsubmit="disableButton()">
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="connectionType" class="form-label">Connection Type: <span class="text-danger">*</span></label>
@@ -139,7 +127,7 @@
 	           	   <input type="text" id="address1" name="addressLine1" class="form-control" placeholder="Enter address" >
 	            </div>
 	        </div>
-	         <div class="row mb-3">
+	        
 
         <!-- Address Details -->
         <h4>Address Details:</h4>
@@ -213,8 +201,8 @@
                  <label for="division" class="form-label">Division:<span class="text-danger">*</span></label>
 	             <select id="division" name="division" class="form-select" disabled>
 	                  <option value="">--Select--</option>
-	                 
-	             </select>
+					  <option value="bhagalpur">Bhagalpur</option>
+				 </select>
             </div>
         </div>
          <div class="row mb-3">
@@ -344,36 +332,77 @@
          <h4>Photo of Applicant:<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                 <input type="file" id="photo" name="photo" class="form-control" accept="image/jpeg, image/jpg" >
+                 <input type="file" id="photoApplicant" name="photo" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
         
          <h4>Photo of Ownership(First page of Lease Deed/Rent Agreement/Others):<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                <input type="file" id="photo" name="photoOwnerFirst" class="form-control" accept="image/jpeg, image/jpg" >
+                <input type="file" id="photoOwnerFirst" name="photoOwnerFirst" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
         
          <h4>Photo of Ownership(Second page of Lease Deed/Rent Agreement/Others):<span class="text-danger">*</span></h4>
         <div class="row mb-3">
             <div class="col-md-3">
-                  <input type="file" id="photo" name="photoOwnerSecond" class="form-control" accept="image/jpeg, image/jpg" >
+                  <input type="file" id="photoOwnerSecond" name="photoOwnerSecond" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
 
-        	
-            <!-- Submit Button -->
+            <!-- Submit Button 
             <div class="text-start mt-4">
                 <button type="submit" class="btn btn-primary px-5 py-2">Submit</button>
             </div>
-        </form>
+        </form>   -->
+
 
         <!-- Submit Button -->
         <div class="text-left">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="showPreview()">Submit</button>
         </div>
     </form>
+
+
+    <!-- Preview Section -->
+    <div id="previewSection">
+        <h4 class="mt-4">Preview Your Details</h4>
+        <div id="previewContent"></div>
+        <button class="btn btn-secondary mt-3" onclick="goBackToForm()">Back</button>
+        <button class="btn btn-success mt-3" onclick="finalSubmit()">Final Submit</button>
+    </div>
+
+</div>
+
+	<script>
+	    function showPreview() {
+	        const form = document.getElementById('connectionForm');
+	        const formData = new FormData(form);
+	        let previewHTML = '<ul class="list-group">';
+	
+	        for (const [name, value] of formData.entries()) {
+	            if (value && name !== 'photo' && name !== 'photoOwnerFirst' && name !== 'photoOwnerSecond' && name !== 'frontPage' && name !== 'lastPage' && name !== 'documentFile') {
+	                const label = form.querySelector(`[name="${name}"]`).closest('.form-group, .col-md-3').querySelector('label').textContent;
+	                previewHTML += `<li class="list-group-item"><strong>${label}</strong>: ${value}</li>`;
+	            }
+	        }
+	
+	        previewHTML += '</ul>';
+	        document.getElementById('previewContent').innerHTML = previewHTML;
+	        document.getElementById('connectionForm').style.display = 'none';
+	        document.getElementById('previewSection').style.display = 'block';
+	    }
+	
+	    function goBackToForm() {
+	        document.getElementById('previewSection').style.display = 'none';
+	        document.getElementById('connectionForm').style.display = 'block';
+	    }
+	
+	    function finalSubmit() {
+	        document.getElementById('connectionForm').submit();
+	    }
+	</script>
+
     <script>
 		    $(document).ready(function () {
 		        // Load districts on page load
@@ -509,12 +538,7 @@
 	        		document.getElementById('submitBtn').disabled=true;
 	        	}
         </script>
-	</div>
-        
-
-    </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
 </body>
 </html>

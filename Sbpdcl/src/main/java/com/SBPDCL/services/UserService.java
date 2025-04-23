@@ -27,5 +27,9 @@ public class UserService {
 	        }
 	        return isRegistered;
 	    }
+	    public boolean changePassword(String userId, String oldPass, String newPass) {
+	        return userDAO.updatePassword(userId, oldPass, newPass);
+	    }
+		
 	   
 }
