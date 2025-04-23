@@ -67,7 +67,7 @@ public class ChangePasswordServlet extends HttpServlet {
 	                dashboardPage = "jeeDashboard.jsp";
 	                break;
 	            case 2:
-	                dashboardPage = "jeeDashboard.jsp";
+	                dashboardPage = "miDashboard.jsp";
 	                break;
 	            case 3:
 	                dashboardPage = "aeeDashboard.jsp";
