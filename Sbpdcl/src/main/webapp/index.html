@@ -18,6 +18,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
    
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  
+
   <style>
     
     .image-frame {
@@ -115,7 +117,7 @@
 </nav>
 <!-- Sidebar -->
 <div class="d-flex">
-  <div class="bg-dark text-white p-3" id="sidebar" style="width: 200px; min-height: 100vh; display: none;">
+  <div class="bg-dark text-white p-3" id="sidebar" style="width: 200px; min-height: 60vh; display: none;">
     <ul class="nav flex-column">
       <li class="nav-item">
         <a class="nav-link text-white" href="#">No Dues</a>
@@ -170,80 +172,109 @@
   </div>
 </div>
 
+
 <!-- About Section -->
-<section id="aboutSection" class="mt-5 mb-5 px-4">
-  
-  <div class="container d-flex flex-wrap align-items-stretch justify-content-between" style="height: auto; padding: 30px; background-color: #f4f4f4; border-radius: 10px;">
-    <div class="image-container" style="flex: 1; display: flex; justify-content: center; align-items: center;">
-      <div class="image-frame" style="width: 100%; max-width: 500px; height: 100%; max-height: 500px; border-radius: 10px;">
-      <img src="images/about.jpg" alt="About Us Image" style="width: 100%; height: 100%; object-fit: cover;">
+<section id="aboutSection" class="py-5" style="background: linear-gradient(to right, #e3f2fd, #ffffff);">
+  <div class="container-fluid px-5">
+    <div class="row align-items-center wow fadeInUp" data-wow-delay="0.2s" style="animation: fadeIn 0.4s ease;">
+      <!-- Image -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <img src="images/about.jpg" class="img-fluid rounded shadow-lg" alt="About Us" style="width: 100%; transition: transform 0.5s ease, box-shadow 0.5s ease; transform-origin: center; cursor: pointer;">
+      </div>
+      <!-- Content -->
+      <div class="col-lg-6 text-dark ps-lg-5">
+        <h2 class="fw-bold mb-3" style="color: #003366; font-family: 'Poppins', sans-serif; font-size: 2.5rem;">About Us</h2>
+        <p class="lead" style="font-size: 1.2rem; color: #555;">South Bihar Power Distribution Company Limited (SBPDCL) is a public sector undertaking (PSU) controlled by the Government of Bihar.</p>
+        <p style="font-size: 1.1rem;">It was formed on <strong>1st November 2012</strong> under Section 14 of the Electricity Act of 2003, and is the successor to the erstwhile Bihar State Electricity Board.</p>
+        <h5 class="mt-3" style="font-size: 1.4rem;">Our Main Objectives:</h5>
+        <ul class="list-unstyled fs-5" style="font-size: 1.15rem;">
+          <li><i class="fas fa-bolt text-warning me-2" style="font-size: 1.3rem;"></i> Modernize and strengthen the distribution network.</li>
+          <li><i class="fas fa-map-marker-alt text-danger me-2" style="font-size: 1.3rem;"></i> Extend power to all villages/tolas.</li>
+          <li><i class="fas fa-tachometer-alt text-primary me-2" style="font-size: 1.3rem;"></i> Provide meters to un-metered consumers.</li>
+          <li><i class="fas fa-headset text-success me-2" style="font-size: 1.3rem;"></i> Address consumer grievances promptly.</li>
+        </ul>
+      </div>
     </div>
+
+    <!-- Call Center Section -->
+    <div class="row mt-5 p-4 bg-white shadow rounded align-items-center wow fadeIn" data-wow-delay="0.4s" style="animation: fadeIn 1.5s ease;">
+      <div class="col-md-8">
+        <p class="fs-5 text-dark" style="font-size: 1.1rem; line-height: 1.8;">We have established a <strong>call center</strong> for our valued consumers, where all types of complaints may be lodged. We are committed to providing safe, reliable, uninterrupted, and quality power supply to all consumers at affordable tariffs.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <img src="images/about2.jpg" class="img-fluid rounded shadow" alt="Call Center Support" style="max-height: 200px; transition: transform 0.5s ease, box-shadow 0.5s ease; cursor: pointer;">
+      </div>
     </div>
-    <div class="content-container" style="flex: 1; padding: 40px; border-radius: 10px; font-size: 1.2em; line-height: 1.5;">
-      <h2>About Us</h2>
-      <p>South Bihar Power Distribution Company Limited (SBPDCL) is a public sector undertaking (PSU) controlled by the Government of Bihar.
-      It was formed on 1st November 2012 under Section 14 of the Electricity Act of 2003, and it is a successor to the erstwhile Bihar State Electricity Board.</p>
-      <p><strong>Our main objectives are:</strong></p>
-      <ul>
-        <li>To modernize and strengthen the distribution network.</li>
-        <li>To extend the distribution to all the villages/tolas.</li>
-        <li>To provide meter to all the un-metered consumers.</li>
-        <li>To redress the consumer grievances in the shortest time.</li>
-      </ul>
-    </div>
-  </div>
-  <div class="new-section d-flex justify-content-between align-items-center mt-4 p-4" style="background: #f8f8f8; border-radius: 8px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); width: 88%; margin: 0 auto;">
-    <div class="new-content" style="line-height: 1.5; padding-left: 10px; width: 70%; font-size: 20px; color: #333;">
-      <p>We have established a call center for our valued consumers, where all types of complaints may be lodged.
-      We are committed to providing safe, reliable, uninterrupted and quality power supply to all of the valued 
-      consumers at affordable tariff.</p>
-    </div>
-    <div class="new-image" style="width: 25%; display: flex; justify-content: center; align-items: center;">
-      <div class="image-frame" style="width: 100%; border-radius: 5px;">
-      <img src="images/about2.jpg" alt="Call center assistance" style="width: 100%; height: auto; object-fit: cover;">
-    </div>
-    </div>
+
   </div>
 </section>
 
+<!-- Add this hover effect directly to images -->
+<script>
+  document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('mouseover', function() {
+      img.style.transform = 'scale(1.05)';
+      img.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+    });
+    img.addEventListener('mouseout', function() {
+      img.style.transform = 'scale(1)';
+      img.style.boxShadow = 'none';
+    });
+  });
+</script>
+
 <!-- Contact Section -->
-<section id="contactSection" class="mt-5 px-4">
-  <div class="container d-flex flex-wrap align-items-stretch justify-content-between" style="height: auto; padding: 30px; background-color: #f4f4f4; border-radius: 10px;">
-    
-    <!-- Contact Info (Left) -->
-    <div class="contact-info" style="flex: 1; padding: 20px; font-size: 1.1em; line-height: 1.6;">
-      <h2>Contact Us</h2>
-      <div class="mb-3">
-        <i class="fas fa-phone" style="color: #0d6efd; margin-right: 10px;"></i><strong>Phone:</strong> +91 00000 00000
+<section id="contactSection" class="py-5" style="background: linear-gradient(to right, #e3f2fd, #ffffff);">
+  <div class="container px-4">
+    <div class="text-center mb-5">
+      <h2 style="color: #003366; font-weight: bold; font-size: 2.5rem; text-shadow: 1px 1px 2px #aaa;">Contact Us</h2>
+      <p style="color: #444; font-size: 1.1rem;">We’d love to hear from you! Choose any method below to reach us.</p>
+    </div>
+
+    <!-- 3D Cards Row -->
+    <div class="row g-4 justify-content-center">
+      <!-- Phone -->
+      <div class="col-md-4">
+        <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2); transform: perspective(800px) rotateY(-5deg); transition: transform 0.4s ease-in-out; text-align: center;">
+          <i class="fas fa-phone-alt" style="color: #007bff; font-size: 2.5rem; margin-bottom: 15px;"></i>
+          <h4 style="color: #003366;">Phone</h4>
+          <p style="color: #555;">+91 00000 00000</p>
+        </div>
       </div>
-      <div class="mb-3">
-        <i class="fas fa-envelope" style="color: #0d6efd; margin-right: 10px;"></i><strong>Email:</strong> www.sbpdcl123@gmail.com
+
+      <!-- Email -->
+      <div class="col-md-4">
+        <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2); transform: perspective(800px) rotateY(5deg); transition: transform 0.4s ease-in-out; text-align: center;">
+          <i class="fas fa-envelope" style="color: #e83e8c; font-size: 2.5rem; margin-bottom: 15px;"></i>
+          <h4 style="color: #003366;">Email</h4>
+          <p style="color: #555;">sbpdcl123@gmail.com</p>
+        </div>
       </div>
-      <div class="mb-3">
-        <i class="fas fa-map-marker-alt" style="color: #0d6efd; margin-right: 10px;"></i>
-        <div style="display: inline-block;">
-          <strong>Address:</strong><br>
-          South Bihar Power Distribution Company Ltd.<br>
-          Second Floor, Vidyut Bhawan<br>
-          Bailey Road, Patna 800 001
+
+      <!-- Address -->
+      <div class="col-md-4">
+        <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2); transform: perspective(800px) rotateY(-3deg); transition: transform 0.4s ease-in-out; text-align: center;">
+          <i class="fas fa-map-marker-alt" style="color: #28a745; font-size: 2.5rem; margin-bottom: 15px;"></i>
+          <h4 style="color: #003366;">Address</h4>
+          <p style="color: #555;">
+            South Bihar Power Distribution Company Ltd.<br>
+            2nd Floor, Vidyut Bhawan,<br>
+            Bailey Road, Patna – 800001
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- Google Map (Right) -->
-    <div class="map-container" style="flex: 1; padding: 20px;">
+    <!-- 3D Styled Map -->
+    <div class="mt-5" style="transform: perspective(1000px) rotateX(2deg); box-shadow: 0 20px 35px rgba(0,0,0,0.3); border-radius: 20px; overflow: hidden;">
       <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.254922084758!2d85.115062!3d25.614057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed582e88f8723b%3A0x7bdffae470ebfa4c!2sSouth%20Bihar%20Power%20Distribution%20Company%20Limited!5e0!3m2!1sen!2sin!4v1648895951046!5m2!1sen!2sin"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        style="width: 100%; height: 100%; min-height: 300px; border: none; border-radius: 10px;">
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.254922084758!2d85.115062!3d25.614057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed582e88f8723b%3A0x7bdffae470ebfa4c!2sSouth%20Bihar%20Power%20Distribution%20Company%20Limited!5e0!3m2!1sen!2sin!4v1648895951046!5m2!1sen!2sin" 
+        width="100%" height="350" 
+        style="border: none;">
       </iframe>
     </div>
-
   </div>
 </section>
-
 <!-- Shared Modal Style -->
  
 <style>
@@ -357,7 +388,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content custom-modal text-black">
       <div class="modal-header border-0">
-        <h4 class="modal-title mx-auto" id="signupModalLabel">Create your account</h4>
+        <h4 class="modal-title mx-auto" id="signupModalLabel">Sign Up</h4>
       </div>
       <div class="modal-body">
         <form action="ConsumerSignupServlet" method="post">
