@@ -28,7 +28,16 @@ public class NewConnectionRequest {
 		 private String f_hName;
 		 private String idProof;
 		 private String addressProof;
-		 
+	
+		 private String idProofFile;
+		 private String addressProofFront;
+		 private String addressProofLast;
+		 private String photo;
+		 private String ownershipFirst;
+		 private String ownershipSecond;
+
+		 // Generate Getters and Setters for all above fields
+
 		 
 		
 		public String getApp_id() {
@@ -169,12 +178,12 @@ public class NewConnectionRequest {
 		public void setApplicantName(String applicantName) {
 			this.applicantName = applicantName;
 		}
-		public String getFatherName() {
+		/*public String getFatherName() {
 			return f_hName;
 		}
 		public void setFatherName(String fatherName) {
 			this.f_hName = fatherName;
-		}
+		}*/
 		public String getTariff() {
 			return tariff;
 		}
@@ -199,6 +208,42 @@ public class NewConnectionRequest {
 		public void setHouseNo(String houseNo) {
 			this.houseNo = houseNo;
 		}
+				 public String getIdProofFile() {
+						return idProofFile;
+					}
+					public void setIdProofFile(String idProofFile) {
+						this.idProofFile = idProofFile;
+					}
+					public String getAddressProofFront() {
+						return addressProofFront;
+					}
+					public void setAddressProofFront(String addressProofFront) {
+						this.addressProofFront = addressProofFront;
+					}
+					public String getAddressProofLast() {
+						return addressProofLast;
+					}
+					public void setAddressProofLast(String addressProofLast) {
+						this.addressProofLast = addressProofLast;
+					}
+					public String getPhoto() {
+						return photo;
+					}
+					public void setPhoto(String photo) {
+						this.photo = photo;
+					}
+					public String getOwnershipFirst() {
+						return ownershipFirst;
+					}
+					public void setOwnershipFirst(String ownershipFirst) {
+						this.ownershipFirst = ownershipFirst;
+					}
+					public String getOwnershipSecond() {
+						return ownershipSecond;
+					}
+					public void setOwnershipSecond(String ownershipSecond) {
+						this.ownershipSecond = ownershipSecond;
+					}
 		@Override
 		public String toString() {
 			return "NewConnectionRequest [app_id=" + app_id + ", connectionType=" + connectionType + ", consumerId="
@@ -208,7 +253,10 @@ public class NewConnectionRequest {
 					+ block + ", panchayat=" + panchayat + ", village=" + village + ", division=" + division
 					+ ", subDivision=" + subDivision + ", section=" + section + ", tariff=" + tariff + ", phase="
 					+ phase + ", load=" + load + ", gender=" + gender + ", applicantName=" + applicantName
-					+ ", f_hName=" + f_hName + ", idProof=" + idProof + ", addressProof=" + addressProof + "]";
+					+ ", f_hName=" + f_hName + ", idProof=" + idProof + ", addressProof=" + addressProof
+					+ ", idProofFile=" + idProofFile + ", addressProofFront=" + addressProofFront
+					+ ", addressProofLast=" + addressProofLast + ", photo=" + photo + ", ownershipFirst="
+					+ ownershipFirst + ", ownershipSecond=" + ownershipSecond + "]";
 		}
 			
 }

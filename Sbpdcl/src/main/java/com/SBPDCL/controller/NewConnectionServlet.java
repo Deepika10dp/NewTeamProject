@@ -1,27 +1,53 @@
 package com.SBPDCL.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Enumeration;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-import com.SBPDCL.DAO.NewConnectionDAO;
-
+import com.SBPDCL.bean.LocationNameBean;
 import com.SBPDCL.bean.NewConnectionRequest;
+import com.SBPDCL.services.NewConnectionService;
+import com.SBPDCL.util.LocationNameUtil;
 
 @WebServlet("/NewConnectionServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MB
+maxFileSize = 5 * 1024 * 1024,           // 5MB
+maxRequestSize = 20 * 1024 * 1024)       // 20MB
 public class NewConnectionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    // Directory to save uploaded files
+    private static final String UPLOAD_DIR = "uploads";
 
-
-    public NewConnectionServlet(){
-    	super();
+    public NewConnectionServlet() {
+        super();
     }
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // When "Back to Edit" is clicked, redirect to the form page
+        RequestDispatcher dispatcher = request.getRequestDispatcher("form.html");
+        dispatcher.forward(request, response);
+    }
+
+    @SuppressWarnings("unused")
+	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String app_id="APP" + System.currentTimeMillis();
+        // Step 1: Fetch form data
+    	 // Get file save path
+        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIR;
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) uploadDir.mkdir();
+        String app_id = "APP" + System.currentTimeMillis();
         String connectionType = request.getParameter("connectionType");
         String consumerId = request.getParameter("consumerId");
         String mobile = request.getParameter("mobile");
@@ -36,9 +62,9 @@ public class NewConnectionServlet extends HttpServlet {
         String district = request.getParameter("district");
         String block = request.getParameter("block");
         String panchayat = request.getParameter("panchayat");
-        String village = request.getParameter("village");
+        String village = request.getParameter("village_ward");
         String division = request.getParameter("division");
-        String subDivision = request.getParameter("subDivision");
+        String subDivision = request.getParameter("subdivision");
         String section = request.getParameter("section");
         String tariff = request.getParameter("tariff");
         String phase = request.getParameter("E_phase");
@@ -48,54 +74,82 @@ public class NewConnectionServlet extends HttpServlet {
         String f_hName = request.getParameter("f_hName");
         String idProof = request.getParameter("idProof");
         String addressProof = request.getParameter("addressProof");
+
+        // Step 2: Populate NewConnectionRequest object
+        NewConnectionRequest formData = new NewConnectionRequest();
+        formData.setApp_id(app_id);
+        formData.setConnectionType(connectionType);
+        formData.setConsumerId(consumerId);
+        formData.setMobile(mobile);
+        formData.setEmail(email);
+        formData.setHouseNo(houseNo);
+        formData.setStreet(street);
+        formData.setAddressLine1(addressLine1);
+        formData.setAddressLine2(addressLine2);
+        formData.setAddressLine3(addressLine3);
+        formData.setCity(city);
+        formData.setPincode(pincode);
+        formData.setDistrict(district);
+        formData.setBlock(block);
+        formData.setPanchayat(panchayat);
+        formData.setVillage(village);
+        formData.setDivision(division);
+        formData.setSubDivision(subDivision);
+        formData.setSection(section);
+        formData.setTariff(tariff);
+        formData.setPhase(phase);
+        formData.setLoad(load);
+        formData.setGender(gender);
+        formData.setApplicantName(applicantName);
+        formData.setF_hName(f_hName);
+        formData.setIdProof(idProof);
+        formData.setAddressProof(addressProof);
         
-        NewConnectionRequest rq = new NewConnectionRequest();
-        rq.setApp_id(app_id);
-        rq.setConnectionType(connectionType);
-        rq.setConsumerId(consumerId);
-        rq.setMobile(mobile);
-        rq.setEmail(email);
-        rq.setHouseNo(houseNo);
-        rq.setStreet(street);
-        rq.setAddressLine1(addressLine1);
-        rq.setAddressLine2(addressLine2);
-        rq.setAddressLine3(addressLine3);
-        rq.setCity(city);
-        rq.setPincode(pincode);
-        rq.setDistrict(district);
-        rq.setBlock(block);
-        rq.setPanchayat(panchayat);
-        rq.setVillage(village);
-        rq.setDivision(division);
-        rq.setSubDivision(subDivision);
-        rq.setSection(section);
-        rq.setTariff(tariff);
-        rq.setPhase(phase);
-        rq.setLoad(load);
-        rq.setGender(gender);
-        rq.setApplicantName(applicantName);
-        rq.setF_hName(f_hName);
-        rq.setIdProof(idProof);
-        rq.setAddressProof(addressProof);
-        
-        
-        System.out.println(rq);
-        
-        NewConnectionDAO dao=new  NewConnectionDAO();
+     // Step 2: Handle file uploads
+        formData.setIdProofFile(saveFile(request.getPart("documentFile"), uploadPath));
+        formData.setAddressProofFront(saveFile(request.getPart("frontPage"), uploadPath));
+        formData.setAddressProofLast(saveFile(request.getPart("lastPage"), uploadPath));
+        formData.setPhoto(saveFile(request.getPart("photo"), uploadPath));
+        formData.setOwnershipFirst(saveFile(request.getPart("photoOwnerFirst"), uploadPath));
+        formData.setOwnershipSecond(saveFile(request.getPart("photoOwnerSecond"), uploadPath));
+       
+        System.out.println("Received form data for Consumer ID: " + consumerId);
+
+        Enumeration<String> params = request.getParameterNames();
+        while (params.hasMoreElements()) {
+            String name = params.nextElement();
+            System.out.println("Param: " + name + " = " + request.getParameter(name));
+        }
+
+
+        // Step 3: Save form data temporarily (optional - for preview)
+        NewConnectionService service = new NewConnectionService();
         try {
-			dao.processNewConnection(rq);
-		} catch (ClassNotFoundException e) {
-			
-			e.printStackTrace();
-		}
-        response.sendRedirect("app.html");
-        
-        /*boolean isInserted = service.processNewConnection(rq);
-        
-        if (isInserted) {
-            response.getWriter().write("Success: New Connection Request Submitted");
-        } else {
-            response.getWriter().write("Error: Unable to process request");
-        }*/
+            boolean isInserted = service.processNewConnection(formData);
+            System.out.println("Inserted status: " + isInserted);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Step 4: Fetch location names
+        LocationNameBean locationNames = LocationNameUtil.getLocationNames(formData);
+       
+        request.setAttribute("formData", formData);  
+        request.setAttribute("locationNames", locationNames); 
+        RequestDispatcher rd = request.getRequestDispatcher("preview.jsp");  
+        rd.forward(request, response);
+        System.out.println("Form Data: " + formData);
+        System.out.println("Location Names: " + locationNames);
+
+    }
+    // Helper method to save file and return relative path
+    private String saveFile(Part part, String uploadPath) throws IOException {
+        if (part != null && part.getSize() > 0) {
+            String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            String filePath = uploadPath + File.separator + fileName;
+            part.write(filePath);
+            return "uploads/" + fileName;
+        }
+        return null;
     }
 }

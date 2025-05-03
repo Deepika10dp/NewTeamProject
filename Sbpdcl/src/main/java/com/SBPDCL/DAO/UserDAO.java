@@ -117,6 +117,4 @@ public class UserDAO {
 	        }
 	        return success;
 	    }
-	
-	
 }

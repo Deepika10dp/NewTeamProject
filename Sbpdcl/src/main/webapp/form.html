@@ -77,7 +77,7 @@
        
         <!-- ALL FORM FIELDS FROM YOUR ORIGINAL CODE (KEEP UNCHANGED) -->
         <!-- For brevity, the full original form content should go here, unchanged -->
-         <form id="connectionForm" action="NewConnectionServlet" method="post" enctype="multipart/form-data" onsubmit="disableButton()">
+        <form id="connectionForm" action="NewConnectionServlet" method="post"  enctype="multipart/form-data" onsubmit="disableButton()">
 
         <p class="text-danger">*Mandatory Fields (Please upload all documents in jpeg/jpg format. 
         Document size must be less than 500 KB and PDF document size must be less than 10000 KB.)</p>
@@ -110,24 +110,6 @@
 	            </div>
 	        </div>
 
-
-	        <!-- Address Details -->
-	        <h4>Address Details:</h4>
-	        <div class="row mb-3">
-	            <div class="col-md-3">
-	                <label for="house" class="form-label">House No:</label>
-	                <input type="text" id="house" name="houseNo" class="form-control" placeholder="Enter House Number">
-	            </div>
-	            <div class="col-md-3">
-	                <label for="street" class="form-label">Street:<span class="text-danger">*</span></label>
-	                <input type="text" id="street" name="street" class="form-control" placeholder="Enter Street Name" required>
-	            </div>
-	             <div class="col-md-3">
-	               <label for="address1" class="form-label">Address Line 1:</label>
-	           	   <input type="text" id="address1" name="addressLine1" class="form-control" placeholder="Enter address" >
-	            </div>
-	        </div>
-	        
 
         <!-- Address Details -->
         <h4>Address Details:</h4>
@@ -197,33 +179,41 @@
 	       
 	            </select>
             </div>
-            <div class="col-md-3">
-                 <label for="division" class="form-label">Division:<span class="text-danger">*</span></label>
-	             <select id="division" name="division" class="form-select" disabled>
-	                  <option value="">--Select--</option>
-					  <option value="bhagalpur">Bhagalpur</option>
-				 </select>
-            </div>
-        </div>
-         <div class="row mb-3">
-            <div class="col-md-3">
-                <label for="subdivision" class="form-label">SubDivision:<span class="text-danger">*</span></label>
-	            <select id="subdivision" name="subdivision" class="form-select" disabled>
-	                <option value="">--Select--</option>
-	           
-	            </select>
-            </div>
-            <div class="col-md-3">
-                <label for="section" class="form-label">Section:<span class="text-danger">*</span></label>
-	            <select id="section" name="section" class="form-select" disabled>
-	                <option value="">--Select--</option>
-	              
-	            </select>
-            </div>
-            <!-- Hidden inputs to store actual values for form submission -->
-			<input type="hidden" name="division_id" id="hiddenDivision" />
-			<input type="hidden" name="subdivision_id" id="hiddenSubdivision" />
-			<input type="hidden" name="section_id" id="hiddenSection" />
+           <!-- Division (read-only display only, no name attribute) -->
+			<div class="col-md-3">
+			    <label for="division" class="form-label">Division:<span class="text-danger">*</span></label>
+			    <select id="division" class="form-select" disabled style="pointer-events: none; background-color: #e9ecef;">
+			        <option value="">--Select--</option>
+			    </select>
+			</div>
+			
+			<!-- Subdivision (read-only display only) -->
+			<div class="col-md-3">
+			    <label for="subdivision" class="form-label">SubDivision:<span class="text-danger">*</span></label>
+			    <select id="subdivision" class="form-select" disabled style="pointer-events: none; background-color: #e9ecef;">
+			        <option value="">--Select--</option>
+			    </select>
+			</div>
+			
+			<!-- Section (read-only display only) -->
+			<div class="col-md-3">
+			    <label for="section" class="form-label">Section:<span class="text-danger">*</span></label>
+			    <select id="section" class="form-select" disabled style="pointer-events: none; background-color: #e9ecef;">
+			        <option value="">--Select--</option>
+			    </select>
+			</div>
+			
+			<!-- ✅ Hidden inputs to actually submit the IDs -->
+			<input type="hidden" id="hiddenDivision" name="division" />
+			<input type="hidden" id="hiddenSubdivision" name="subdivision" />
+			<input type="hidden" id="hiddenSection" name="section" />
+
+			
+			<!-- Optional: store names too
+			<input type="hidden" id="hiddenDivisionName" name="division_name" />
+			<input type="hidden" id="hiddenSubdivisionName" name="subdivision_name" />
+			<input type="hidden" id="hiddenSectionName" name="section_name" /> -->
+
 			
             <div class="col-md-3">
                 <label for="tariff" class="form-label">Tariff:<span class="text-danger">*</span></label>
@@ -358,23 +348,23 @@
 
 
         <!-- Submit Button -->
-        <div class="text-left">
-            <button type="button" class="btn btn-primary" onclick="showPreview()">Submit</button>
-        </div>
+         <div class="text-left">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
     </form>
 
 
-    <!-- Preview Section -->
+    <!-- Preview Section 
     <div id="previewSection">
         <h4 class="mt-4">Preview Your Details</h4>
         <div id="previewContent"></div>
         <button class="btn btn-secondary mt-3" onclick="goBackToForm()">Back</button>
         <button class="btn btn-success mt-3" onclick="finalSubmit()">Final Submit</button>
-    </div>
+    </div>-->
 
 </div>
 
-	<script>
+ <!-- 	<script>
 	    function showPreview() {
 	        const form = document.getElementById('connectionForm');
 	        const formData = new FormData(form);
@@ -401,143 +391,160 @@
 	    function finalSubmit() {
 	        document.getElementById('connectionForm').submit();
 	    }
-	</script>
+	</script>-->
 
-    <script>
+		<script>
 		    $(document).ready(function () {
-		        // Load districts on page load
+		
+		        // Load Districts on page load
 		        $.ajax({
-                url: "DivisionAutoFillServlet",
-                type: "POST",
-                data: { action: "getDistricts" },
-                success: function (data) {
-                    console.log("Fetched:", data);
-                  //  $('#district').empty().append('<option value="">--Select District--</option>');
-                    $.each(data, function (index, district) {
-                        $('#district').append('<option value="' + district.id + '">' + district.name + '</option>');
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX error:", error);
-                }
-            });
-		        // District -> Block
+		            url: "DivisionAutoFillServlet",
+		            type: "POST",
+		            data: { action: "getDistricts" },
+		            dataType: "json",
+		            success: function (data) {
+		                $('#district').empty().append('<option value="">--Select District--</option>');
+		                $.each(data, function (index, district) {
+		                    $('#district').append('<option value="' + district.id + '">' + district.name + '</option>');
+		                });
+		            },
+		            error: function (xhr, status, error) {
+		                console.error("Error loading districts:", error);
+		            }
+		        });
+		
+		        // District → Block
 		        $('#district').change(function () {
 		            let districtId = $(this).val();
 		            clearDropdowns(['#block', '#panchayat', '#village_ward', '#division', '#subdivision', '#section']);
+		            resetHiddenFields();
+		
 		            if (districtId) {
 		                $.ajax({
 		                    url: "DivisionAutoFillServlet?action=getBlocks&districtId=" + districtId,
 		                    method: "POST",
 		                    dataType: "json",
 		                    success: function (response) {
-		                     //   $('#block').append('<option value="">Select Block</option>');
+		                        $('#block').append('<option value="">--Select Block--</option>');
 		                        $.each(response, function (i, item) {
 		                            $('#block').append('<option value="' + item.id + '">' + item.name + '</option>');
 		                        });
+		                    },
+		                    error: function (xhr, status, error) {
+		                        console.error("Error loading blocks:", error);
 		                    }
 		                });
 		            }
 		        });
 		
-		        // Block -> Panchayat
+		        // Block → Panchayat
 		        $('#block').change(function () {
 		            let blockId = $(this).val();
 		            clearDropdowns(['#panchayat', '#village_ward', '#division', '#subdivision', '#section']);
+		            resetHiddenFields();
+		
 		            if (blockId) {
 		                $.ajax({
 		                    url: "DivisionAutoFillServlet?action=getPanchayats&blockId=" + blockId,
 		                    method: "POST",
 		                    dataType: "json",
 		                    success: function (response) {
-		                      //  $('#panchayat').append('<option value="">Select Panchayat</option>');
+		                        $('#panchayat').append('<option value="">--Select Panchayat--</option>');
 		                        $.each(response, function (i, item) {
 		                            $('#panchayat').append('<option value="' + item.id + '">' + item.name + '</option>');
 		                        });
+		                    },
+		                    error: function (xhr, status, error) {
+		                        console.error("Error loading panchayats:", error);
 		                    }
 		                });
 		            }
 		        });
 		
-		        // Panchayat -> Village/Ward
+		     // Panchayat → Village/Ward
 		        $('#panchayat').change(function () {
-				    let panchayatId = $(this).val();
-				    clearDropdowns(['#village_ward', '#division', '#subdivision', '#section']);
-				    if (panchayatId) {
-				        $.ajax({
-				            url: "DivisionAutoFillServlet?action=getVillages&panchayatId=" + panchayatId,
-				            method: "POST",
-				            dataType: "json",
-				            success: function (response) {
-				              //  $('#village_ward').append('<option value="">Select Village/Ward</option>');
-				                $.each(response, function (i, item) {
-				                    $('#village_ward').append('<option value="' + item.id + '">' + item.name + '</option>');
-				                });
-				            }
-				        });
-				    }
-				});
+		            let panchayatId = $(this).val();
+
+		            // Clear the dependent dropdowns
+		            clearDropdowns(['#village_ward', '#division', '#subdivision', '#section']);
+		            resetHiddenFields();
+
+		            if (panchayatId) {
+		                $.ajax({
+		                    url: "DivisionAutoFillServlet?action=getVillages&panchayatId=" + panchayatId,
+		                    method: "POST",
+		                    dataType: "json",  // Ensure the server is returning data as JSON
+		                    success: function (response) {
+		                        // Reset village_ward dropdown first
+		                        $('#village_ward').append('<option value="">--Select Village/Ward--</option>');
+
+		                        // Loop through the villages returned from the backend and populate the dropdown
+		                        $.each(response, function (i, item) {
+		                            $('#village_ward').append('<option value="' + item.id + '">' + item.name + '</option>');
+		                        });
+		                    },
+		                    error: function (xhr, status, error) {
+		                        console.error("Error loading villages:", error);
+		                        // Optionally, you can show an error message in the UI
+		                        alert("Error loading villages. Please try again.");
+		                    }
+		                });
+		            }
+		        });
 
 		
-		        // Village -> Auto-fill Division/Subdivision/Section
-		           // Village -> Auto-fill Division/Subdivision/Section
-			    $(document).ready(function () {
-				    $('#village_ward').change(function () {
-				        let villageId = $(this).val();
-				
-				        if (villageId) {
-				            $.ajax({
-				                url: "DivisionAutoFillServlet?action=getHierarchy&villageId=" + villageId,
-				                method: "POST",
-				                dataType: "json",
-				                success: function (data) {
-				                    // Clear old options
-				                    $('#division').empty();
-				                    $('#subdivision').empty();
-				                    $('#section').empty();
-				
-				                    // Fill & disable Division
-				                    $('#division').append('<option value="' + data.division.id + '" selected>' + data.division.name + '</option>');
-				                    $('#division').prop('disabled', true);
-				                    $('#hiddenDivision').val(data.division.id);
-				
-				                    // Fill & disable Sub Division
-				                    $('#subdivision').append('<option value="' + data.subdivision.id + '" selected>' + data.subdivision.name + '</option>');
-				                    $('#subdivision').prop('disabled', true);
-				                    $('#hiddenSubdivision').val(data.subdivision.id);
-				
-				                    // Fill & disable Section
-				                    $('#section').append('<option value="' + data.section.id + '" selected>' + data.section.name + '</option>');
-				                    $('#section').prop('disabled', true);
-				                    $('#hiddenSection').val(data.section.id);
-				                },
-				                error: function (xhr, status, error) {
-				                    console.error("Error loading data:", error);
-				                }
-				            });
-				        } else {
-				            // Reset selects and hidden values
-				            $('#division, #subdivision, #section').empty().append('<option value="">-- Select --</option>').prop('disabled', true);
-				            $('#hiddenDivision, #hiddenSubdivision, #hiddenSection').val('');
-				        }
-				    });
-				});
-
-		        
-
-			    function clearDropdowns(ids) {
-			        ids.forEach(function (id) {
-			            $(id).empty().append('<option value="">--Select--</option>');
-			        });
-			    }
-
+		        // Village → Auto-fill Division/Subdivision/Section
+		        $('#village_ward').change(function () {
+		            let villageId = $(this).val();
+		            clearDropdowns(['#division', '#subdivision', '#section']);
+		            resetHiddenFields();
+		
+		            if (villageId) {
+		                $.ajax({
+		                    url: "DivisionAutoFillServlet?action=getHierarchy&villageId=" + villageId,
+		                    method: "POST",
+		                    dataType: "json",
+		                    success: function (data) {
+		                        // Fill Division
+		                        $('#division').append('<option value="' + data.division.id + '" selected>' + data.division.name + '</option>');
+		                        $('#hiddenDivision').val(data.division.id);
+		                        $('#hiddenDivisionName').val(data.division.name);
+		
+		                        // Fill Subdivision
+		                        $('#subdivision').append('<option value="' + data.subdivision.id + '" selected>' + data.subdivision.name + '</option>');
+		                        $('#hiddenSubdivision').val(data.subdivision.id);
+		                        $('#hiddenSubdivisionName').val(data.subdivision.name);
+		
+		                        // Fill Section
+		                        $('#section').append('<option value="' + data.section.id + '" selected>' + data.section.name + '</option>');
+		                        $('#hiddenSection').val(data.section.id);
+		                        $('#hiddenSectionName').val(data.section.name);
+		                    },
+		                    error: function (xhr, status, error) {
+		                        console.error("Error loading hierarchy:", error);
+		                    }
+		                });
+		            }
+		        });
+		
+		        // Utility Functions
+		        function clearDropdowns(ids) {
+		            ids.forEach(function (id) {
+		                $(id).empty().append('<option value="">--Select--</option>');
+		            });
+		        }
+		
+		        function resetHiddenFields() {
+		            $('#hiddenDivision, #hiddenSubdivision, #hiddenSection, #hiddenDivisionName, #hiddenSubdivisionName, #hiddenSectionName').val('');
+		        }
+		
+		        // Optional: disable button after click
+		        window.disableButton = function () {
+		            document.getElementById('submitBtn').disabled = true;
+		        };
 		    });
+		</script>
 
-	  
-	        	function disableButton(){
-	        		document.getElementById('submitBtn').disabled=true;
-	        	}
-        </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	
 </body>

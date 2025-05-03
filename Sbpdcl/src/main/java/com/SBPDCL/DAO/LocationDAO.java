@@ -107,5 +107,50 @@ public class LocationDAO {
         }
         return dh;
     }
+    // Helper method to fetch name by ID
+    private static String getNameById(Connection conn, String tableName, int id) {
+        String name = "";
+        String query = "SELECT name FROM " + tableName + " WHERE id = ?";
+        
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, id);
+            System.out.println("Executing Query: " + query + " with ID = " + id);
 
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    name = rs.getString("name");
+                    System.out.println("Fetched from " + tableName + ": " + name);
+                } else {
+                    System.out.println("No record found in table '" + tableName + "' for ID: " + id);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error fetching name from " + tableName + " for ID: " + id);
+            e.printStackTrace();
+        }
+
+        return name;
+    }
+
+
+    // Fetch location names based on IDs
+    public LocationNameBean getLocationNames(int districtId, int blockId, int panchayatId, int villageId, int divisionId, int subDivisionId, int sectionId) {
+        LocationNameBean bean = new LocationNameBean();
+
+        try (Connection conn = DBConnection.getConnection()) {
+            bean.setDistrictName(getNameById(conn, "district", districtId));
+            bean.setBlockName(getNameById(conn, "block", blockId));
+            bean.setPanchayatName(getNameById(conn, "panchayat", panchayatId));
+            bean.setVillageName(getNameById(conn, "village_ward", villageId));
+            bean.setDivisionName(getNameById(conn, "division", divisionId));
+            bean.setSubDivisionName(getNameById(conn, "sub_division", subDivisionId));
+            bean.setSectionName(getNameById(conn, "section", sectionId));
+            System.out.println("Village ID: " + villageId + ", Name: " + getNameById(conn, "village_ward", villageId));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return bean;
+    }
 }
