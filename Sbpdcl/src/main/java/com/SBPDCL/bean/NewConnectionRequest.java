@@ -1,5 +1,8 @@
 package com.SBPDCL.bean;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 public class NewConnectionRequest {
 		 private String app_id;
 		 private String connectionType;
@@ -35,6 +38,9 @@ public class NewConnectionRequest {
 		 private String photo;
 		 private String ownershipFirst;
 		 private String ownershipSecond;
+		
+		private Timestamp submissionDate;
+		 private String status;
 
 		 // Generate Getters and Setters for all above fields
 
@@ -178,12 +184,6 @@ public class NewConnectionRequest {
 		public void setApplicantName(String applicantName) {
 			this.applicantName = applicantName;
 		}
-		/*public String getFatherName() {
-			return f_hName;
-		}
-		public void setFatherName(String fatherName) {
-			this.f_hName = fatherName;
-		}*/
 		public String getTariff() {
 			return tariff;
 		}
@@ -244,6 +244,18 @@ public class NewConnectionRequest {
 					public void setOwnershipSecond(String ownershipSecond) {
 						this.ownershipSecond = ownershipSecond;
 					}
+					 public Timestamp getSubmissionDate() {
+							return submissionDate;
+						}
+						public void setSubmissionDate(Timestamp timestamp) {
+							this.submissionDate = timestamp;
+						}
+						public String getStatus() {
+							return status;
+						}
+						public void setStatus(String status) {
+							this.status = status;
+						}
 		@Override
 		public String toString() {
 			return "NewConnectionRequest [app_id=" + app_id + ", connectionType=" + connectionType + ", consumerId="
@@ -256,8 +268,14 @@ public class NewConnectionRequest {
 					+ ", f_hName=" + f_hName + ", idProof=" + idProof + ", addressProof=" + addressProof
 					+ ", idProofFile=" + idProofFile + ", addressProofFront=" + addressProofFront
 					+ ", addressProofLast=" + addressProofLast + ", photo=" + photo + ", ownershipFirst="
-					+ ownershipFirst + ", ownershipSecond=" + ownershipSecond + "]";
+					+ ownershipFirst + ", ownershipSecond=" + ownershipSecond + ", submissionDate=" + submissionDate
+					+ ", status=" + status + "]";
 		}
+		public void setSubmissionDate(Date date) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 			
 }
 

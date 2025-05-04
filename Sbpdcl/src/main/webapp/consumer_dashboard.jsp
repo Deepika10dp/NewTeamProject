@@ -100,6 +100,10 @@
     .navbar .navbar-brand:hover {
       color: #ddd;
     }
+
+    #mainContent {
+      min-height: 400px;
+    }
   </style>
 </head>
 <body>
@@ -122,24 +126,27 @@
     <div class="col-md-2 sidebar">
       <h5 class="text-center mb-4">Menu</h5>
       <a href="form.html" class="menu-link">New Connection</a>
-      <a href="#" class="menu-link">Track Status</a>
+      <a href="#" class="menu-link" onclick="loadTrackStatus('<%= userId %>')">Track Status</a>
     </div>
 
     <!-- Main Content -->
     <div class="col-md-10 p-4">
       <h2>Welcome, <%= user.getName() %></h2>
 
+      <!-- Main dynamic content -->
+      <div id="mainContent">
+        <p>Please select an option from the menu.</p>
+      </div>
+
       <!-- Profile Panel -->
       <div class="profile-panel" id="profilePanel">
         <p><strong>Name:</strong> <%= user.getName() %></p>
         <p><strong>ID:</strong> <%= userId %></p>
-       <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
+        <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
         <p><a href="LogoutServlet">Logout</a></p>
-        
         <div id="profileContent"></div>
       </div>
 
-    
     </div>
 
   </div>
@@ -152,29 +159,44 @@
     const panel = document.getElementById("profilePanel");
     panel.classList.toggle("open");
   }
-  
+
   function loadChangePassword(event) {
-	  event.preventDefault();
+    event.preventDefault();
+    const panel = document.getElementById("profilePanel");
+    panel.classList.add("open");
+    const contentDiv = document.getElementById("profileContent");
 
-	  const panel = document.getElementById("profilePanel");
-	  panel.classList.add("open"); // Keep panel open
+    fetch("change_password.jsp")
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to load change password");
+        return response.text();
+      })
+      .then(html => {
+        contentDiv.innerHTML = html;
+      })
+      .catch(err => {
+        contentDiv.innerHTML = "<p style='color:red;'>Error loading content.</p>";
+        console.error(err);
+      });
+  }
 
-	  const contentDiv = document.getElementById("profileContent");
+  function loadTrackStatus(userId) {
+    const contentDiv = document.getElementById("mainContent");
+    contentDiv.innerHTML = "<p>Loading application status...</p>";
 
-	  // Load JSP via AJAX
-	  fetch("change_password.jsp")
-	    .then(response => {
-	      if (!response.ok) throw new Error("Failed to load change password");
-	      return response.text();
-	    })
-	    .then(html => {
-	      contentDiv.innerHTML = html;
-	    })
-	    .catch(err => {
-	      contentDiv.innerHTML = "<p style='color:red;'>Error loading content.</p>";
-	      console.error(err);
-	    });
-	}
+    fetch("TrackStatusServlet?consumerId=" + userId)
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch application status.");
+        return response.text();
+      })
+      .then(html => {
+        contentDiv.innerHTML = html;
+      })
+      .catch(error => {
+        contentDiv.innerHTML = "<p style='color:red;'>Error loading status.</p>";
+        console.error(error);
+      });
+  }
 </script>
 
 <%

@@ -69,16 +69,19 @@ public class LoginServlet extends HttpServlet {
 	                    response.sendRedirect("aeeDashboard.jsp");
 	                    break;
 	                case 4:
-	                    response.sendRedirect("consumer_dashboard.jsp");
-	                    break;
+	                	// ✅ Set the consumerId in session explicitly
+						session.setAttribute("consumerId", user.getUserId());
+						System.out.println("Consumer ID set in session: " + user.getUserId());
+						response.sendRedirect("consumer_dashboard.jsp");
+						break;
 	                default:
 	                    response.sendRedirect("unauthorized.jsp");
 	                    break;
 	            }
-	        }
-
-		
-		//doGet(request, response);
+	        }else {
+				System.out.println("Login failed: No user found");
+				response.sendRedirect("index.html?error=Invalid credentials");
+			}
 	}
 
 }

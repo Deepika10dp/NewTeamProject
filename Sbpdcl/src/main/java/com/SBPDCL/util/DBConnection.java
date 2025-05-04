@@ -42,4 +42,9 @@ public class DBConnection {
         return conn;
     }
 
+	public static void closeConnection(Connection con) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
