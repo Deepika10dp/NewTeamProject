@@ -43,6 +43,35 @@ INSERT INTO `block` VALUES (1,'Arwal',1),(2,'Kaler',1),(3,'Karpi',1),(4,'Kurtha'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `consumer`
+--
+
+DROP TABLE IF EXISTS `consumer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `consumer` (
+  `consumerId` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `phone_no` varchar(15) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `roleId` int DEFAULT NULL,
+  PRIMARY KEY (`consumerId`),
+  UNIQUE KEY `phone_no` (`phone_no`),
+  KEY `role_id_idx` (`roleId`),
+  CONSTRAINT `role_id` FOREIGN KEY (`roleId`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `consumer`
+--
+
+LOCK TABLES `consumer` WRITE;
+/*!40000 ALTER TABLE `consumer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `consumer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `district`
 --
 
@@ -115,6 +144,40 @@ LOCK TABLES `dues` WRITE;
 /*!40000 ALTER TABLE `dues` DISABLE KEYS */;
 INSERT INTO `dues` VALUES ('CNS7656','6754345678',0.00,'Not Due'),('CON5009','9142101898',1000.00,'Dues');
 /*!40000 ALTER TABLE `dues` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `meter_details`
+--
+
+DROP TABLE IF EXISTS `meter_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `meter_details` (
+  `meter_id` varchar(50) NOT NULL,
+  `app_id` varchar(50) NOT NULL,
+  `meter_type` varchar(50) DEFAULT NULL,
+  `meter_capacity` varchar(50) DEFAULT NULL,
+  `installation_date` date DEFAULT NULL,
+  `inspector_name` varchar(45) DEFAULT NULL,
+  `inspection_date` date DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `site_status` varchar(45) DEFAULT NULL,
+  `confirmation_status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`meter_id`),
+  KEY `app_id` (`app_id`),
+  CONSTRAINT `meter_details_ibfk_1` FOREIGN KEY (`app_id`) REFERENCES `new_connection_requests` (`app_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `meter_details`
+--
+
+LOCK TABLES `meter_details` WRITE;
+/*!40000 ALTER TABLE `meter_details` DISABLE KEYS */;
+INSERT INTO `meter_details` VALUES ('MTR1746344144968','APP1745209023731','smart meter','220 volt','2025-05-06','Chanda','2025-04-28','Bankepur','Unsafe','Pending'),('MTR1746344222948','APP1745209526715','smart meter','220 volt','2025-05-01',NULL,NULL,NULL,NULL,NULL),('MTR1746440773013','APP1745209712350','Digital','220 volt','2025-04-30','AatmaVishwas Rai','2025-05-08','Saristabad','Safe','Confirmed');
+/*!40000 ALTER TABLE `meter_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -200,15 +263,7 @@ CREATE TABLE `new_connection_requests` (
   `f_hName` varchar(255) DEFAULT NULL,
   `idProof` varchar(50) DEFAULT NULL,
   `addressProof` varchar(50) DEFAULT NULL,
-  `idProofFile` varchar(255) DEFAULT NULL,
-  `addressProofFront` varchar(255) DEFAULT NULL,
-  `addressProofLast` varchar(255) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `ownershipFirst` varchar(255) DEFAULT NULL,
-  `ownershipSecond` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`app_id`)
+  PRIMARY KEY (`app_id`,`consumerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -218,7 +273,7 @@ CREATE TABLE `new_connection_requests` (
 
 LOCK TABLES `new_connection_requests` WRITE;
 /*!40000 ALTER TABLE `new_connection_requests` DISABLE KEYS */;
-INSERT INTO `new_connection_requests` VALUES ('APP1745209023731','domestic','CON5678','9142101898','abc@gmail.com','45','Saristabad','Patna','Gardanibagh','Anisabad','Patna','678899','munger','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','nandu','NhiPata','aadhar_card','driving_license',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-04 14:22:49',NULL),('APP1745209526715','domestic','CNS7656','6754345678','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','shrii','vali','aadhar_card','voter_id',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-04 14:22:49',NULL),('APP1745209712350','domestic','CON5009','9142101898','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','hari','prasad','aadhar_card','pan_card',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-04 14:22:49',NULL),('APP1746126185204','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','1','2','22',NULL,'2','1','2','domestic',NULL,NULL,'male','John Doe','Doe','voter_id','aadhar_card',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-04 14:22:49',NULL),('APP1746126496682','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','1','2','22',NULL,'2','1','2','domestic',NULL,NULL,'male','John Doe','Doe','voter_id','aadhar_card',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-04 14:22:49',NULL),('APP1746126932698','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','1','2','22','null','2',NULL,'2','domestic','null','null','male','John Doe','Doe','voter_id','aadhar_card',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-04 14:22:49',NULL),('APP1746369384303','domestic','CNS7656','7050913685','asad@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','1','3','38','160','2','1','3','commercial','single','49','male','John Doe','Doe','voter_id','id_government',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-04 14:36:24','Submitted'),('APP1746369944092','domestic','CNS7654','9673274756','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','1','5','60','293','2','1','5','commercial','single','34','male','John Doe','Kumar','ration_card','ration_card','uploads/12th marksheet.jpg','uploads/12th migration.jpg','uploads/10th marksheet.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-04 14:45:44','Submitted'),('APP1746371911438','domestic','CNS25713B','7050913685','doedoe897@gmail.com','23','nosa','Patna','Anishabad','Phulwari','patna','801505','1','3','43','185','2','1','3','domestic','single','30','male','John Doe','Doe','voter_id','ration_card','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-04 15:18:31','Submitted');
+INSERT INTO `new_connection_requests` VALUES ('APP1745209023731','domestic','CON5678','9142101898','abc@gmail.com','45','Saristabad','Patna','Gardanibagh','Anisabad','Patna','678899','munger','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','nandu','NhiPata','aadhar_card','driving_license'),('APP1745209526715','domestic','CNS7656','6754345678','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','shrii','vali','aadhar_card','voter_id'),('APP1745209712350','domestic','CON5009','9142101898','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','hari','prasad','aadhar_card','pan_card');
 /*!40000 ALTER TABLE `new_connection_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -396,4 +451,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-05  1:14:46
+-- Dump completed on 2025-05-05 18:47:43

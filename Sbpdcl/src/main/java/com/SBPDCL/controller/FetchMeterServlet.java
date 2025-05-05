@@ -1,0 +1,38 @@
+package com.SBPDCL.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.SBPDCL.bean.Meter;
+import com.SBPDCL.services.MeterService;
+
+@SuppressWarnings("serial")
+@WebServlet("/FetchMeterServlet")
+public class FetchMeterServlet extends HttpServlet {
+
+	
+		private MeterService service = new MeterService();
+
+	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        String appId = request.getParameter("app_id");
+
+	        try {
+	        	Meter meter = service.getMeterByAppId(appId);
+	            request.setAttribute("meter", meter);
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("displayMeter.jsp");
+	            dispatcher.forward(request, response);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            request.setAttribute("error", "Details not found or error occurred.");
+	            request.getRequestDispatcher("displayMeter.jsp").forward(request, response);
+	        }
+	    }
+	}
+
+
