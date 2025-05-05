@@ -263,6 +263,14 @@ CREATE TABLE `new_connection_requests` (
   `f_hName` varchar(255) DEFAULT NULL,
   `idProof` varchar(50) DEFAULT NULL,
   `addressProof` varchar(50) DEFAULT NULL,
+  `idProofFile` varchar(255) DEFAULT NULL,
+  `addressProofFront` varchar(255) DEFAULT NULL,
+  `addressProofLast` varchar(255) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `ownershipFirst` varchar(255) DEFAULT NULL,
+  `ownershipSecond` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`app_id`,`consumerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -273,7 +281,7 @@ CREATE TABLE `new_connection_requests` (
 
 LOCK TABLES `new_connection_requests` WRITE;
 /*!40000 ALTER TABLE `new_connection_requests` DISABLE KEYS */;
-INSERT INTO `new_connection_requests` VALUES ('APP1745209023731','domestic','CON5678','9142101898','abc@gmail.com','45','Saristabad','Patna','Gardanibagh','Anisabad','Patna','678899','munger','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','nandu','NhiPata','aadhar_card','driving_license'),('APP1745209526715','domestic','CNS7656','6754345678','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','shrii','vali','aadhar_card','voter_id'),('APP1745209712350','domestic','CON5009','9142101898','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','hari','prasad','aadhar_card','pan_card');
+INSERT INTO `new_connection_requests` VALUES ('APP1745209023731','domestic','CON5678','9142101898','abc@gmail.com','45','Saristabad','Patna','Gardanibagh','Anisabad','Patna','678899','munger','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','nandu','NhiPata','aadhar_card','driving_license',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL),('APP1745209526715','domestic','CNS7656','6754345678','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','shrii','vali','aadhar_card','voter_id',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL),('APP1745209712350','domestic','CON5009','9142101898','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','hari','prasad','aadhar_card','pan_card',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL);
 /*!40000 ALTER TABLE `new_connection_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -451,4 +459,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-05 18:47:43
+-- Dump completed on 2025-05-05 19:42:07
