@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inspection Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      box-sizing: border-box;
+    }
+    input[type=submit] {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Inspection Details Form</h2>
+  <form action="InspectionDetailsServlet" method="post">
+  	Application ID:
+  	<input type="text" name="app_id" value="" required>
+  	
+    Inspector Name:
+    <input type="text" name="inspector_name" required>
+
+    Inspection Date:
+    <input type="date" name="inspection_date" required>
+
+    Site Address:
+    <textarea name="address" required></textarea>
+
+    Site Status:
+    <select name="site_status" required>
+      <option value="Select">---Select---</option>
+      <option value="Safe">Safe</option>
+      <option value="Unsafe">Unsafe</option>
+      <option value="Needs Changes">Needs Changes</option>
+    </select>
+
+    Confirmation Status:
+    <select name="confirmation_status" required>
+      <option value="Select">---Select---</option>
+      <option value="Confirmed">Confirmed</option>
+      <option value="Pending">Pending</option>
+      <option value="Rejected">Rejected</option>
+    </select>
+
+    <input type="submit" value="Submit Inspection">
+  </form>
+</body>
+</html>
