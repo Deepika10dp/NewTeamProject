@@ -40,28 +40,12 @@
       box-shadow: 0 12px 20px rgba(0, 86, 179, 0.5);
     }
 
-    #sidebar {
-      transition: all 0.4s ease;
-    }
-
-    #sidebar.show {
-      display: block !important;
-      animation: fadeIn 0.4s ease;
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateX(-10px); }
       to { opacity: 1; transform: translateX(0); }
     }
 
-    @media (max-width: 768px) {
-      #sidebar {
-        position: absolute;
-        width: 100%;
-        z-index: 1000;
-      }
-       
-    }
+   
     .modal-backdrop.show {
       backdrop-filter: blur(100%);
     }
@@ -173,7 +157,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Home</a>
-    <button class="btn btn-dark me-2" id="toggleSidebar"><i class="fas fa-bars"></i> Menu</button>
+ <!--     <button class="btn btn-dark me-2" id="toggleSidebar"><i class="fas fa-bars"></i> Menu</button>	-->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item"><a class="nav-link" href="#aboutSection"><i class="fas fa-info-circle"></i> About</a></li>
@@ -192,7 +176,7 @@
     </div>
   </div>
 </nav>
-<!-- Sidebar -->
+<!-- Sidebar 
 <div class="d-flex">
   <div class="bg-dark text-white p-3" id="sidebar" style="width: 200px; min-height: 60vh; display: none;">
     <ul class="nav flex-column">
@@ -217,7 +201,7 @@
         <p class="small text-white-50 ms-2">Share your experience with us.</p>
       </li>
     </ul>
-  </div>
+  </div>		-->
 
   <!-- Main Content -->
   <div class="flex-grow-1 p-4" id="mainContent">
