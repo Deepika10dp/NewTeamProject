@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.SBPDCL.bean.User,javax.servlet.http.HttpSession" %>
+    <%@page import="java.util.List"%>
+<%@page import="com.SBPDCL.bean.NewConnectionRequest"%>
+<%@page import="com.SBPDCL.services.NewConnectionService"%>
 
 <%
     User user = (User) session.getAttribute("user");
@@ -16,6 +19,11 @@
 
     String userId = (String) sess.getAttribute("user_id");
     String pageParam = request.getParameter("page");
+%>
+<%
+    String sectionId = (String) session.getAttribute("section_id");
+    NewConnectionService service = new NewConnectionService();
+    List<NewConnectionRequest> requests = service.getApplicationsForJEE(sectionId);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,28 +138,29 @@
               <th>Application ID</th>
               <th>Applicant Name</th>
               <th>Status</th>
+              <th>Remarks</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr data-status="Pending Inspection">
-              <td>APP12345</td>
-              <td>Ravi Kumar</td>
-              <td>Pending Inspection</td>
-              <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-            </tr>
-            <tr data-status="Report Pending">
-              <td>APP12346</td>
-              <td>Neha Singh</td>
-              <td>Report Pending</td>
-              <td><a href="#" class="btn btn-sm btn-warning">Upload Report</a></td>
-            </tr>
-            <tr data-status="Ready for Meter">
-              <td>APP12347</td>
-              <td>Sunil Sharma</td>
-              <td>Ready for Meter</td>
-              <td><a href="#" class="btn btn-sm btn-success">Approve</a></td>
-            </tr>
+          		 <%
+			        for (NewConnectionRequest req : requests) {
+			      %>
+			      <form action="JEEVerificationServlet" method="post">
+			        <tr data-status="<%= req.getStatus() %>">
+			          <td><%= req.getApp_id() %></td>
+			          <td><%= req.getApplicantName()%></td>
+			          <td><%= req.getStatus() %></td>
+			          <td><input type="text" name="jeeRemarks" class="form-control" required></td>
+			          <td>
+			            <input type="hidden" name="appId" value="<%= req.getApp_id() %>">
+			            <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to MI</button>
+			          </td>
+			        </tr>
+			      </form>
+			      <%
+			        }
+			      %>
           </tbody>
         </table>
       </div>

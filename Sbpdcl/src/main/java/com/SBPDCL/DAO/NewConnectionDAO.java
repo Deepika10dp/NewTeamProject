@@ -77,12 +77,13 @@ public class NewConnectionDAO {
 		        con.setAutoCommit(false);
 
 		        // Define query for updating status
-		        String query = "UPDATE new_connection_requests SET status = ? WHERE app_id = ?";
+		        String query = "UPDATE new_connection_requests SET status = ?, current_stage = ? WHERE app_id = ?";
 		        ps = con.prepareStatement(query);
 		        
 		        // Set parameters
 		        ps.setString(1, "Submitted"); // assuming 'Submitted' is the status
-		        ps.setString(2, appId);
+		        ps.setString(2, "JEE");
+		        ps.setString(3, appId);
 
 		        int rowsUpdated = ps.executeUpdate();
 
@@ -161,11 +162,81 @@ public class NewConnectionDAO {
 		    return request;
 		}
 
+	  public List<NewConnectionRequest> getRequestsForJEE(String sectionId) {
+		    List<NewConnectionRequest> list = new ArrayList<>();
+		    try (Connection con = DBConnection.getConnection()) {
+		        String query = "SELECT * FROM new_connection_requests WHERE current_stage='JEE' AND section=?";
+		        PreparedStatement ps = con.prepareStatement(query);
+		        ps.setString(1, sectionId);
+		        ResultSet rs = ps.executeQuery();
+		        while (rs.next()) {
+		            NewConnectionRequest req = new NewConnectionRequest();
+		            req.setApp_id(rs.getString("app_id"));
+		            req.setApplicantName(rs.getString("applicantName"));
+		            req.setStatus(rs.getString("status"));
+		            req.setAddressLine1(rs.getString("addressLine1"));
+		            // set more fields as needed
+		            list.add(req);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return list;
+		}
+	  public boolean updateStageAfterJEE(String appId, String jeeRemarks) {
+		    boolean result = false;
+		    try (Connection con = DBConnection.getConnection()) {
+		        String query = "UPDATE new_connection_requests SET status=?, current_stage=?, jee_remarks=? WHERE app_id=?";
+		        PreparedStatement ps = con.prepareStatement(query);
+		        ps.setString(1, "Pending MI");
+		        ps.setString(2, "MI");
+		        ps.setString(3, jeeRemarks);
+		        ps.setString(4, appId);
+		        result = ps.executeUpdate() > 0;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return result;
+		}
+	  public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {
+		  List<NewConnectionRequest> list = new ArrayList<>();
+		    try (Connection con = DBConnection.getConnection()) {
+		        String query = "SELECT * FROM new_connection_requests WHERE current_stage='MI' AND section=?";
+		        PreparedStatement ps = con.prepareStatement(query);
+		        ps.setString(1, sectionId);
+		        ResultSet rs = ps.executeQuery();
+		        while (rs.next()) {
+		            NewConnectionRequest req = new NewConnectionRequest();
+		            req.setApp_id(rs.getString("app_id"));
+		            req.setApplicantName(rs.getString("applicantName"));
+		            req.setStatus(rs.getString("status"));
+		            req.setAddressLine1(rs.getString("addressLine1"));
+		            // set more fields as needed
+		            list.add(req);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return list;
+		}
 
+	  public boolean updateMIInspection(String appId, String miRemarks) {
+		    String sql ="UPDATE new_connection_requests SET status=?, current_stage=?, mi_remarks=? WHERE app_id=?";
+
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(sql)) {
+
+		    	ps.setString(1, "Pending AEE");
+		        ps.setString(2, "AEE");
+		        ps.setString(3, miRemarks);
+		        ps.setString(4, appId);
+
+		        int rows = ps.executeUpdate();
+		        return rows > 0;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return false;
+		}
 
 }
-
-
-
-
-

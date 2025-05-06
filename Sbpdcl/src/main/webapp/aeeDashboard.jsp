@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.SBPDCL.bean.User,javax.servlet.http.HttpSession" %>
-
+<%@page import="java.util.List"%>
+<%@page import="com.SBPDCL.bean.NewConnectionRequest"%>
+<%@page import="com.SBPDCL.services.AEEApprovalService"%>
 <%
     User user = (User) session.getAttribute("user");
     if (user == null || user.getRoleId() != 3) {
@@ -16,6 +18,12 @@
 
     String userId = (String) sess.getAttribute("user_id");
     String pageParam = request.getParameter("page");
+%>
+
+<%
+	String sectionId = (String) session.getAttribute("section_id");
+    AEEApprovalService service = new AEEApprovalService();
+    List<NewConnectionRequest> applications = service.getAEEApplications(sectionId);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -143,33 +151,34 @@
             <thead>
               <tr>
                 <th>Application ID</th>
-                <th>Applicant Name</th>
-                <th>Status</th>
-                <th>JEE Remarks</th>
-                <th>Action</th>
+	            <th>Applicant Name</th>
+	            <th>Mobile</th>
+	            <th>Status</th>
+	            <th>Remarks</th>
+	            <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>NSC2025001</td>
-                <td>Ravi Kumar</td>
-                <td>Pending</td>
-                <td>Verified</td>
-                <td>
-                  <button class="btn btn-success btn-sm">Approve</button>
-                  <button class="btn btn-danger btn-sm">Reject</button>
-                </td>
-              </tr>
-              <tr>
-                <td>NSC2025002</td>
-                <td>Sneha Sharma</td>
-                <td>Pending</td>
-                <td>Incomplete Documents</td>
-                <td>
-                  <button class="btn btn-success btn-sm">Approve</button>
-                  <button class="btn btn-danger btn-sm">Reject</button>
-                </td>
-              </tr>
+			        <%
+			            for(NewConnectionRequest req : applications) {
+			        %>
+			        <form action="AEEApprovalServlet" method="post">
+			            <tr>
+			                <td><%= req.getApp_id() %></td>
+			                <td><%= req.getApplicantName() %></td>
+			                <td><%= req.getMobile() %></td>
+			                <td><%= req.getStatus() %></td>
+			                <td>
+			                    <input type="text" name="aeeRemarks" required />
+			                    <input type="hidden" name="appId" value="<%= req.getApp_id() %>" />
+			                    <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
+			                </td>
+			                <td><input type="submit" value="Approve & Generate Consumer No" /></td>
+			            </tr>
+			        </form>
+			        <%
+			            }
+			        %>
             </tbody>
           </table>
         </div>

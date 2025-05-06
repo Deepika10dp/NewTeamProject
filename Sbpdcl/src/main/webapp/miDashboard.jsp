@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.SBPDCL.bean.User,javax.servlet.http.HttpSession" %>
-
+<%@page import="java.util.List"%>
+<%@page import="com.SBPDCL.bean.NewConnectionRequest"%>
+<%@page import="com.SBPDCL.services.NewConnectionService"%>
 <%
     User user = (User) session.getAttribute("user");
     if (user == null || user.getRoleId() != 2) {
@@ -17,6 +19,12 @@
     String userId = (String) sess.getAttribute("user_id");
     String pageParam = request.getParameter("page");
 %>
+<%
+    String sectionId = (String) session.getAttribute("section_id");
+    NewConnectionService service = new NewConnectionService();
+    List<NewConnectionRequest> requests = service.getApplicationsForMI(sectionId);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,40 +136,30 @@
               <tr>
                 <th>Application ID</th>
                 <th>Customer Name</th>
-                <th>Address</th>
-                <th>Meter No.</th>
                 <th>Status</th>
+                <th>Remarks</th>
                 <th>Update</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>NSC2025011</td>
-                <td>Rajesh Singh</td>
-                <td>Patna, Bihar</td>
-                <td><input type="text" class="form-control" placeholder="Enter meter no."></td>
-                <td>
-                  <select class="form-select">
-                    <option>Pending</option>
-                    <option>Installed</option>
-                  </select>
-                </td>
-                <td><button class="btn btn-primary btn-sm">Submit</button></td>
-              </tr>
-              <tr>
-                <td>NSC2025012</td>
-                <td>Anita Verma</td>
-                <td>Gaya, Bihar</td>
-                <td><input type="text" class="form-control" value="MTR8930"></td>
-                <td>
-                  <select class="form-select">
-                    <option>Installed</option>
-                    <option>Pending</option>
-                  </select>
-                </td>
-                <td><button class="btn btn-primary btn-sm">Submit</button></td>
-              </tr>
-              <!-- More rows as needed -->
+			      <%
+			        for (NewConnectionRequest req : requests) {
+			      %>
+			      <form action="MIInspectionServlet" method="post">
+			        <tr data-status="<%= req.getStatus() %>">
+			          <td><%= req.getApp_id() %></td>
+			          <td><%= req.getApplicantName()%></td>
+			          <td><%= req.getStatus() %></td>
+			          <td><input type="text" name="miRemarks" class="form-control" required></td>
+			          <td>
+			            <input type="hidden" name="appId" value="<%= req.getApp_id() %>">
+			            <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
+			          </td>
+			        </tr>
+			      </form>
+			      <%
+			        }
+			      %>
             </tbody>
           </table>
         </div>

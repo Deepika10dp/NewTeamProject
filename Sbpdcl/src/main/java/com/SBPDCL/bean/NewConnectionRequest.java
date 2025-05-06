@@ -39,8 +39,37 @@ public class NewConnectionRequest {
 		 private String ownershipFirst;
 		 private String ownershipSecond;
 		
-		private Timestamp submissionDate;
+		 private Timestamp submissionDate;
 		 private String status;
+		 private String currentStage;
+		 private String jeeRemarks;
+		 private String miRemarks;
+		 private String aeeRemarks;
+		 public String getCurrentStage() {
+			return currentStage;
+		}
+		public void setCurrentStage(String currentStage) {
+			this.currentStage = currentStage;
+		}
+		public String getJeeRemarks() {
+			return jeeRemarks;
+		}
+		public void setJeeRemarks(String jeeRemarks) {
+			this.jeeRemarks = jeeRemarks;
+		}
+		public String getMiRemarks() {
+			return miRemarks;
+		}
+		public void setMiRemarks(String miRemarks) {
+			this.miRemarks = miRemarks;
+		}
+		public String getAeeRemarks() {
+			return aeeRemarks;
+		}
+		public void setAeeRemarks(String aeeRemarks) {
+			this.aeeRemarks = aeeRemarks;
+		}
+		
 
 		 // Generate Getters and Setters for all above fields
 
@@ -269,7 +298,8 @@ public class NewConnectionRequest {
 					+ ", idProofFile=" + idProofFile + ", addressProofFront=" + addressProofFront
 					+ ", addressProofLast=" + addressProofLast + ", photo=" + photo + ", ownershipFirst="
 					+ ownershipFirst + ", ownershipSecond=" + ownershipSecond + ", submissionDate=" + submissionDate
-					+ ", status=" + status + "]";
+					+ ", status=" + status + ", currentStage=" + currentStage + ", jeeRemarks=" + jeeRemarks
+					+ ", miRemarks=" + miRemarks + ", aeeRemarks=" + aeeRemarks + "]";
 		}
 		public void setSubmissionDate(Date date) {
 			// TODO Auto-generated method stub
@@ -278,7 +308,3 @@ public class NewConnectionRequest {
 		
 			
 }
-
-
-
-

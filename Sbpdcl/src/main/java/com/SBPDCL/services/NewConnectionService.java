@@ -1,3 +1,4 @@
+
 package com.SBPDCL.services;
 
 import java.util.List;
@@ -20,6 +21,19 @@ public class NewConnectionService {
     }
     public static NewConnectionRequest getRequestByAppId(String appId) {
     	return NewConnectionDAO.getRequestByAppId(appId);
+    }
+    public List<NewConnectionRequest> getApplicationsForJEE(String sectionId) {
+        return new NewConnectionDAO().getRequestsForJEE(sectionId);
+    }
+    public boolean updateJEEVerification(String appId, String jeeRemarks) {
+        return new NewConnectionDAO().updateStageAfterJEE(appId, jeeRemarks);
+    }
+    public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {
+        return new NewConnectionDAO().getApplicationsForMI(sectionId);
+    }
+
+    public boolean updateMIInspection(String appId, String miRemarks) {
+        return new NewConnectionDAO().updateMIInspection(appId, miRemarks);
     }
 
 }

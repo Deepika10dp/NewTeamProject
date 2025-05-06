@@ -3,8 +3,6 @@ package com.SBPDCL.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import com.SBPDCL.bean.User;
 import com.SBPDCL.util.DBConnection;
 
@@ -12,7 +10,7 @@ public class UserDAO {
 	 public User loginUser(String userId, String password) {
 	        User user = null;
 	        try (Connection conn = DBConnection.getConnection()) {
-	            String query ="SELECT user_id,name,phone_no,password,role_id FROM users WHERE user_id= ? AND password=?";
+	            String query ="SELECT user_id,name,phone_no,password,role_id,section_id FROM users WHERE user_id= ? AND password=?";
 	            		/* "SELECT u.user_id, u.name, u.password, u.phone, u.role_id, r.role_name " +
 	                           "FROM users u JOIN roles r ON u.role_id = r.id " +
 	                           "WHERE u.user_id = ? AND u.password = ?";*/
@@ -35,6 +33,7 @@ public class UserDAO {
 	                user.setPassword(rs.getString("password"));
 	                user.setPhoneNo(rs.getString("phone_no"));
 	                int roleId=rs.getInt("role_id");
+	                user.setSectionId(rs.getString("section_id")); // important for JEE
 	                System.out.println("Setting Role ID in the user object: " +roleId);
 	                user.setRoleId(rs.getInt("role_id"));
 	             //   user.setRoleName(rs.getString("role_name"));

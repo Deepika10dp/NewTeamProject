@@ -7,12 +7,18 @@ public class User {
     private String phoneNo;
     private int roleId;
     private String roleName; 
+    private String sectionId;
     
-    
-    @Override
+    public String getSectionId() {
+		return sectionId;
+	}
+	public void setSectionId(String sectionId) {
+		this.sectionId = sectionId;
+	}
+	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", password=" + password + ", phoneNo=" + phoneNo
-				+ ", roleId=" + roleId + ", roleName=" + roleName + "]";
+				+ ", roleId=" + roleId + ", roleName=" + roleName + ", sectionId=" + sectionId + "]";
 	}
 	public String getUserId() {
 		return userId;

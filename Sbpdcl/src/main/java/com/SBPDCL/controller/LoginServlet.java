@@ -60,12 +60,15 @@ public class LoginServlet extends HttpServlet {
 	            // Redirect based on role
 	            switch (roleId) {
 	                case 1:
+	                	session.setAttribute("section_id", user.getSectionId()); // ✅ Critical for fetching assigned applications
 	                	response.sendRedirect("jeeDashboard.jsp");
 	                    break;
 	                case 2:
+	                	session.setAttribute("section_id", user.getSectionId());
 	                    response.sendRedirect("miDashboard.jsp");
 	                    break;
 	                case 3:
+	                	session.setAttribute("section_id", user.getSectionId());
 	                    response.sendRedirect("aeeDashboard.jsp");
 	                    break;
 	                case 4:
