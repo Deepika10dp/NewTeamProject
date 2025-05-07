@@ -1,4 +1,3 @@
-
 package com.SBPDCL.services;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import com.SBPDCL.bean.NewConnectionRequest;
 public class NewConnectionService {
 
     private NewConnectionDAO dao = new NewConnectionDAO();
-
+    
     public boolean processNewConnection(NewConnectionRequest request) throws ClassNotFoundException {
         return dao.processNewConnection(request);
     }
@@ -25,9 +24,12 @@ public class NewConnectionService {
     public List<NewConnectionRequest> getApplicationsForJEE(String sectionId) {
         return new NewConnectionDAO().getRequestsForJEE(sectionId);
     }
-    public boolean updateJEEVerification(String appId, String jeeRemarks) {
-        return new NewConnectionDAO().updateStageAfterJEE(appId, jeeRemarks);
+    public boolean verifyDocumentsAndForwardToMI(String appId, String jeeRemarks) {
+        // Call the DAO method to update the database
+        return dao.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
     }
+
+
     public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {
         return new NewConnectionDAO().getApplicationsForMI(sectionId);
     }
@@ -35,5 +37,11 @@ public class NewConnectionService {
     public boolean updateMIInspection(String appId, String miRemarks) {
         return new NewConnectionDAO().updateMIInspection(appId, miRemarks);
     }
+	public boolean checkDuesCleared(String consumerId, String mobile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 
 }

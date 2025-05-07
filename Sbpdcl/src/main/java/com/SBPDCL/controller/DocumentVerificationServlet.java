@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.SBPDCL.services.NewConnectionService;
 
 /**
- * Servlet implementation class JEEVerificationServlet
+ * Servlet implementation class DocumentVerificationServlet
  */
-@WebServlet("/JEEVerificationServlet")
-public class JEEVerificationServlet extends HttpServlet {
+@WebServlet("/DocumentVerificationServlet")
+public class DocumentVerificationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	 private NewConnectionService service = new NewConnectionService();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JEEVerificationServlet() {
+    public DocumentVerificationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,20 +36,13 @@ public class JEEVerificationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 // Retrieve parameters from the request
-	    String appId = request.getParameter("appId");
-	    String jeeRemarks = request.getParameter("jeeRemarks");
+		// TODO Auto-generated method stub
+		 String appId = request.getParameter("app_id");
+	        String jeeRemarks = request.getParameter("jee_remarks");
 
-	    // Create service instance
-	    NewConnectionService service = new NewConnectionService();
+	        service.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
 
-	    // Call the service method to verify documents and forward to MI
-	    boolean updated = service.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
+	        response.sendRedirect("jeeDashboard.jsp?message=Documents+verified+and+forwarded+to+MI");
+	}
 
-	    // Redirect based on the result of the operation
-	    if (updated) {
-	        response.sendRedirect("jeeDashboard.jsp?success=true");
-	    } else {
-	        response.sendRedirect("jeeDashboard.jsp?error=true");
-	    }	    }
 }

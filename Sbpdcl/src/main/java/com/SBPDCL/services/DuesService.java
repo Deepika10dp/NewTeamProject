@@ -1,14 +1,19 @@
 package com.SBPDCL.services;
 
 import com.SBPDCL.DAO.DuesDAO;
-import com.SBPDCL.bean.DuesInfo;
 
 public class DuesService {
-	    private DuesDAO dao = new DuesDAO();
+    DuesDAO duesDAO = new DuesDAO();
 
-	    public DuesInfo checkDues(String consumerId, String mobile) throws Exception {
-	        return dao.checkDues(consumerId, mobile);
-	    }
-	}
+    public boolean checkDuesCleared(String consumerId, String mobile) {
+        return duesDAO.checkDuesCleared(consumerId, mobile);
+    }
 
+    public String getDuesStatus(String consumerId, String mobile) {
+        return duesDAO.getDuesStatus(consumerId, mobile);
+    }
 
+    public void updateDuesClearedInRequest(String consumerId, String mobile) {
+        duesDAO.updateDuesClearedStatusInRequest(consumerId, mobile);
+    }
+}
