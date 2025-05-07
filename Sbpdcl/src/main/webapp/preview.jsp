@@ -129,9 +129,7 @@
             <div class="row"><div class="label">ID Proof:</div><div class="value"><%= formData.getIdProof() %></div></div>
             <div class="row"><div class="label">Address Proof:</div><div class="value"><%= formData.getAddressProof() %></div></div>
         </div>
-	
-		
-        <!-- Hidden Fields -->
+        
         <input type="hidden" name="app_id" value="<%= formData.getApp_id() %>"/>
         <input type="hidden" name="connectionType" value="<%= formData.getConnectionType() %>"/>
         <input type="hidden" name="consumerId" value="<%= formData.getConsumerId() %>"/>
@@ -193,15 +191,10 @@
     <iframe src="<%= formData.getOwnershipSecond() %>" class="preview-frame"></iframe>
   </div>
 </div>
-
-
-
-        <!-- Buttons -->
         <div class="buttons">
             <button type="submit">Final Submit</button>
             <button type="button" onclick="history.back();">Back to Edit</button>
         </div>
     </form>
-
 </body>
 </html>

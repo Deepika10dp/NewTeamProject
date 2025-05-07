@@ -30,7 +30,6 @@
     function validateForm() {
         let newPassword = document.forms["changePasswordForm"]["newPassword"].value;
         let confirmPassword = document.forms["changePasswordForm"]["confirmPassword"].value;
-
         if (newPassword !== confirmPassword) {
             alert("New Password and Confirm Password do not match!");
             return false;
@@ -44,17 +43,14 @@
         <label for="oldPassword">Old Password:</label>
         <input type="password" id="oldPassword" name="oldPassword" required>
     </div>
-
     <div class="form-group">
         <label for="newPassword">New Password:</label>
         <input type="password" id="newPassword" name="newPassword" required>
     </div>
-
     <div class="form-group">
         <label for="confirmPassword">Confirm New Password:</label>
         <input type="password" id="confirmPassword" name="confirmPassword" required>
     </div>
-
     <div class="form-group center-button">
         <input type="submit" value="Change Password">
     </div>

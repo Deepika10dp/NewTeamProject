@@ -1,4 +1,3 @@
-
 package com.SBPDCL.services;
 
 import com.SBPDCL.DAO.UserDAO;
@@ -8,7 +7,6 @@ import com.SBPDCL.util.SMSService;
 
 public class UserService {
 	 private UserDAO userDAO = new UserDAO();
-
 	    public User loginUser(String userId, String password) {
 	        return userDAO.loginUser(userId, password);
 	    }
@@ -19,8 +17,7 @@ public class UserService {
 	        user.setName(name);
 	        user.setPhoneNo(phoneNo);
 	        user.setPassword(password);
-	        user.setRoleId(4); // Role ID for Consumer
-
+	        user.setRoleId(4); 
 	        boolean isRegistered = UserDAO.registerConsumer(user);
 	        if (isRegistered) {
 	            String message = "Welcome! Your Consumer ID: " + consumerId + " Password: " + password;
@@ -30,7 +27,5 @@ public class UserService {
 	    }
 	    public boolean changePassword(String userId, String oldPass, String newPass) {
 	        return userDAO.updatePassword(userId, oldPass, newPass);
-	    }
-		
-	   
+	    }	   
 }

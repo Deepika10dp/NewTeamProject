@@ -1,5 +1,4 @@
 package com.SBPDCL.controller;
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,38 +6,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import com.SBPDCL.bean.User;
 import com.SBPDCL.services.UserService;
 
-/**
- * Servlet implementation class LoginServlet
- */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserService userService=new UserService();
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 			String userId = request.getParameter("user_id");
 	        String password = request.getParameter("password");
 	        System.out.println("User ID: " +userId + ", Password: "+password);
@@ -51,16 +35,15 @@ public class LoginServlet extends HttpServlet {
 	        if (user != null) {
 	            System.out.println("Log in successful: " + user.getName() + " - Role ID: " + user.getRoleId());
 	            HttpSession session = request.getSession();
-	            session.setAttribute("user", user); // already there
-	            session.setAttribute("user_id", user.getUserId()); // ✅ Add this line
+	            session.setAttribute("user", user);
+	            session.setAttribute("user_id", user.getUserId()); 
 
 	            int roleId = user.getRoleId();
 	            System.out.println("Redirecting based on Role ID: " + roleId);
 
-	            // Redirect based on role
 	            switch (roleId) {
 	                case 1:
-	                	session.setAttribute("section_id", user.getSectionId()); // ✅ Critical for fetching assigned applications
+	                	session.setAttribute("section_id", user.getSectionId()); 
 	                	response.sendRedirect("jeeDashboard.jsp");
 	                    break;
 	                case 2:
@@ -72,7 +55,6 @@ public class LoginServlet extends HttpServlet {
 	                    response.sendRedirect("aeeDashboard.jsp");
 	                    break;
 	                case 4:
-	                	// ✅ Set the consumerId in session explicitly
 						session.setAttribute("consumerId", user.getUserId());
 						System.out.println("Consumer ID set in session: " + user.getUserId());
 						response.sendRedirect("consumer_dashboard.jsp");
@@ -86,5 +68,4 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("index.html?error=Invalid credentials");
 			}
 	}
-
 }

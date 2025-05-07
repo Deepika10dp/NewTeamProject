@@ -11,9 +11,7 @@ public class UserDAO {
 	        User user = null;
 	        try (Connection conn = DBConnection.getConnection()) {
 	            String query ="SELECT user_id,name,phone_no,password,role_id,section_id FROM users WHERE user_id= ? AND password=?";
-	            		/* "SELECT u.user_id, u.name, u.password, u.phone, u.role_id, r.role_name " +
-	                           "FROM users u JOIN roles r ON u.role_id = r.id " +
-	                           "WHERE u.user_id = ? AND u.password = ?";*/
+	          
 	            PreparedStatement ps = conn.prepareStatement(query);
 	            ps.setString(1, userId);
 	            ps.setString(2, password);
@@ -33,10 +31,9 @@ public class UserDAO {
 	                user.setPassword(rs.getString("password"));
 	                user.setPhoneNo(rs.getString("phone_no"));
 	                int roleId=rs.getInt("role_id");
-	                user.setSectionId(rs.getString("section_id")); // important for JEE
+	                user.setSectionId(rs.getString("section_id")); 
 	                System.out.println("Setting Role ID in the user object: " +roleId);
 	                user.setRoleId(rs.getInt("role_id"));
-	             //   user.setRoleName(rs.getString("role_name"));
 	            }
 	            else {
 	            	System.out.println("No user found with given credentials");
@@ -73,7 +70,7 @@ public class UserDAO {
 	            if (rs.next()) {
 	                user = new User();
 	                user.setUserId(rs.getString("user_id"));
-	                user.setPassword(rs.getString("password")); // Already hashed
+	                user.setPassword(rs.getString("password"));
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -89,8 +86,6 @@ public class UserDAO {
 
 	        try {
 	            conn = DBConnection.getConnection();
-
-	            // Check if old password is correct
 	            ps = conn.prepareStatement("SELECT password FROM users WHERE user_id = ?");
 	            ps.setString(1, userId);
 	            rs = ps.executeQuery();
@@ -100,8 +95,6 @@ public class UserDAO {
 	                    return false;
 	                }
 	            }
-
-	            // Update to new password
 	            ps = conn.prepareStatement("UPDATE users SET password = ? WHERE user_id = ?");
 	            ps.setString(1, newPassword);
 	            ps.setString(2, userId);

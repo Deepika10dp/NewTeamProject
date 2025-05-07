@@ -58,7 +58,6 @@
                 transform: translateY(0);
             }
         }
-        /* Make all form controls the same height and properly aligned */
         .form-control, .form-select {
             min-height: 45px;
         }
@@ -74,14 +73,9 @@
 <body>
     <div class="container form-wrapper">
         <h2 class="text-center mb-4">New Connection Form</h2>
-       
-        <!-- ALL FORM FIELDS FROM YOUR ORIGINAL CODE (KEEP UNCHANGED) -->
-        <!-- For brevity, the full original form content should go here, unchanged -->
         <form id="connectionForm" action="NewConnectionServlet" method="post"  enctype="multipart/form-data" onsubmit="disableButton()">
-
         <p class="text-danger">*Mandatory Fields (Please upload all documents in jpeg/jpg format. 
         Document size must be less than 500 KB and PDF document size must be less than 10000 KB.)</p>
-
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="connectionType" class="form-label">Connection Type: <span class="text-danger">*</span></label>
@@ -96,9 +90,6 @@
                 <input type="text" id="consumerId" name="consumerId"  class="form-control" placeholder="Enter Consumer ID" required>
             </div>
         </div>
-
-        
-	        <!-- Mobile No & Email -->
 	        <div class="row mb-3">
 	            <div class="col-md-3">
 	                <label for="mobile" class="form-label">Mobile No:<span class="text-danger">*</span></label>
@@ -109,9 +100,7 @@
 	                <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email ID">
 	            </div>
 	        </div>
-
-
-        <!-- Address Details -->
+	        
         <h4>Address Details:</h4>
         <div class="row mb-3">
             <div class="col-md-3">
@@ -128,8 +117,6 @@
             </div>
         </div>
          <div class="row mb-3">
-
-           
             <div class="col-md-3">
                  <label for="addressLine2" class="form-label">Address Line 2:</label>
             <input type="text" id="addressLine2" name="addressLine2" class="form-control" placeholder="Enter address" >
@@ -151,70 +138,50 @@
             <div class="col-md-3">
                  <label for="district" class="form-label">District:<span class="text-danger">*</span></label>
             <select id="district" name="district" class="form-select" required>
-                <option value="">--Select--</option>
-     
+                <option value="">--Select--</option> 
             </select>
             </div>
             <div class="col-md-3">
                 <label for="block" class="form-label">Block:<span class="text-danger">*</span></label>
             	<select id="block" name="block" class="form-select" required>
-               		 <option value="">--Select--</option>
-               		
+               		 <option value="">--Select--</option>           		
             	</select>
             </div>
         </div>
-         <div class="row mb-3">
-            
+         <div class="row mb-3">          
             <div class="col-md-3">
                 <label for="panchayat" class="form-label">Panchayat:<span class="text-danger">*</span></label>
            		 <select id="panchayat" name="panchayat" class="form-select" required>
-		              <option value="">--Select--</option>
-		             
+		              <option value="">--Select--</option>		             
             	 </select>
             </div>
              <div class="col-md-3">
                 <label for="village_ward" class="form-label">Village/Ward:<span class="text-danger">*</span></label>
 	            <select id="village_ward" name="village_ward" class="form-select" required>
-	                  <option value="">--Select--</option>
-	       
+	                  <option value="">--Select--</option>	       
 	            </select>
             </div>
-           <!-- Division (read-only display only, no name attribute) -->
 			<div class="col-md-3">
 			    <label for="division" class="form-label">Division:<span class="text-danger">*</span></label>
 			    <select id="division" class="form-select" disabled style="pointer-events: none; background-color: #e9ecef;">
 			        <option value="">--Select--</option>
 			    </select>
 			</div>
-			
-			<!-- Subdivision (read-only display only) -->
 			<div class="col-md-3">
 			    <label for="subdivision" class="form-label">SubDivision:<span class="text-danger">*</span></label>
 			    <select id="subdivision" class="form-select" disabled style="pointer-events: none; background-color: #e9ecef;">
 			        <option value="">--Select--</option>
 			    </select>
 			</div>
-			
-			<!-- Section (read-only display only) -->
 			<div class="col-md-3">
 			    <label for="section" class="form-label">Section:<span class="text-danger">*</span></label>
 			    <select id="section" class="form-select" disabled style="pointer-events: none; background-color: #e9ecef;">
 			        <option value="">--Select--</option>
 			    </select>
 			</div>
-			
-			<!-- ✅ Hidden inputs to actually submit the IDs -->
 			<input type="hidden" id="hiddenDivision" name="division" />
 			<input type="hidden" id="hiddenSubdivision" name="subdivision" />
 			<input type="hidden" id="hiddenSection" name="section" />
-
-			
-			<!-- Optional: store names too
-			<input type="hidden" id="hiddenDivisionName" name="division_name" />
-			<input type="hidden" id="hiddenSubdivisionName" name="subdivision_name" />
-			<input type="hidden" id="hiddenSectionName" name="section_name" /> -->
-
-			
             <div class="col-md-3">
                 <label for="tariff" class="form-label">Tariff:<span class="text-danger">*</span></label>
 	            <select id="tariff" name="tariff" class="form-select" required>
@@ -225,8 +192,7 @@
 	            </select>
             </div>
         </div>
-         <div class="row mb-3">
-            
+         <div class="row mb-3">          
             <div class="col-md-3">
                 <label for="phase" class="form-label">Phase:<span class="text-danger">*</span></label>
 	            <select id="phase" name="E_phase" class="form-select" required>
@@ -240,10 +206,7 @@
                <input type="text" id="load" name="E_load" class="form-control" placeholder="Enter load" required>
             </div>
         </div>
-         
-        <!-- More address fields in the same pattern -->
         
-        <!-- Applicant Details -->
         <h4>Applicant Details:</h4>
         <div class="row mb-3">
             <div class="col-md-3">
@@ -259,16 +222,14 @@
                 <label for="applicantName" class="form-label">Applicant Name <span class="text-danger">*</span></label>
                 <input type="text" id="applicantName" name="applicantName" class="form-control" placeholder="Enter Name" required>
             </div>
-        </div>
-        
+        </div>       
         <div class="row mb-3">
             <div class="col-md-3">
                 <label for="f_hName" class="form-label">Husband/Father Name <span class="text-danger">*</span></label>
                 <input type="text" id="f_hName" name="f_hName" class="form-control" placeholder="Enter Father/Husband Name" required>
             </div>
         </div>
-
-        <!-- ID Proof -->
+        
         <h4>ID Proof:</h4>
         <div class="row mb-3">
             <div class="col-md-3">
@@ -290,8 +251,7 @@
                 <input type="file" id="document_fileI" name="documentFile" class="form-control" accept=".jpeg, .jpg"  >
             </div>
         </div>
-        
-        <!-- Address Proof -->
+
         <h4>Address Proof:</h4>
         <div class="row mb-3">
             <div class="col-md-3">
@@ -305,8 +265,7 @@
                     <option value="driving_license">Driving License</option>                    
                     <option value="ration_card">Ration Card</option>
                     <option value="id_government">ID Issued By Government</option>
-					<option value="bpl_card">Bill of Government Landline Connection</option>
-					
+					<option value="bpl_card">Bill of Government Landline Connection</option>					
                 </select>
             </div>
             <div class="col-md-3">
@@ -339,64 +298,14 @@
                   <input type="file" id="photoOwnerSecond" name="photoOwnerSecond" class="form-control" accept="image/jpeg, image/jpg" >
             </div>
         </div>
-
-            <!-- Submit Button 
-            <div class="text-start mt-4">
-                <button type="submit" class="btn btn-primary px-5 py-2">Submit</button>
-            </div>
-        </form>   -->
-
-
-        <!-- Submit Button -->
          <div class="text-left">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
     </form>
-
-
-    <!-- Preview Section 
-    <div id="previewSection">
-        <h4 class="mt-4">Preview Your Details</h4>
-        <div id="previewContent"></div>
-        <button class="btn btn-secondary mt-3" onclick="goBackToForm()">Back</button>
-        <button class="btn btn-success mt-3" onclick="finalSubmit()">Final Submit</button>
-    </div>-->
-
 </div>
-
- <!-- 	<script>
-	    function showPreview() {
-	        const form = document.getElementById('connectionForm');
-	        const formData = new FormData(form);
-	        let previewHTML = '<ul class="list-group">';
-	
-	        for (const [name, value] of formData.entries()) {
-	            if (value && name !== 'photo' && name !== 'photoOwnerFirst' && name !== 'photoOwnerSecond' && name !== 'frontPage' && name !== 'lastPage' && name !== 'documentFile') {
-	                const label = form.querySelector(`[name="${name}"]`).closest('.form-group, .col-md-3').querySelector('label').textContent;
-	                previewHTML += `<li class="list-group-item"><strong>${label}</strong>: ${value}</li>`;
-	            }
-	        }
-	
-	        previewHTML += '</ul>';
-	        document.getElementById('previewContent').innerHTML = previewHTML;
-	        document.getElementById('connectionForm').style.display = 'none';
-	        document.getElementById('previewSection').style.display = 'block';
-	    }
-	
-	    function goBackToForm() {
-	        document.getElementById('previewSection').style.display = 'none';
-	        document.getElementById('connectionForm').style.display = 'block';
-	    }
-	
-	    function finalSubmit() {
-	        document.getElementById('connectionForm').submit();
-	    }
-	</script>-->
 
 		<script>
 		    $(document).ready(function () {
-		
-		        // Load Districts on page load
 		        $.ajax({
 		            url: "DivisionAutoFillServlet",
 		            type: "POST",
@@ -412,8 +321,7 @@
 		                console.error("Error loading districts:", error);
 		            }
 		        });
-		
-		        // District → Block
+		        
 		        $('#district').change(function () {
 		            let districtId = $(this).val();
 		            clearDropdowns(['#block', '#panchayat', '#village_ward', '#division', '#subdivision', '#section']);
@@ -436,8 +344,7 @@
 		                });
 		            }
 		        });
-		
-		        // Block → Panchayat
+	
 		        $('#block').change(function () {
 		            let blockId = $(this).val();
 		            clearDropdowns(['#panchayat', '#village_ward', '#division', '#subdivision', '#section']);
@@ -461,11 +368,8 @@
 		            }
 		        });
 		
-		     // Panchayat → Village/Ward
 		        $('#panchayat').change(function () {
 		            let panchayatId = $(this).val();
-
-		            // Clear the dependent dropdowns
 		            clearDropdowns(['#village_ward', '#division', '#subdivision', '#section']);
 		            resetHiddenFields();
 
@@ -473,27 +377,20 @@
 		                $.ajax({
 		                    url: "DivisionAutoFillServlet?action=getVillages&panchayatId=" + panchayatId,
 		                    method: "POST",
-		                    dataType: "json",  // Ensure the server is returning data as JSON
+		                    dataType: "json", 
 		                    success: function (response) {
-		                        // Reset village_ward dropdown first
 		                        $('#village_ward').append('<option value="">--Select Village/Ward--</option>');
-
-		                        // Loop through the villages returned from the backend and populate the dropdown
 		                        $.each(response, function (i, item) {
 		                            $('#village_ward').append('<option value="' + item.id + '">' + item.name + '</option>');
 		                        });
 		                    },
 		                    error: function (xhr, status, error) {
 		                        console.error("Error loading villages:", error);
-		                        // Optionally, you can show an error message in the UI
 		                        alert("Error loading villages. Please try again.");
 		                    }
 		                });
 		            }
 		        });
-
-		
-		        // Village → Auto-fill Division/Subdivision/Section
 		        $('#village_ward').change(function () {
 		            let villageId = $(this).val();
 		            clearDropdowns(['#division', '#subdivision', '#section']);
@@ -505,17 +402,14 @@
 		                    method: "POST",
 		                    dataType: "json",
 		                    success: function (data) {
-		                        // Fill Division
 		                        $('#division').append('<option value="' + data.division.id + '" selected>' + data.division.name + '</option>');
 		                        $('#hiddenDivision').val(data.division.id);
 		                        $('#hiddenDivisionName').val(data.division.name);
 		
-		                        // Fill Subdivision
 		                        $('#subdivision').append('<option value="' + data.subdivision.id + '" selected>' + data.subdivision.name + '</option>');
 		                        $('#hiddenSubdivision').val(data.subdivision.id);
 		                        $('#hiddenSubdivisionName').val(data.subdivision.name);
 		
-		                        // Fill Section
 		                        $('#section').append('<option value="' + data.section.id + '" selected>' + data.section.name + '</option>');
 		                        $('#hiddenSection').val(data.section.id);
 		                        $('#hiddenSectionName').val(data.section.name);
@@ -526,8 +420,7 @@
 		                });
 		            }
 		        });
-		
-		        // Utility Functions
+	
 		        function clearDropdowns(ids) {
 		            ids.forEach(function (id) {
 		                $(id).empty().append('<option value="">--Select--</option>');
@@ -538,7 +431,6 @@
 		            $('#hiddenDivision, #hiddenSubdivision, #hiddenSection, #hiddenDivisionName, #hiddenSubdivisionName, #hiddenSectionName').val('');
 		        }
 		
-		        // Optional: disable button after click
 		        window.disableButton = function () {
 		            document.getElementById('submitBtn').disabled = true;
 		        };
