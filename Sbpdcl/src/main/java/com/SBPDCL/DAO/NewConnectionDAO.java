@@ -165,7 +165,7 @@ public class NewConnectionDAO {
 	  public List<NewConnectionRequest> getRequestsForJEE(String sectionId) {
 		    List<NewConnectionRequest> list = new ArrayList<>();
 		    try (Connection con = DBConnection.getConnection()) {
-		        String query = "SELECT * FROM new_connection_requests WHERE current_stage='JEE' AND section=?";
+		        String query = "SELECT * FROM new_connection_requests WHERE (current_stage='JEE' OR (current_stage='MI' AND status='Pending MI')) AND section=?";
 		        PreparedStatement ps = con.prepareStatement(query);
 		        ps.setString(1, sectionId);
 		        ResultSet rs = ps.executeQuery();
@@ -173,8 +173,13 @@ public class NewConnectionDAO {
 		            NewConnectionRequest req = new NewConnectionRequest();
 		            req.setApp_id(rs.getString("app_id"));
 		            req.setApplicantName(rs.getString("applicantName"));
+		            req.setMobile(rs.getString("mobile"));
+		            req.setDues_cleared(rs.getBoolean("dues_cleared"));
+		            req.setDocuments_verified(rs.getBoolean("documents_verified"));
+		            req.setConsumerId(rs.getString("consumerId"));
 		            req.setStatus(rs.getString("status"));
-		            req.setAddressLine1(rs.getString("addressLine1"));
+		            req.setCurrentStage(rs.getString("current_stage"));
+		           
 		            // set more fields as needed
 		            list.add(req);
 		        }
@@ -182,22 +187,31 @@ public class NewConnectionDAO {
 		        e.printStackTrace();
 		    }
 		    return list;
-		}
-	  public boolean updateStageAfterJEE(String appId, String jeeRemarks) {
-		    boolean result = false;
-		    try (Connection con = DBConnection.getConnection()) {
-		        String query = "UPDATE new_connection_requests SET status=?, current_stage=?, jee_remarks=? WHERE app_id=?";
-		        PreparedStatement ps = con.prepareStatement(query);
-		        ps.setString(1, "Pending MI");
-		        ps.setString(2, "MI");
-		        ps.setString(3, jeeRemarks);
-		        ps.setString(4, appId);
-		        result = ps.executeUpdate() > 0;
+		}  
+	 
+	  public boolean verifyDocumentsAndForwardToMI(String appId, String jeeRemarks) {
+		    // Updated query to include 'documents_verified' field
+		    String query = "UPDATE new_connection_requests SET status='Pending MI', current_stage='MI', jee_remarks=?, documents_verified=1 WHERE app_id=?";
+		    
+		    try (Connection con = DBConnection.getConnection(); 
+		         PreparedStatement ps = con.prepareStatement(query)) {
+
+		        // Set the parameters for the prepared statement
+		        ps.setString(1, jeeRemarks);
+		        ps.setString(2, appId);
+		        
+		        // Execute the update and check how many rows were affected
+		        int rowsUpdated = ps.executeUpdate();
+		        
+		        // Return true if at least one row was updated
+		        return rowsUpdated > 0;  
 		    } catch (Exception e) {
 		        e.printStackTrace();
+		        return false;  // Return false if there's an error
 		    }
-		    return result;
 		}
+
+
 	  public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {
 		  List<NewConnectionRequest> list = new ArrayList<>();
 		    try (Connection con = DBConnection.getConnection()) {
@@ -238,5 +252,6 @@ public class NewConnectionDAO {
 		    }
 		    return false;
 		}
+
 
 }

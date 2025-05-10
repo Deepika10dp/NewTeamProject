@@ -1,52 +1,43 @@
 package com.SBPDCL.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
-import com.SBPDCL.bean.DuesInfo;
 import com.SBPDCL.services.DuesService;
+
 @WebServlet("/CheckDuesServlet")
 public class CheckDuesServlet extends HttpServlet {
-	  
-	private static final long serialVersionUID = 1L;
-	
-	public CheckDuesServlet() {
-		super();
-	}
+    private static final long serialVersionUID = 1L;
 
-		protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	        String consumerId = req.getParameter("consumerId");
-	        String mobile = req.getParameter("mobile");
+    DuesService service = new DuesService(); // ✅ FIXED: Using correct service
 
-	        DuesService service = new DuesService();
+    public CheckDuesServlet() {
+        super();
+    }
 
-	        try {
-	            DuesInfo info = service.checkDues(consumerId, mobile);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String consumerId = request.getParameter("consumerId");
+        String mobile = request.getParameter("mobile");
+        String duesConfirmed = request.getParameter("duesCleared");
 
-	            res.setContentType("text/html");
-	            PrintWriter out = res.getWriter();
-	            out.println("<html><body><div style='padding: 20px;'>");
+        boolean duesCleared = service.checkDuesCleared(consumerId, mobile);
 
-	            if (info != null) {
-	                out.println("<h3>Dues Details</h3>");
-	                out.println("<p><strong>Amount:</strong> " + info.getDues_amount() + "</p>");
-	                out.println("<p><strong>Status:</strong> " + info.getDues_status() + "</p>");
-	            } else {
-	                out.println("<p style='color:red;'>No dues record found for the given details.</p>");
-	            }
+        if ("yes".equalsIgnoreCase(duesConfirmed) && duesCleared) {
+            // ✅ Optional: update dues_cleared status in new_connection_requests table
+            service.updateDuesClearedInRequest(consumerId, mobile);
+            response.sendRedirect("jeeDashboard.jsp?consumer_id=" + consumerId + "&mobile=" + mobile);
+            return;
+        }
 
-	            out.println("</div></body></html>");
+        // Show dues status
+        String duesStatus = duesCleared ? "Cleared" : "Not Cleared";
+        request.setAttribute("consumerId", consumerId);
+        request.setAttribute("mobile", mobile);
+        request.setAttribute("duesStatus", duesStatus);
 
-	        } catch (Exception e) {
-	            throw new ServletException("Error checking dues", e);
-	        }
-	    }
-	}
-
-
+        RequestDispatcher rd = request.getRequestDispatcher("duesCheck.jsp");
+        rd.forward(request, response);
+    }
+}

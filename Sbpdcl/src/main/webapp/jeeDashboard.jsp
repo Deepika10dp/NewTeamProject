@@ -135,32 +135,54 @@
         <table class="table table-striped table-bordered" id="applicationsTable">
           <thead class="table-dark">
             <tr>
-              <th>Application ID</th>
-              <th>Applicant Name</th>
-              <th>Status</th>
-              <th>Remarks</th>
-              <th>Action</th>
+              	<th>Application ID</th>
+		        <th>Applicant Name</th>
+		        <th>Mobile</th>
+		        <th>Dues Cleared</th>
+		        <th>Documents Verified</th>
+		        <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-          		 <%
-			        for (NewConnectionRequest req : requests) {
-			      %>
-			      <form action="JEEVerificationServlet" method="post">
-			        <tr data-status="<%= req.getStatus() %>">
-			          <td><%= req.getApp_id() %></td>
-			          <td><%= req.getApplicantName()%></td>
-			          <td><%= req.getStatus() %></td>
-			          <td><input type="text" name="jeeRemarks" class="form-control" required></td>
-			          <td>
-			            <input type="hidden" name="appId" value="<%= req.getApp_id() %>">
-			            <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to MI</button>
-			          </td>
-			        </tr>
-			      </form>
-			      <%
-			        }
-			      %>
+          		<%
+				    for (NewConnectionRequest r : requests) {
+				    	boolean duesCleared = Boolean.TRUE.equals(r.getDues_cleared());  // assumed getter
+
+				    	boolean docsVerified = "MI".equals(r.getCurrentStage()) || 
+			                       (r.getStatus() != null && r.getStatus().contains("Pending MI"));
+
+				%>
+				    <tr>
+				        <td><%= r.getApp_id() %></td>
+				        <td><%= r.getApplicantName() %></td>
+				        <td><%= r.getMobile() %></td>
+				        <td><%= duesCleared ? "Yes" : "No" %></td>
+				        <td><%= docsVerified ? "Yes" : "No" %></td>
+				        <td>
+				        
+			<%
+		    if (docsVerified) {
+		%>
+		    <span class="badge bg-success">Forwarded</span>
+		<%
+		    } else {
+		%>
+		    <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
+		        <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
+		        <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
+		        <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
+		    </form>
+		
+		    <form action="verify_documents.jsp" method="get" style="display:inline-block;">
+		        <input type="hidden" name="app_id" value="<%= r.getApp_id() %>" />
+		        <button type="submit" class="btn btn-sm btn-success" <%= duesCleared ? "" : "disabled" %>>Verify Docs</button>
+		    </form>
+		<%
+		    }
+		%>
+</td>
+				    </tr>
+				<% } %>
           </tbody>
         </table>
       </div>

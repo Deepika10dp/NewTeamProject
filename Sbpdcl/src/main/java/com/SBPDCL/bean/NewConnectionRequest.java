@@ -31,7 +31,7 @@ public class NewConnectionRequest {
 		 private String f_hName;
 		 private String idProof;
 		 private String addressProof;
-	
+		 
 		 private String idProofFile;
 		 private String addressProofFront;
 		 private String addressProofLast;
@@ -45,7 +45,24 @@ public class NewConnectionRequest {
 		 private String jeeRemarks;
 		 private String miRemarks;
 		 private String aeeRemarks;
-		 public String getCurrentStage() {
+		 
+		 private Boolean dues_cleared;
+		 private Boolean documents_verified;
+		 
+		 
+		public Boolean getDues_cleared() {
+			return dues_cleared;
+		}
+		public void setDues_cleared(Boolean dues_cleared) {
+			this.dues_cleared = dues_cleared;
+		}
+		public Boolean getDocuments_verified() {
+			return documents_verified;
+		}
+		public void setDocuments_verified(Boolean documents_verified) {
+			this.documents_verified = documents_verified;
+		}
+		public String getCurrentStage() {
 			return currentStage;
 		}
 		public void setCurrentStage(String currentStage) {
@@ -296,7 +313,8 @@ public class NewConnectionRequest {
 					+ ", addressProofLast=" + addressProofLast + ", photo=" + photo + ", ownershipFirst="
 					+ ownershipFirst + ", ownershipSecond=" + ownershipSecond + ", submissionDate=" + submissionDate
 					+ ", status=" + status + ", currentStage=" + currentStage + ", jeeRemarks=" + jeeRemarks
-					+ ", miRemarks=" + miRemarks + ", aeeRemarks=" + aeeRemarks + "]";
+					+ ", miRemarks=" + miRemarks + ", aeeRemarks=" + aeeRemarks + ", dues_cleared=" + dues_cleared
+					+ ", documents_verified=" + documents_verified + "]";
 		}
 		public void setSubmissionDate(Date date) {
 			

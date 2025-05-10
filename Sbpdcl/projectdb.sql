@@ -128,10 +128,11 @@ DROP TABLE IF EXISTS `dues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dues` (
-  `consumerId` varchar(50) DEFAULT NULL,
+  `consumerId` varchar(50) NOT NULL,
   `mobile` varchar(15) DEFAULT NULL,
   `dues_amount` decimal(10,2) DEFAULT '0.00',
-  `dues_status` varchar(20) DEFAULT 'Not Due'
+  `dues_status` varchar(20) DEFAULT 'Not Due',
+  PRIMARY KEY (`consumerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -141,7 +142,7 @@ CREATE TABLE `dues` (
 
 LOCK TABLES `dues` WRITE;
 /*!40000 ALTER TABLE `dues` DISABLE KEYS */;
-INSERT INTO `dues` VALUES ('CNS7656','6754345678',0.00,'Not Due'),('CON5009','9142101898',1000.00,'Dues');
+INSERT INTO `dues` VALUES ('CNS25713B','7050913685',0.00,'Cleared'),('CNS6A29B6','8754965243',0.00,'Cleared'),('CNS7656','6754345678',0.00,'No Due'),('CON5009','9142101898',1000.00,'dues');
 /*!40000 ALTER TABLE `dues` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,56 +176,8 @@ CREATE TABLE `meter_details` (
 
 LOCK TABLES `meter_details` WRITE;
 /*!40000 ALTER TABLE `meter_details` DISABLE KEYS */;
-INSERT INTO `meter_details` VALUES ('MTR1746344144968','APP1745209023731','smart meter','220 volt','2025-05-06','Chanda','2025-04-28','Bankepur','Unsafe','Pending'),('MTR1746344222948','APP1745209526715','smart meter','220 volt','2025-05-01',NULL,NULL,NULL,NULL,NULL),('MTR1746440773013','APP1745209712350','Digital','220 volt','2025-04-30','AatmaVishwas Rai','2025-05-08','Saristabad','Safe','Confirmed'),('MTR1746552395529','APP1746540552318','Digital','220 Volt','2025-05-06',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `meter_details` VALUES ('MTR1746344144968','APP1745209023731','smart meter','220 volt','2025-05-06','Chanda','2025-04-28','Bankepur','Unsafe','Pending'),('MTR1746344222948','APP1745209526715','smart meter','220 volt','2025-05-01',NULL,NULL,NULL,NULL,NULL),('MTR1746440773013','APP1745209712350','Digital','220 volt','2025-04-30','AatmaVishwas Rai','2025-05-08','Saristabad','Safe','Confirmed'),('MTR1746552395529','APP1746540552318','Digital','220 Volt','2025-05-06',NULL,NULL,NULL,NULL,NULL),('MTR1746654214063','APP1746540552318','Digital','220 Volt','2025-05-08',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `meter_details` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `new_connection_request`
---
-
-DROP TABLE IF EXISTS `new_connection_request`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `new_connection_request` (
-  `app_id` varchar(100) DEFAULT 'APP123',
-  `connectionType` varchar(50) DEFAULT NULL,
-  `consumerId` varchar(50) DEFAULT NULL,
-  `mobile` varchar(15) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `houseNo` varchar(100) DEFAULT NULL,
-  `street` varchar(255) DEFAULT NULL,
-  `addressLine1` varchar(100) DEFAULT NULL,
-  `addressLine2` varchar(100) DEFAULT NULL,
-  `addressLine3` varchar(100) DEFAULT NULL,
-  `city` varchar(100) DEFAULT NULL,
-  `pincode` varchar(10) DEFAULT NULL,
-  `district` varchar(100) DEFAULT NULL,
-  `block` varchar(100) DEFAULT NULL,
-  `panchayat` varchar(100) DEFAULT NULL,
-  `village` varchar(100) DEFAULT NULL,
-  `division` varchar(100) DEFAULT NULL,
-  `subDivision` varchar(100) DEFAULT NULL,
-  `section` varchar(100) DEFAULT NULL,
-  `tariff` varchar(50) DEFAULT NULL,
-  `E_phase` varchar(50) DEFAULT NULL,
-  `E_load` varchar(50) DEFAULT NULL,
-  `gender` varchar(50) DEFAULT NULL,
-  `applicantName` varchar(255) DEFAULT NULL,
-  `f_hName` varchar(255) DEFAULT NULL,
-  `idProof` varchar(50) DEFAULT NULL,
-  `addressProof` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `new_connection_request`
---
-
-LOCK TABLES `new_connection_request` WRITE;
-/*!40000 ALTER TABLE `new_connection_request` DISABLE KEYS */;
-INSERT INTO `new_connection_request` VALUES ('APP123','domestic','CON5678','9142101898','abc@gmail.com','123','Saristabad','Patna','Gardanibagh','Anisabad','Patna','80004','aurangabad','arwal','arwal','arwal','arwal','arwal','arwal','domestic','single','220','female','shrii','Ram','aadhar_card','aadhar_card'),('APP1744335123083','domestic','CON5678','9142101898','abc@gmail.com','123','Saristabad','Patna','Gardanibagh','Anisabad','Patna','80004','aurangabad','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','shrii','hari','aadhar_card','passport'),('APP1744335416076','commercial','CON123456','6754345678','def@gmail.com','9AB34','Gaziabad','Aara','Punjab','Haryana','Patna','80004','kaimur','arwal','arwal','arwal','arwal','arwal','arwal','commercial','three','220','male','Deepak','Hansmukh','pan_card','voter_id'),('APP1745175056708',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('APP1745323026241',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `new_connection_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -269,12 +222,14 @@ CREATE TABLE `new_connection_requests` (
   `ownershipFirst` varchar(255) DEFAULT NULL,
   `ownershipSecond` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` varchar(20) DEFAULT NULL,
   `current_stage` varchar(50) DEFAULT NULL,
   `jee_remarks` text,
   `mi_remarks` text,
   `aee_remarks` text,
   `consumer_number` varchar(100) DEFAULT NULL,
+  `dues_cleared` tinyint(1) DEFAULT '0',
+  `documents_verified` tinyint(1) DEFAULT '0',
+  `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`app_id`,`consumerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -285,7 +240,7 @@ CREATE TABLE `new_connection_requests` (
 
 LOCK TABLES `new_connection_requests` WRITE;
 /*!40000 ALTER TABLE `new_connection_requests` DISABLE KEYS */;
-INSERT INTO `new_connection_requests` VALUES ('APP1745209023731','domestic','CON5678','9142101898','abc@gmail.com','45','Saristabad','Patna','Gardanibagh','Anisabad','Patna','678899','munger','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','nandu','NhiPata','aadhar_card','driving_license',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL,NULL,NULL,NULL,NULL,NULL),('APP1745209526715','domestic','CNS7656','6754345678','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','shrii','vali','aadhar_card','voter_id',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL,NULL,NULL,NULL,NULL,NULL),('APP1745209712350','domestic','CON5009','9142101898','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','hari','prasad','aadhar_card','pan_card',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL,NULL,NULL,NULL,NULL,NULL),('APP1746465873462','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','Arwal','Arwal','Rampur Panchayat','Rampur Waina','Magadh','Arwal','Arwal','domestic','single','30','male','John Doe','Doe','aadhar_card','ration_card','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/signature.jpg',NULL,'uploads/ys.jpg','2025-05-05 17:24:33',NULL,NULL,NULL,NULL,NULL,NULL),('APP1746465926444','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','Arwal','Arwal','Payarechak Panchayat','Piare Chak','Magadh','Arwal','Arwal','domestic','single','30','male','John Doe','Doe','aadhar_card','ration_card','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/signature.jpg','uploads/12th migration.jpg','uploads/ys.jpg','2025-05-05 17:25:26','Submitted',NULL,NULL,NULL,NULL,NULL),('APP1746467059536','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','Arwal','Kaler','Ismailpur Koil Panchayat','Khushdihra','Magadh','Arwal','Kaler','domestic','single','34','male','John Doe','Doe','voter_id','voter_id','uploads/10th marksheet.jpg','uploads/12th marksheet.jpg','uploads/12th migration.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-05 17:44:19','Submitted',NULL,NULL,NULL,NULL,NULL),('APP1746467640620','domestic','CNS25713B','7050913685','doedoe897@gmail.com','23','nosa','Patna','Anishabad','Phulwari','patna','801505','Arwal','Karpi','Puran Panchayat ','Katesar','Magadh','Arwal','Atuallah','commercial','single','34','male','John Doe','Doe','bpl_card','ration_card','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/12th marksheet.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-05 17:54:00','Submitted',NULL,NULL,NULL,NULL,NULL),('APP1746473469441','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','1','3','41','175','2','1','3','domestic','single','34','male','John Doe','Doe','aadhar_card','ration_card','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-05 19:31:09','Approved','Complete','verified','verified by mi','Completed','CNSMR0B7A1AD0'),('APP1746540552318','domestic','CNS98EE03','9123456789','pooja@456gmail.com','19','Baga','Amarpur','Tajnagar','Bagichagali','Arwal','804519','1','3','31','128','2','1','3','domestic','single','15','female','Pooja Sharma','Rohan Sharma','aadhar_card','driving_license','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-06 14:09:12','Approved','Complete','approved','verified','Completed','CNSMR904102B5');
+INSERT INTO `new_connection_requests` VALUES ('APP1745209023731','domestic','CON5678','9142101898','abc@gmail.com','45','Saristabad','Patna','Gardanibagh','Anisabad','Patna','678899','munger','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','670','female','nandu','NhiPata','aadhar_card','driving_license',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL,NULL,NULL,NULL,NULL,0,0,NULL),('APP1745209526715','domestic','CNS7656','6754345678','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','shrii','vali','aadhar_card','voter_id',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL,NULL,NULL,NULL,NULL,0,0,NULL),('APP1745209712350','domestic','CON5009','9142101898','def@gmail.com','45','Gaziabad','Patna','Punjab','Anisabad','Patna','200003','lakhisarai','arwal','arwal','arwal','arwal','arwal','arwal','commercial','single','220','other','hari','prasad','aadhar_card','pan_card',NULL,NULL,NULL,NULL,NULL,NULL,'2025-05-05 14:11:19',NULL,NULL,NULL,NULL,NULL,0,0,NULL),('APP1746465873462','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','Arwal','Arwal','Rampur Panchayat','Rampur Waina','Magadh','Arwal','Arwal','domestic','single','30','male','John Doe','Doe','aadhar_card','ration_card','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/signature.jpg',NULL,'uploads/ys.jpg','2025-05-05 17:24:33',NULL,NULL,NULL,NULL,NULL,0,0,NULL),('APP1746465926444','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','Arwal','Arwal','Payarechak Panchayat','Piare Chak','Magadh','Arwal','Arwal','domestic','single','30','male','John Doe','Doe','aadhar_card','ration_card','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/signature.jpg','uploads/12th migration.jpg','uploads/ys.jpg','2025-05-05 17:25:26',NULL,NULL,NULL,NULL,NULL,0,0,NULL),('APP1746467059536','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','Arwal','Kaler','Ismailpur Koil Panchayat','Khushdihra','Magadh','Arwal','Kaler','domestic','single','34','male','John Doe','Doe','voter_id','voter_id','uploads/10th marksheet.jpg','uploads/12th marksheet.jpg','uploads/12th migration.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-05 17:44:19','JEE',NULL,NULL,NULL,NULL,0,0,NULL),('APP1746467640620','domestic','CNS25713B','7050913685','doedoe897@gmail.com','23','nosa','Patna','Anishabad','Phulwari','patna','801505','Arwal','Karpi','Puran Panchayat ','Katesar','Magadh','Arwal','Atuallah','commercial','single','34','male','John Doe','Doe','bpl_card','ration_card','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/12th marksheet.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-05 17:54:00','JEE',NULL,NULL,NULL,NULL,0,0,NULL),('APP1746473469441','domestic','CNS25713B','7050913685','doedoe897@gmail.com','45','nosa','Patna','Anishabad','Phulwari','patna','801505','1','3','41','175','2','1','3','domestic','single','34','male','John Doe','Doe','aadhar_card','ration_card','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-05 19:31:09','MI','verified','','','',1,1,'Pending MI'),('APP1746540552318','domestic','CNS98EE03','9123456789','pooja@456gmail.com','19','Baga','Amarpur','Tajnagar','Bagichagali','Arwal','804519','1','3','31','128','2','1','3','domestic','single','15','female','Pooja Sharma','Rohan Sharma','aadhar_card','driving_license','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-06 14:09:12','Complete','approved','verified','Completed','CNSMR904102B5',0,0,NULL),('APP1746687965452','domestic','CNS6A29B6','8754965243','man34@gmail.com','45','nosa','Patna','Anishabad','Phulwari','Arwal','801505','1','2','17','76','2','1','2','domestic','single','34','female','Mansi','Kumar','voter_id','voter_id','uploads/12th marksheet.jpg','uploads/10th marksheet.jpg','uploads/12th migration.jpg','uploads/IMG_20220919_184357.jpg','uploads/signature.jpg','uploads/ys.jpg','2025-05-08 07:06:05','MI','verified',NULL,NULL,NULL,1,1,'Pending MI');
 /*!40000 ALTER TABLE `new_connection_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -421,7 +376,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('AEE001','AEE','9876543203','aee123',3,'3'),('CNS25713B','John Doe','7050913685','doedoe789',4,NULL),('CNS98EE03','Pooja Sharma','9123456789','pooja@456',4,NULL),('CNSA1B33C','Yasrab','9603540582','yasrab123',4,NULL),('JEE001','JEE','9876543201','jee123',1,'3'),('JEE002','Amit','9876543210','amit123',1,NULL),('MI001','MI','9876543202','mi123',2,'3');
+INSERT INTO `users` VALUES ('AEE001','AEE','9876543203','aee123',3,'3'),('CNS25713B','John Doe','7050913685','doedoe789',4,NULL),('CNS6A29B6','Mansi','8754965243','man456',4,NULL),('CNS98EE03','Pooja Sharma','9123456789','pooja@456',4,NULL),('CNSA1B33C','Yasrab','9603540582','yasrab123',4,NULL),('CNSB7E443','Rahul Kumar','9988776655','rahul123',4,NULL),('JEE001','JEE','9876543201','jee123',1,'3'),('JEE002','Amit','9876543210','amit123',1,'2'),('MI001','MI','9876543202','mi123',2,'2');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,4 +419,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-07  1:55:46
+-- Dump completed on 2025-05-10 21:53:18
