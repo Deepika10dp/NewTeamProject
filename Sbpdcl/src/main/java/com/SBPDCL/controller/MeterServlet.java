@@ -39,5 +39,3 @@ public class MeterServlet extends HttpServlet {
 	    }
 }
 	
-
-

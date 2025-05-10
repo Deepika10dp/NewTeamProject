@@ -159,20 +159,28 @@
 				        <td><%= duesCleared ? "Yes" : "No" %></td>
 				        <td><%= docsVerified ? "Yes" : "No" %></td>
 				        <td>
-				            <!-- Check Dues -->
-				            <form action="duesCheck.jsp" method="get">
-							    <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
-							    <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
-
-				                <button type="submit">Check Dues</button>
-				            </form>
-				
-				            <!-- Verify Documents -->
-				            <form action="verify_documents.jsp" method="get" style="display:inline;">
-				                <input type="hidden" name="app_id" value="<%= r.getApp_id() %>" />
-				                <button type="submit" <%= duesCleared ? "" : "class='disabled' disabled" %>>Verify Docs</button>
-				            </form>
-				        </td>
+				        
+			<%
+		    if (docsVerified) {
+		%>
+		    <span class="badge bg-success">Forwarded</span>
+		<%
+		    } else {
+		%>
+		    <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
+		        <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
+		        <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
+		        <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
+		    </form>
+		
+		    <form action="verify_documents.jsp" method="get" style="display:inline-block;">
+		        <input type="hidden" name="app_id" value="<%= r.getApp_id() %>" />
+		        <button type="submit" class="btn btn-sm btn-success" <%= duesCleared ? "" : "disabled" %>>Verify Docs</button>
+		    </form>
+		<%
+		    }
+		%>
+</td>
 				    </tr>
 				<% } %>
           </tbody>

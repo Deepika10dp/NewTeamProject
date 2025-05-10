@@ -1,3 +1,4 @@
+
 package com.SBPDCL.services;
 
 import java.sql.SQLException;
@@ -32,6 +33,3 @@ public class MeterService {
     	return dao.getInspectionByMeterId(meter_id);
     }
 }
-
-
-
