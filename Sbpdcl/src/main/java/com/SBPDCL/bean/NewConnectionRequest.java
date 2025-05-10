@@ -70,11 +70,8 @@ public class NewConnectionRequest {
 			this.aeeRemarks = aeeRemarks;
 		}
 		
-
 		 // Generate Getters and Setters for all above fields
 
-		 
-		
 		public String getApp_id() {
 			return app_id;
 		}
@@ -302,9 +299,6 @@ public class NewConnectionRequest {
 					+ ", miRemarks=" + miRemarks + ", aeeRemarks=" + aeeRemarks + "]";
 		}
 		public void setSubmissionDate(Date date) {
-			// TODO Auto-generated method stub
 			
-		}
-		
-			
+		}		
 }

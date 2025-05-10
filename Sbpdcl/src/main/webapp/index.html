@@ -5,56 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SBPDCL Portal</title>
 
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-   <!-- Bootstrap icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-   
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   
-
   <style>
-    
     .image-frame {
       border: 2px solid #0056b3;
       border-radius: 5px;
       overflow: hidden;
       transition: transform 0.5s ease;
     }
-
     .image-frame img,
     .card-img-top {
       transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
-
     .image-frame:hover img,
     .card:hover .card-img-top {
       transform: scale(1.1);
       box-shadow: 0 12px 20px rgba(0, 86, 179, 0.5);
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateX(-10px); }
       to { opacity: 1; transform: translateX(0); }
     }
-
-   
     .modal-backdrop.show {
       backdrop-filter: blur(100%);
     }
     html {
       scroll-behavior:smooth;
     }
-  
-     .custom-modal {
-    background: rgba(255, 255, 255, 0.4); /* Semi-transparent white */
+    .custom-modal {
+    background: rgba(255, 255, 255, 0.4); 
     border-radius: 20px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -63,19 +47,16 @@
     padding: 10px;
     color: #333;
   }
-
-  .custom-modal label {
+	.custom-modal label {
     font-weight: 600;
     margin-bottom: 10px;
     display: block;
     color: #222;
   }
-
   .custom-modal .form-group {
     position: relative;
     margin-bottom: 20px;
   }
-
   .custom-modal .form-control {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid #ccc;
@@ -85,11 +66,9 @@
     color: #000;
     font-size: 16px;
   }
-
   .custom-modal .form-control::placeholder {
     color: #777;
   }
-
   .custom-modal .form-group i {
     position: absolute;
     top: 50%;
@@ -97,7 +76,6 @@
     transform: translateY(-50%);
     color: #888;
   }
-
   .custom-btn {
     font-weight: 600;
     border-radius: 8px;
@@ -109,31 +87,25 @@
     cursor: pointer;
     transition: background 0.3s ease;
   }
-
   .custom-btn:hover {
     background: #0056b3;
   }
-
   .create-link {
     font-size: 13px;
     margin-top: 10px;
     text-align: center;
     color: #333;
   }
-
   .create-link a {
     color: #007bff;
     text-decoration: none;
   }
-
   .create-link a:hover {
     text-decoration: underline;
   }
   </style>
 </head>
 <body>
-
-<!-- Header with Blurred Background -->
 <div style="position: relative; text-align: center; color: white; padding: 20px 0;">
   <div style="
     background: url('images/Backg.jpg') center/cover no-repeat;
@@ -146,27 +118,22 @@
     z-index: 0;
     opacity: 0.8;">
   </div>
-
   <div style="position: relative; z-index: 1;">
     <img src="images/logo1.png" alt="SBPDCL Logo" style="height:120px;">
     <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; color: maroon;">South Bihar Power Distribution Company Ltd</h1>
   </div>
 </div>
-
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Home</a>
- <!--     <button class="btn btn-dark me-2" id="toggleSidebar"><i class="fas fa-bars"></i> Menu</button>	-->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item"><a class="nav-link" href="#aboutSection"><i class="fas fa-info-circle"></i> About</a></li>
         <li class="nav-item"><a class="nav-link" href="guidelines.jsp"><i class="fas fa-book-open"></i> Guidelines</a></li>
         <li class="nav-item"><a class="nav-link" href="#contactSection"><i class="fas fa-phone"></i> Contact Us</a></li>
       </ul>
-      <div class="d-flex">
-        
-     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#loginModal">
+      <div class="d-flex">    
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#loginModal">
       <i class="bi bi-box-arrow-in-right"></i> Login
      </button>
         <button type="button" class="btn btn-warning ms-2" data-bs-toggle="modal" data-bs-target="#signupModal">
@@ -176,32 +143,6 @@
     </div>
   </div>
 </nav>
-<!-- Sidebar 
-<div class="d-flex">
-  <div class="bg-dark text-white p-3" id="sidebar" style="width: 200px; min-height: 60vh; display: none;">
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link text-white" href="#">No Dues</a>
-        <p class="small text-white-50 ms-2">Check any pending dues before applying.</p>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" href="#">New Connection</a>
-        <p class="small text-white-50 ms-2">Apply for new power connection easily.</p>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" href="#">Consumer Login</a>
-        <p class="small text-white-50 ms-2">Login to your consumer dashboard.</p>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" href="#">Power Supply Status</a>
-        <p class="small text-white-50 ms-2">Track real-time power supply updates.</p>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" href="#">Feedback</a>
-        <p class="small text-white-50 ms-2">Share your experience with us.</p>
-      </li>
-    </ul>
-  </div>		-->
 
   <!-- Main Content -->
   <div class="flex-grow-1 p-4" id="mainContent">
@@ -233,16 +174,13 @@
   </div>
 </div>
 
-
 <!-- About Section -->
 <section id="aboutSection" class="py-5" style="background: linear-gradient(to right, #e3f2fd, #ffffff);">
   <div class="container-fluid px-5">
     <div class="row align-items-center wow fadeInUp" data-wow-delay="0.2s" style="animation: fadeIn 0.4s ease;">
-      <!-- Image -->
       <div class="col-lg-6 mb-4 mb-lg-0">
         <img src="images/about.jpg" class="img-fluid rounded shadow-lg" alt="About Us" style="width: 100%; transition: transform 0.5s ease, box-shadow 0.5s ease; transform-origin: center; cursor: pointer;">
       </div>
-      <!-- Content -->
       <div class="col-lg-6 text-dark ps-lg-5">
         <h2 class="fw-bold mb-3" style="color: #003366; font-family: 'Poppins', sans-serif; font-size: 2.5rem;">About Us</h2>
         <p class="lead" style="font-size: 1.2rem; color: #555;">South Bihar Power Distribution Company Limited (SBPDCL) is a public sector undertaking (PSU) controlled by the Government of Bihar.</p>
@@ -269,8 +207,6 @@
 
   </div>
 </section>
-
-<!-- Add this hover effect directly to images -->
 <script>
   document.querySelectorAll('img').forEach(img => {
     img.addEventListener('mouseover', function() {
@@ -291,8 +227,6 @@
       <h2 style="color: #003366; font-weight: bold; font-size: 2.5rem; text-shadow: 1px 1px 2px #aaa;">Contact Us</h2>
       <p style="color: #444; font-size: 1.1rem;">We’d love to hear from you! Choose any method below to reach us.</p>
     </div>
-
-    <!-- 3D Cards Row -->
     <div class="row g-4 justify-content-center">
       <!-- Phone -->
       <div class="col-md-4">
@@ -302,7 +236,6 @@
           <p style="color: #555;">+91 00000 00000</p>
         </div>
       </div>
-
       <!-- Email -->
       <div class="col-md-4">
         <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2); transform: perspective(800px) rotateY(5deg); transition: transform 0.4s ease-in-out; text-align: center;">
@@ -311,8 +244,7 @@
           <p style="color: #555;">sbpdcl123@gmail.com</p>
         </div>
       </div>
-
-      <!-- Address -->
+    <!-- Address -->
       <div class="col-md-4">
         <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2); transform: perspective(800px) rotateY(-3deg); transition: transform 0.4s ease-in-out; text-align: center;">
           <i class="fas fa-map-marker-alt" style="color: #28a745; font-size: 2.5rem; margin-bottom: 15px;"></i>
@@ -325,7 +257,6 @@
         </div>
       </div>
     </div>
-
     <!-- 3D Styled Map -->
     <div class="mt-5" style="transform: perspective(1000px) rotateX(2deg); box-shadow: 0 20px 35px rgba(0,0,0,0.3); border-radius: 20px; overflow: hidden;">
       <iframe 
@@ -338,11 +269,9 @@
 </section>
 
 <!-- Shared Modal Style -->
- 
 <style>
   .custom-modal {
-    background: rgba(255, 255, 255, 0.4); /* Semi-transparent white */
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.4); 
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -350,19 +279,16 @@
     padding: 10px;
     color: #333;
   }
-
   .custom-modal label {
     font-weight: 600;
     margin-bottom: 10px;
     display: block;
     color: #222;
   }
-
   .custom-modal .form-group {
     position: relative;
     margin-bottom: 20px;
   }
-
   .custom-modal .form-control {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid #ccc;
@@ -372,11 +298,9 @@
     color: #000;
     font-size: 16px;
   }
-
   .custom-modal .form-control::placeholder {
     color: #777;
   }
-
   .custom-modal .form-group i {
     position: absolute;
     top: 50%;
@@ -384,7 +308,6 @@
     transform: translateY(-50%);
     color: #888;
   }
-
   .custom-btn {
     font-weight: 600;
     border-radius: 8px;
@@ -396,23 +319,19 @@
     cursor: pointer;
     transition: background 0.3s ease;
   }
-
   .custom-btn:hover {
     background: #0056b3;
   }
-
   .create-link {
     font-size: 13px;
     margin-top: 10px;
     text-align: center;
     color: #333;
   }
-
   .create-link a {
     color: #007bff;
     text-decoration: none;
   }
-
   .create-link a:hover {
     text-decoration: underline;
   }
@@ -487,8 +406,6 @@
   };
 </script>
 
-
-<!-- Bootstrap & Sidebar Toggle Script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   const toggleBtn = document.getElementById('toggleSidebar');
