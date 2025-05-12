@@ -31,6 +31,7 @@
         <h2>Registration Successful!</h2>
         <p><strong>User ID:</strong> ${userId}</p>
         <p><strong>Password:</strong> ${password}</p>
+        <p>Make sure to take a screenshot or note them down for future logins.</p>
     </div>
 </body>
 </html>
