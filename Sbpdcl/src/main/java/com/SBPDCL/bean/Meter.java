@@ -17,6 +17,7 @@ public class Meter {
 	 private String confirmation_status;
 	 
 	 
+	 
 	public String getMeter_id() {
 		return meter_id;
 	}

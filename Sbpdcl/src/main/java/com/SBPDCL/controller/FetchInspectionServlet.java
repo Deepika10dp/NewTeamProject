@@ -20,10 +20,10 @@ import com.SBPDCL.services.MeterService;
 			private MeterService service = new MeterService();
 
 		    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		        String meterId = request.getParameter("meter_id");
+		        String app_id = request.getParameter("app_id");
 
 		        try {
-		        	Meter meter = service.getInspectionByMeterId(meterId);
+		        	Meter meter = service.getInspectionByAppId(app_id);
 		            request.setAttribute("meter", meter);
 		            RequestDispatcher dispatcher = request.getRequestDispatcher("FetchInspectionDetails.jsp");
 		            dispatcher.forward(request, response);
