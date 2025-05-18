@@ -17,13 +17,12 @@ import com.SBPDCL.services.UserService;
 public class ChangePasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public ChangePasswordServlet() {
-        super();
+        super();  
     }
-    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 HttpSession session = request.getSession(false);
 	        if (session == null || session.getAttribute("user_id") == null) {
@@ -34,14 +33,13 @@ public class ChangePasswordServlet extends HttpServlet {
 	        String oldPass = request.getParameter("oldPassword");
 	        String newPass = request.getParameter("newPassword");
 
-	        User user = (User) session.getAttribute("user");
-	        int roleId = user.getRoleId();
+	        User user = (User) session.getAttribute("user"); // Get user from session
+	        int roleId = user.getRoleId(); // Used to identify which dashboard
 	        
 	        UserService userService = new UserService();
 	        boolean success = userService.changePassword(userId, oldPass, newPass);
-
 	        request.setAttribute("msg", success ? "Password changed successfully." : "Old password is incorrect.");
-
+	        // Decide which dashboard to forward to
 	        String dashboardPage = "";
 	        switch (roleId) {
 	            case 1:
@@ -60,7 +58,9 @@ public class ChangePasswordServlet extends HttpServlet {
 	                dashboardPage = "unauthorized.jsp";
 	                break;
 	        }
+
 	        RequestDispatcher rd = request.getRequestDispatcher(dashboardPage + "?page=change_password");
 	        rd.forward(request, response);
 	}
+
 }

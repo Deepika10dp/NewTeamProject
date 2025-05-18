@@ -193,7 +193,7 @@
   <p><strong>Name:</strong> <%= user.getName() %></p>
   <p><strong>Section:</strong> East Division</p>
   <p><strong>ID:</strong> <%= userId %></p>
-  <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
+  <p><a href="#" onclick="openChangePasswordModal(event)">Change Password</a></p>
   <p><a href="LogoutServlet">Logout</a></p>
 
   <div id="profileContent"></div>
@@ -207,27 +207,27 @@
     panel.classList.toggle("open");
   }
 
-  function loadChangePassword(event) {
-    event.preventDefault();
+  function openChangePasswordModal(event) {
+	  event.preventDefault();
 
-    const panel = document.getElementById("profilePanel");
-    panel.classList.add("open"); // Keep panel open
+	  const modalBody = document.getElementById("changePasswordContent");
+	  modalBody.innerHTML = "<p>Loading...</p>";
 
-    const contentDiv = document.getElementById("profileContent");
-
-    fetch("change_password.jsp")
-      .then(response => {
-        if (!response.ok) throw new Error("Failed to load change password");
-        return response.text();
-      })
-      .then(html => {
-        contentDiv.innerHTML = html;
-      })
-      .catch(err => {
-        contentDiv.innerHTML = "<p style='color:red;'>Error loading content.</p>";
-        console.error(err);
-      });
-  }
+	  fetch("change_password.jsp")
+	    .then(response => {
+	      if (!response.ok) throw new Error("Error loading page.");
+	      return response.text();
+	    })
+	    .then(html => {
+	      modalBody.innerHTML = html;
+	      const modal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+	      modal.show();
+	    })
+	    .catch(error => {
+	      modalBody.innerHTML = "<p class='text-danger'>Failed to load the form.</p>";
+	      console.error(error);
+	    });
+	}
 </script>
 
 <%
@@ -240,5 +240,20 @@
 <%
     }
 %>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="changePasswordContent">
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

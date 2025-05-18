@@ -159,20 +159,28 @@
 				        <td><%= duesCleared ? "Yes" : "No" %></td>
 				        <td><%= docsVerified ? "Yes" : "No" %></td>
 				        <td>
-				            <!-- Check Dues -->
-				            <form action="duesCheck.jsp" method="get">
-							    <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
-							    <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
-
-				                <button type="submit">Check Dues</button>
-				            </form>
-				
-				            <!-- Verify Documents -->
-				            <form action="verify_documents.jsp" method="get" style="display:inline;">
-				                <input type="hidden" name="app_id" value="<%= r.getApp_id() %>" />
-				                <button type="submit" <%= duesCleared ? "" : "class='disabled' disabled" %>>Verify Docs</button>
-				            </form>
-				        </td>
+				        
+			<%
+		    if (docsVerified) {
+		%>
+		    <span class="badge bg-success">Forwarded</span>
+		<%
+		    } else {
+		%>
+		    <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
+		        <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
+		        <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
+		        <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
+		    </form>
+		
+		    <form action="verify_documents.jsp" method="get" style="display:inline-block;">
+		        <input type="hidden" name="app_id" value="<%= r.getApp_id() %>" />
+		        <button type="submit" class="btn btn-sm btn-success" <%= duesCleared ? "" : "disabled" %>>Verify Docs</button>
+		    </form>
+		<%
+		    }
+		%>
+</td>
 				    </tr>
 				<% } %>
           </tbody>
@@ -187,7 +195,7 @@
   <p><strong>Name:</strong> <%= user.getName() %></p>
   <p><strong>Section:</strong> East Division</p>
   <p><strong>ID:</strong> <%= userId %></p>
-  <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
+  <p><a href="#" onclick="openChangePasswordModal(event)">Change Password</a></p>
   <p><a href="LogoutServlet">Logout</a></p>
 
   <div id="profileContent"></div>
@@ -219,26 +227,26 @@
     });
   });
   
-  function loadChangePassword(event) {
+ 
+  function openChangePasswordModal(event) {
 	  event.preventDefault();
 
-	  const panel = document.getElementById("profilePanel");
-	  panel.classList.add("open"); // Keep panel open
+	  const modalBody = document.getElementById("changePasswordContent");
+	  modalBody.innerHTML = "<p>Loading...</p>";
 
-	  const contentDiv = document.getElementById("profileContent");
-
-	  // Load JSP via AJAX
 	  fetch("change_password.jsp")
 	    .then(response => {
-	      if (!response.ok) throw new Error("Failed to load change password");
+	      if (!response.ok) throw new Error("Error loading page.");
 	      return response.text();
 	    })
 	    .then(html => {
-	      contentDiv.innerHTML = html;
+	      modalBody.innerHTML = html;
+	      const modal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+	      modal.show();
 	    })
-	    .catch(err => {
-	      contentDiv.innerHTML = "<p style='color:red;'>Error loading content.</p>";
-	      console.error(err);
+	    .catch(error => {
+	      modalBody.innerHTML = "<p class='text-danger'>Failed to load the form.</p>";
+	      console.error(error);
 	    });
 	}
 </script>
@@ -248,10 +256,25 @@
     if (msg != null) {
 %>
   <script>
-    alert("<%= msg.replaceAll("\"", "\\\\\"") %>");
+    alert("<%= msg %>");
   </script>
 <%
     }
 %>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="changePasswordContent">
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

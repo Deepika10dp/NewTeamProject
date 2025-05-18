@@ -173,7 +173,7 @@
   <p><strong>Name:</strong> <%= user.getName() %></p>
   <p><strong>Role:</strong> Meter Installer</p>
   <p><strong>ID:</strong> <%= userId %></p>
-  <p><a href="#" onclick="loadChangePassword(event)">Change Password</a></p>
+  <p><a href="#" onclick="openChangePasswordModal(event)">Change Password</a></p>
   <p><a href="LogoutServlet">Logout</a></p>
 
   <div id="profileContent"></div>
@@ -208,6 +208,28 @@
         console.error(err);
       });
   }
+  
+  function openChangePasswordModal(event) {
+	  event.preventDefault();
+
+	  const modalBody = document.getElementById("changePasswordContent");
+	  modalBody.innerHTML = "<p>Loading...</p>";
+
+	  fetch("change_password.jsp")
+	    .then(response => {
+	      if (!response.ok) throw new Error("Error loading page.");
+	      return response.text();
+	    })
+	    .then(html => {
+	      modalBody.innerHTML = html;
+	      const modal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+	      modal.show();
+	    })
+	    .catch(error => {
+	      modalBody.innerHTML = "<p class='text-danger'>Failed to load the form.</p>";
+	      console.error(error);
+	    });
+	}
 </script>
 
 <%
@@ -220,5 +242,20 @@
 <%
     }
 %>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="changePasswordContent">
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

@@ -165,7 +165,7 @@ public class NewConnectionDAO {
 	  public List<NewConnectionRequest> getRequestsForJEE(String sectionId) {
 		    List<NewConnectionRequest> list = new ArrayList<>();
 		    try (Connection con = DBConnection.getConnection()) {
-		        String query = "SELECT * FROM new_connection_requests WHERE current_stage='JEE' AND section=?";
+		        String query = "SELECT * FROM new_connection_requests WHERE (current_stage='JEE' OR (current_stage='MI' AND status='Pending MI')) AND section=?";
 		        PreparedStatement ps = con.prepareStatement(query);
 		        ps.setString(1, sectionId);
 		        ResultSet rs = ps.executeQuery();
@@ -177,6 +177,8 @@ public class NewConnectionDAO {
 		            req.setDues_cleared(rs.getBoolean("dues_cleared"));
 		            req.setDocuments_verified(rs.getBoolean("documents_verified"));
 		            req.setConsumerId(rs.getString("consumerId"));
+		            req.setStatus(rs.getString("status"));
+		            req.setCurrentStage(rs.getString("current_stage"));
 		           
 		            // set more fields as needed
 		            list.add(req);
@@ -185,7 +187,7 @@ public class NewConnectionDAO {
 		        e.printStackTrace();
 		    }
 		    return list;
-		}
+		}  
 	 
 	  public boolean verifyDocumentsAndForwardToMI(String appId, String jeeRemarks) {
 		    // Updated query to include 'documents_verified' field
