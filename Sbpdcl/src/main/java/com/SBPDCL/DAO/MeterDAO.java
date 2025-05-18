@@ -10,7 +10,6 @@ import com.SBPDCL.util.DBConnection;
 
 public class MeterDAO {
 	
-	private String app_id;
 	public void insertInspectionDetails(Meter meter) throws SQLException, ClassNotFoundException {
 	    String query = "INSERT INTO meter_details (meter_id, app_id, inspector_name, inspection_date, address, site_status, confirmation_status) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	    try (Connection con = DBConnection.getConnection();
@@ -85,12 +84,12 @@ public class MeterDAO {
 	        }
 	        return meter;
 	   }
-	    public String getConfirmationStatusByAppId(String appId) {
+	    public String getConfirmationStatusByAppId(String app_id) {
 	        String status = null;
 	        try (Connection conn = DBConnection.getConnection()) {
 	            String sql = "SELECT confirmation_status FROM meter_details WHERE app_id = ?";
 	            PreparedStatement ps = conn.prepareStatement(sql);
-	            ps.setString(1, appId);
+	            ps.setString(1, app_id);
 	            ResultSet rs = ps.executeQuery();
 	            if (rs.next()) {
 	                status = rs.getString("confirmation_status");
@@ -100,13 +99,13 @@ public class MeterDAO {
 	        }
 	        return status;
 	    }
-	    public boolean isMeterDetailsFilled(String appId) {
+	    public boolean isMeterDetailsFilled(String app_id) {
 	        boolean isFilled = false;
 	        try {
 	            Connection conn = DBConnection.getConnection();
 	            String query = "SELECT COUNT(*) FROM meter_details WHERE app_id = ?";
 	            PreparedStatement ps = conn.prepareStatement(query);
-	            ps.setString(1, appId);
+	            ps.setString(1, app_id);
 	            ResultSet rs = ps.executeQuery();
 
 	            if (rs.next() && rs.getInt(1) > 0) {

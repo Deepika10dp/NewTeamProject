@@ -34,8 +34,8 @@ public class NewConnectionService {
         return new NewConnectionDAO().getApplicationsForMI(sectionId);
     }
 
-    public boolean updateMIInspection(String appId, String miRemarks) {
-        return new NewConnectionDAO().updateMIInspection(appId, miRemarks);
+    public boolean updateMIInspection(String appId, String mi_remarks) {
+        return dao.updateMIInspection(appId, mi_remarks);
     }
 	public boolean checkDuesCleared(String consumerId, String mobile) {
 		// TODO Auto-generated method stub

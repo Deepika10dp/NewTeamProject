@@ -6,47 +6,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.SBPDCL.services.NewConnectionService;
-
-/**
- * Servlet implementation class JEEVerificationServlet
- */
 @WebServlet("/JEEVerificationServlet")
 public class JEEVerificationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public JEEVerificationServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 // Retrieve parameters from the request
 	    String appId = request.getParameter("appId");
 	    String jeeRemarks = request.getParameter("jeeRemarks");
-
-	    // Create service instance
 	    NewConnectionService service = new NewConnectionService();
-
-	    // Call the service method to verify documents and forward to MI
 	    boolean updated = service.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
-
-	    // Redirect based on the result of the operation
 	    if (updated) {
 	        response.sendRedirect("jeeDashboard.jsp?success=true");
 	    } else {
