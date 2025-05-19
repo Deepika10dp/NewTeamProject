@@ -1,4 +1,3 @@
-
 package com.SBPDCL.controller;
 
 import java.io.IOException;
@@ -7,43 +6,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.SBPDCL.services.NewConnectionService;
-
-/**
- * Servlet implementation class MIInspectionServlet
- */
 @WebServlet("/MIInspectionServlet")
 public class MIInspectionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public MIInspectionServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String appId = request.getParameter("appId");
-        String miRemarks = request.getParameter("miRemarks");
-
+		String app_id = request.getParameter("app_id");
+        String mi_remarks = request.getParameter("mi_remarks");
         NewConnectionService service = new NewConnectionService();
-        boolean updated = service. updateMIInspection(appId, miRemarks);
-
+        boolean updated = service. updateMIInspection(app_id, mi_remarks);
         if (updated) {
             response.sendRedirect("miDashboard.jsp?success=true");
         } else {

@@ -43,8 +43,9 @@ public class NewConnectionRequest {
 		 private String status;
 		 private String currentStage;
 		 private String jeeRemarks;
-		 private String miRemarks;
+		 private String mi_remarks;
 		 private String aeeRemarks;
+		 private String inspectionStatus;
 		 
 		 private Boolean dues_cleared;
 		 private Boolean documents_verified;
@@ -74,21 +75,18 @@ public class NewConnectionRequest {
 		public void setJeeRemarks(String jeeRemarks) {
 			this.jeeRemarks = jeeRemarks;
 		}
-		public String getMiRemarks() {
-			return miRemarks;
+		public String getMi_remarks() {
+			return mi_remarks;
 		}
-		public void setMiRemarks(String miRemarks) {
-			this.miRemarks = miRemarks;
+		public void setMi_remarks(String mi_remarks) {
+			this.mi_remarks = mi_remarks;
 		}
 		public String getAeeRemarks() {
 			return aeeRemarks;
 		}
 		public void setAeeRemarks(String aeeRemarks) {
 			this.aeeRemarks = aeeRemarks;
-		}
-		
-		 // Generate Getters and Setters for all above fields
-
+		}		
 		public String getApp_id() {
 			return app_id;
 		}
@@ -299,6 +297,13 @@ public class NewConnectionRequest {
 						public void setStatus(String status) {
 							this.status = status;
 						}
+						
+						public String getInspectionStatus() {
+							return inspectionStatus;
+						}
+						public void setInspectionStatus(String inspectionStatus) {
+							this.inspectionStatus = inspectionStatus;
+						}
 		@Override
 		public String toString() {
 			return "NewConnectionRequest [app_id=" + app_id + ", connectionType=" + connectionType + ", consumerId="
@@ -313,8 +318,9 @@ public class NewConnectionRequest {
 					+ ", addressProofLast=" + addressProofLast + ", photo=" + photo + ", ownershipFirst="
 					+ ownershipFirst + ", ownershipSecond=" + ownershipSecond + ", submissionDate=" + submissionDate
 					+ ", status=" + status + ", currentStage=" + currentStage + ", jeeRemarks=" + jeeRemarks
-					+ ", miRemarks=" + miRemarks + ", aeeRemarks=" + aeeRemarks + ", dues_cleared=" + dues_cleared
-					+ ", documents_verified=" + documents_verified + "]";
+					+ ", miRemarks=" + mi_remarks + ", aeeRemarks=" + aeeRemarks + ", inspectionStatus="
+					+ inspectionStatus + ", dues_cleared=" + dues_cleared + ", documents_verified=" + documents_verified
+					+ "]";
 		}
 		public void setSubmissionDate(Date date) {
 			

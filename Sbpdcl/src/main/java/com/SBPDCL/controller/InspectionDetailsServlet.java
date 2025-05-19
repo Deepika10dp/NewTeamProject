@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,15 +36,13 @@ public class InspectionDetailsServlet extends HttpServlet {
             meter.setConfirmation_status(confirmation_status);
 
             MeterService service = new MeterService();
-            service.updateInspectionDetails(meter);
+            service.insertInspectionDetails(meter);
 
-	    
-			response.getWriter().write("Inspection details saved successfully.");
-			
-		}catch (IOException | ClassNotFoundException | SQLException e) {
+		}catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             throw new ServletException(e); 
         }
+        response.sendRedirect("miDashboard.jsp?message=Inspection Details saved successfully");
     }
 }
 

@@ -3,6 +3,8 @@
 <%@page import="java.util.List"%>
 <%@page import="com.SBPDCL.bean.NewConnectionRequest"%>
 <%@page import="com.SBPDCL.services.NewConnectionService"%>
+<%@page import="com.SBPDCL.DAO.MeterDAO"%>
+
 <%
     User user = (User) session.getAttribute("user");
     if (user == null || user.getRoleId() != 2) {
@@ -117,10 +119,11 @@
     <!-- Sidebar -->
     <div class="col-md-2 sidebar p-3">
       <h5 class="text-center">Menu</h5>
-      <a href="#">Dashboard Home</a>
-      <a href="#">Assigned Installations</a>
-      <a href="#">Update Meter Status</a>
-      <a href="#">Schedule Installation</a>
+      <a href="miDashboard.jsp">Dashboard Home</a>
+      <a href="InspectionDetails.html">Fill Inspection Details</a>
+      <a href="Meter_details.html">Fill Meter Details</a>
+      <a href="FetchInspectionDetails.html">View Inspection Details</a>
+        <a href="MeterDetails.jsp">View Meter Details</a>
       
     </div>
 
@@ -137,20 +140,52 @@
                 <th>Application ID</th>
                 <th>Customer Name</th>
                 <th>Status</th>
+                <th>Inspection Status</th>
+                <th>Meter Details</th>
                 <th>Remarks</th>
                 <th>Update</th>
               </tr>
             </thead>
+			   </thead>
             <tbody>
 			      <%
 			        for (NewConnectionRequest req : requests) {
+			        	String app_id =req.getApp_id();
 			      %>
 			      <form action="MIInspectionServlet" method="post">
 			        <tr data-status="<%= req.getStatus() %>">
 			          <td><%= req.getApp_id() %></td>
 			          <td><%= req.getApplicantName()%></td>
 			          <td><%= req.getStatus() %></td>
-			          <td><input type="text" name="miRemarks" class="form-control" required></td>
+			          <td><%
+			          		MeterDAO meterDAO = new MeterDAO();
+			          String status = meterDAO.getConfirmationStatusByAppId(app_id); 
+			         	    if (status == null || status.equals("Pending")) { 
+						%>
+						    <a href="InspectionDetails.html?app_id=<%= app_id %>">Fill Inspection Details</a>
+						<% } else { %>
+						    <span><%= status %></span>
+						<% } %></td>
+								 <td>
+						    <%
+						        if ("Confirmed".equals(status)) {
+						            if (meterDAO.isMeterDetailsFilled(app_id)) {
+						    %>
+						                <span>Done</span>
+						    <%
+						            } else {
+						    %>
+						                <a href="Meter_details.html?app_id=<%= app_id %>">Fill Meter Details</a>
+						    <%
+						            }
+						        } else {
+						    %>
+						        <span>Waiting for confirmation</span>
+						    <%
+						        }
+						    %>
+					  </td>
+					  <td><input type="text" name="mi_remarks" class="form-control" value="<%= request.getParameter("mi_remarks") != null ? request.getParameter("mi_remarks") : "" %>"required></td>
 			          <td>
 			            <input type="hidden" name="appId" value="<%= req.getApp_id() %>">
 			            <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>

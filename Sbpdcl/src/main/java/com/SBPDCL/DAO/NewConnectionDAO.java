@@ -234,7 +234,7 @@ public class NewConnectionDAO {
 		    return list;
 		}
 
-	  public boolean updateMIInspection(String appId, String miRemarks) {
+	  public boolean updateMIInspection(String app_id, String mi_remarks) {
 		    String sql ="UPDATE new_connection_requests SET status=?, current_stage=?, mi_remarks=? WHERE app_id=?";
 
 		    try (Connection con = DBConnection.getConnection();
@@ -242,8 +242,8 @@ public class NewConnectionDAO {
 
 		    	ps.setString(1, "Pending AEE");
 		        ps.setString(2, "AEE");
-		        ps.setString(3, miRemarks);
-		        ps.setString(4, appId);
+		        ps.setString(3, mi_remarks);
+		        ps.setString(4, app_id);
 
 		        int rows = ps.executeUpdate();
 		        return rows > 0;
