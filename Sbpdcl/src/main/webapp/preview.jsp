@@ -86,8 +86,9 @@
 
     <form action="FinalSubmitServlet" method="post">
 
-        <!-- Personal Details -->
-        <div class="section">
+    <div style="display: flex; gap:20px; flex-wrap: wrap;">    
+    	<!-- Personal Details -->
+        <div class="section" style="flex: 1; min-width: 300px;">
             <h3>Personal Details</h3>
             <div class="row"><div class="label">Applicant Name:</div><div class="value"><%= formData.getApplicantName() %></div></div>
             <div class="row"><div class="label">Father/Husband Name:</div><div class="value"><%= formData.getF_hName() %></div></div>
@@ -97,7 +98,7 @@
         </div>
 
         <!-- Address Details -->
-        <div class="section">
+        <div class="section" style="flex: 1; min-width: 300px;">
             <h3>Address Details</h3>
             <div class="row"><div class="label">House No:</div><div class="value"><%= formData.getHouseNo() %></div></div>
             <div class="row"><div class="label">Street:</div><div class="value"><%= formData.getStreet() %></div></div>
@@ -107,9 +108,11 @@
             <div class="row"><div class="label">City:</div><div class="value"><%= formData.getCity() %></div></div>
             <div class="row"><div class="label">Pincode:</div><div class="value"><%= formData.getPincode() %></div></div>
         </div>
-
+	 </div>
+	 
+	  <div style="display: flex; gap:20px; flex-wrap: wrap;">  
         <!-- Location Details -->
-        <div class="section">
+        <div class="section" style="flex: 1; min-width: 300px;">
             <h3>Location</h3>
             <div class="row"><div class="label">District:</div><div class="value"><%= locationNames.getDistrictName() %></div></div>
             <div class="row"><div class="label">Block:</div><div class="value"><%= locationNames.getBlockName() %></div></div>
@@ -121,7 +124,7 @@
         </div>
 
         <!-- Connection Details -->
-        <div class="section">
+        <div class="section" style="flex: 1; min-width: 300px;">
             <h3>Connection Details</h3>
             <div class="row"><div class="label">Tariff:</div><div class="value"><%= formData.getTariff() %></div></div>
             <div class="row"><div class="label">Phase:</div><div class="value"><%= formData.getPhase() %></div></div>
@@ -157,44 +160,43 @@
         <input type="hidden" name="f_hName" value="<%= formData.getF_hName() %>"/>
         <input type="hidden" name="idProof" value="<%= formData.getIdProof() %>"/>
         <input type="hidden" name="addressProof" value="<%= formData.getAddressProof() %>"/>
+     </div>
 		
- <div class="preview-section">
-  <h2 class="mb-4">Uploaded Files</h2>
+<div class="preview-section">
+  <h2>Uploaded Files</h2>
 
-  <div class="mb-3">
-    <h3>ID Proof:</h3>
-    <iframe src="<%= formData.getIdProofFile() %>" class="preview-frame"></iframe>
-  </div>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+    <div style="text-align: center; width: 140px;">
+      <h4>ID Proof</h4>
+      <img src="<%= formData.getIdProofFile() %>" alt="ID Proof" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+    </div>
 
-  <div class="mb-3">
-    <h3>Address Proof (Front Page):</h3>
-    <iframe src="<%= formData.getAddressProofFront() %>" class="preview-frame"></iframe>
-  </div>
+    <div style="text-align: center; width: 140px;">
+      <h4>Address Proof (Front)</h4>
+      <img src="<%= formData.getAddressProofFront() %>" alt="Address Proof Front" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+    </div>
 
-  <div class="mb-3">
-    <h3>Address Proof (Last Page):</h3>
-    <iframe src="<%= formData.getAddressProofLast() %>" class="preview-frame"></iframe>
-  </div>
+    <div style="text-align: center; width: 140px;">
+      <h4>Address Proof (Last)</h4>
+      <img src="<%= formData.getAddressProofLast() %>" alt="Address Proof Last" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+    </div>
 
-  <div class="mb-3">
-    <h3>Photograph:</h3>
-    <img src="<%= formData.getPhoto() %>" alt="Photo" class="preview-image" />
-  </div>
+    <div style="text-align: center; width: 140px;">
+      <h4>Photograph of Applicant</h4>
+      <img src="<%= formData.getPhoto() %>" alt="Photograph" style="width: 100px; height: 120px; object-fit: cover; border: 1px solid #ccc;" />
+    </div>
 
-  <div class="mb-3">
-    <h3>Ownership Proof (First Page):</h3>
-    <iframe src="<%= formData.getOwnershipFirst() %>" class="preview-frame"></iframe>
-  </div>
+    <div style="text-align: center; width: 140px;">
+      <h4>Ownership Proof (First)</h4>
+      <img src="<%= formData.getOwnershipFirst() %>" alt="Ownership First" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+    </div>
 
-  <div class="mb-3">
-    <h3>Ownership Proof (Second Page):</h3>
-    <iframe src="<%= formData.getOwnershipSecond() %>" class="preview-frame"></iframe>
+    <div style="text-align: center; width: 140px;">
+      <h4>Ownership Proof (Second)</h4>
+      <img src="<%= formData.getOwnershipSecond() %>" alt="Ownership Second" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+    </div>
   </div>
 </div>
-        <div class="buttons">
-            <button type="submit">Final Submit</button>
-            <button type="button" onclick="history.back();">Back to Edit</button>
-        </div>
     </form>
 </body>
 </html>
