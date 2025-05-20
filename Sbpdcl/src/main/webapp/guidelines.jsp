@@ -63,44 +63,110 @@
                 width: 100%;
             }
         }
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin: 30px auto;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            width: 40%;
+        }
+        caption {
+            caption-side: top;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Guidelines for SBPDCL New Connection</h1>
+    <h1>User Guidelines: New Service Connection Portal</h1>
+    <h4>These guidelines will help you navigate and complete the process for applying for a new electricity connection.</h4>
 
     <div class="guidelines">
         <div class="guideline-box">
-            <h3>How to Apply for a New Connection</h3>
+            <h3>How to Apply for a New Connection?</h3>
+            <h4>Step 1: User Registration</h4>
             <ul>
-                <li>Visit the official website and go to 'New Connection'.</li>
-                <li>Select 'LT New Connection' and fill in the required details.</li>
-                <li>Upload scanned copies of identity and address proof.</li>
-                <li>Submit the form and save the request number.</li>
-                <li>Check application status using the request number.</li>
+                <li>Visit the Sign Up page.</li>
+                <li>Fill in the required details such as:<br>* Full Name<br>* Mobile Number<br>* Create a secure Password<br>* Submit the form to generate your Consumer ID.<br>* Save the Consumer ID and Password for future logins.</li>
+                <li>Click Sign Up to register yourself.</li>
             </ul>
         </div>
-
-        <div class="guideline-box">
-            <h3>How to Check Connection Status</h3>
+        <div class="guideline-box"> 
+            <h3>How to Login?</h3>
+            <h4>Step 2: Login</h4>
             <ul>
-                <li>Go to the bill status page.</li>
-                <li>Enter your application number and registered mobile number.</li>
-                <li>View the status updates of your new connection.</li>
+                <li>Go to the Login page.</li>
+                <li>Enter your Consumer ID and Password.</li>
+                <li>Click Login to access your dashboard.</li>
             </ul>
         </div>
-
         <div class="guideline-box">
-            <h3>How to Pay Electricity Bill</h3>
+            <h3>How to Fill Application Form?</h3>
+            <h4>Step 3: Fill Application Form</h4>
             <ul>
-                <li>Visit the payment website and go to 'Bills and Recharges'.</li>
-                <li>Select 'Electricity Bill Payment' and choose your provider.</li>
-                <li>Enter your Consumer Number and fetch the bill.</li>
-                <li>Select a payment method and complete the payment.</li>
+                <li>Click on “New Connection Application”.</li>
+                <li>Complete the application form with accurate details:<br>* Connection Type<br>* Consumer ID<br>* Address of connection<br>* Type of connection<br>* Load requirement<br>* Applicant’s personal and contact information</li>
+                <li>Preview all details before final submitting.</li>
+            </ul>
+        </div>
+        <div class="guideline-box">
+            <h3>How to upload required documents?</h3>
+            <h4>Step 4: Upload Documents</h4>
+            <ul>
+                <li>Upload the necessary supporting documents:<br>* Identity Proof (e.g., Aadhaar, PAN)<br>* Address Proof (e.g., Electricity bill, Rental agreement)<br>* Ownership Proof or Authorization Letter (if applicable)<br>* Photo Of Applicant</li>
+                <li>Make sure the documents are clear and in PDF/JPG/PNG format.</li>
+                <li>Submit all files along with the application.</li>               
+            </ul>
+        </div>
+         <div class="guideline-box">
+            <h3>How to make Payment?</h3>
+            <h4>Step 5: Make Payment (Offline)</h4>
+            <table>
+	        <caption>Typical Charges for New Connection</caption>
+	        <tr>
+	            <th>Application Fee</th>
+	            <td> ₹50 </td>
+	        </tr>
+	        <tr>
+	            <th>Security Deposit</th>
+	            <td>₹300 per kW </td>
+	        </tr>
+	        <tr>
+	            <th>Service Line Charges</th>
+	            <td>(₹500–₹5000+)</td>
+	        </tr>
+	        <tr>
+	            <th>Meter Cost</th>
+	            <td>Varies with meter type (single/three-phase, prepaid/postpaid)</td>
+	        </tr>
+	    </table>
+	    <ul>
+                <li>The payment must be made offline via cash.</li>
+                <li>Visit the nearest electricity office or service center with your Consumer ID & Password.</li>
+                <li>Ensure you collect and keep the payment receipt for future reference.</li>               
+            </ul>
+        </div>
+        <div class="guideline-box">
+            <h3>How to Track Status?</h3>
+            <h4>Step 6: Track Status</h4>
+            <ul>
+                <li>Log in regularly to check the status of your application.</li>              
             </ul>
         </div>
     </div>
+    <h5>Ensure your contact details are correct for future communication.<br>For any issues or delays, contact the local electricity board office.</h5>
 
     <div class="conclusion">
         Following these steps will ensure a smooth SBPDCL connection and bill payment process.
