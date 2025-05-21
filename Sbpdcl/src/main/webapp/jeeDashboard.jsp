@@ -46,6 +46,7 @@
       background-color: #343a40;
       color: white;
       padding-top: 20px;
+      z-index: 1000;
     }
 
     .sidebar a {
@@ -69,24 +70,43 @@
       position: fixed;
       top: 10px;
       right: 10px;
-      z-index: 1060;
+      z-index: 2100;
     }
 
     .profile-panel {
-      position: fixed;
-      top: 0; /* height of navbar */
-      right: -320px;
-      width: 300px;
-      height: 100%;
-      background-color: #343a40;
-      box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-      transition: right 0.4s ease;
-      padding: 80px 20px 20px 20px;
-      z-index: 1050;
-      color: white;
-      overflow-y: auto;
-    }
-
+	  position: fixed;
+	  top: 0;
+	  right: -320px;
+	  width: 300px;
+	  height: 100%;
+	  background-color: rgba(52, 58, 64, 0.9); /* semi-transparent fallback */
+	  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+	  transition: right 0.4s ease;
+	  padding: 80px 20px 20px 20px;
+	  z-index: 2000;
+	  color: white;
+	  overflow-y: auto;
+	  backdrop-filter: blur(6px); /* optional for extra blur on panel contents */
+	  position: fixed;
+	  overflow: hidden;
+	}
+	
+	/* Add this new ::before style for background blur image */
+	.profile-panel::before {
+	  content: "";
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background-image: url('images/5.jpg'); /* your image path */
+	  background-size: cover;
+	  background-position: center;
+	  filter: blur(8px);
+	  opacity: 0.6;
+	  z-index: -1;
+	  pointer-events: none;
+	}
     .profile-panel.open {
       right: 0;
     }
@@ -96,9 +116,47 @@
       text-decoration: underline;
       cursor: pointer;
     }
+    /* Enable stacking context */
+	.sidebar,
+	.navbar {
+	  position: relative;
+	  z-index: 1;
+	  overflow: hidden;
+	}
+	
+	/* Sidebar background blur */
+	.sidebar::before {
+	  content: "";
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background-image: url('images/5.jpg'); /* Update with actual path */
+	  background-size: cover;
+	  background-position: center;
+	  filter: blur(8px);
+	  z-index: -1;
+	  opacity: 0.6;
+	  pointer-events: none;
+	}
+	.navbar{
+		z-index: 2001;
+	}
+	
   </style>
 </head>
 <body>
+<!-- Profile Panel -->
+<div class="profile-panel" id="profilePanel">
+  <p><strong>Name:</strong> <%= user.getName() %></p>
+  <p><strong>Section:</strong> East Division</p>
+  <p><strong>ID:</strong> <%= userId %></p>
+  <p><a href="#" onclick="openChangePasswordModal(event)">Change Password</a></p>
+  <p><a href="LogoutServlet">Logout</a></p>
+
+  <div id="profileContent"></div>
+</div>
 
 <!-- Navbar -->
 <nav class="navbar navbar-dark bg-dark">
@@ -117,11 +175,11 @@
     <!-- Sidebar Menu -->
     <div class="col-md-2 sidebar">
       <h5 class="text-center mb-4">Menu</h5>
-      <a href="#" class="menu-link active" data-status="All">All Applications</a>
-      <a href="#" class="menu-link" data-status="Pending Inspection">Verify Site Inspection</a>
-      <a href="#" class="menu-link" data-status="Report Pending">Pending Reports</a>
-      <a href="#" class="menu-link" data-status="Ready for Meter">Meter Installation</a>
-      <a href="#" class="menu-link" data-status="checks dues">Check Dues</a>
+      <a href="#" class="menu-link active" data-filter="all">All Applications</a>
+	  <a href="#" class="menu-link" data-filter="forwarded">Forwarded to MI Applications</a>
+   	  <a href="#" class="menu-link" data-filter="pending-dues">Pending Dues</a>
+	  <a href="#" class="menu-link" data-filter="pending-docs">Pending Document Verification</a>
+      
       
     </div>
 
@@ -131,7 +189,7 @@
 
       <!-- Applications Table -->
       <div>
-        <h5>Recent Applications</h5>
+        <h5>Total Applications = <span id="totalApplications"><%= requests.size() %></span></h5>
         <table class="table table-striped table-bordered" id="applicationsTable">
           <thead class="table-dark">
             <tr>
@@ -152,7 +210,9 @@
 			                       (r.getStatus() != null && r.getStatus().contains("Pending MI"));
 
 				%>
-				    <tr>
+				    <tr data-dues="<%= duesCleared %>" 
+					    data-docs="<%= docsVerified %>" 
+					    data-status="<%= docsVerified ? "Forwarded" : "Pending" %>">
 				        <td><%= r.getApp_id() %></td>
 				        <td><%= r.getApplicantName() %></td>
 				        <td><%= r.getMobile() %></td>
@@ -190,16 +250,7 @@
   </div>
 </div>
 
-<!-- Profile Panel -->
-<div class="profile-panel" id="profilePanel">
-  <p><strong>Name:</strong> <%= user.getName() %></p>
-  <p><strong>Section:</strong> East Division</p>
-  <p><strong>ID:</strong> <%= userId %></p>
-  <p><a href="#" onclick="openChangePasswordModal(event)">Change Password</a></p>
-  <p><a href="LogoutServlet">Logout</a></p>
 
-  <div id="profileContent"></div>
-</div>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -213,6 +264,7 @@
   // Handle menu click and filtering
   const menuLinks = document.querySelectorAll('.menu-link');
   const rows = document.querySelectorAll('#applicationsTable tbody tr');
+  const totalSpan = document.getElementById('totalApplications');
 
   menuLinks.forEach(link => {
     link.addEventListener('click', function (e) {
@@ -220,10 +272,31 @@
       menuLinks.forEach(l => l.classList.remove('active'));
       this.classList.add('active');
 
-      const status = this.getAttribute('data-status');
+      const filter = this.getAttribute('data-filter');
+      let count = 0;
+
       rows.forEach(row => {
-        row.style.display = (status === "All" || row.getAttribute('data-status') === status) ? '' : 'none';
+        const status = row.getAttribute('data-status');
+        const dues = row.getAttribute('data-dues');
+        const docs = row.getAttribute('data-docs');
+
+        let show = false;
+
+        if (filter === 'all') {
+          show = true;
+        } else if (filter === 'forwarded') {
+          show = (status === 'Forwarded');
+        } else if (filter === 'pending-dues') {
+          show = (dues === 'false');
+        } else if (filter === 'pending-docs') {
+          show = (docs === 'false');
+        }
+
+        row.style.display = show ? '' : 'none';
+        if (show) count++;
       });
+
+      totalSpan.textContent = count;
     });
   });
   

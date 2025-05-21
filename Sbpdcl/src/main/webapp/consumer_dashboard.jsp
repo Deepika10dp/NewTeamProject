@@ -57,21 +57,41 @@
 	      right: 10px;
 	      z-index: 1060;
 	    }
-	    .profile-panel {
-	      position: fixed;
-	      top: 0;
-	      right: -320px;
-	      width: 300px;
-	      height: 100%;
-	      background-color: #343a40;
-	      box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-	      transition: right 0.4s ease;
-	      padding: 80px 20px 20px 20px;
-	      z-index: 1050;
-	      color: white;
-	      overflow-y: auto;
-	    }
-	    .profile-panel.open {
+	   .profile-panel {
+		  position: fixed;
+		  top: 0;
+		  right: -320px;
+		  width: 300px;
+		  height: 100%;
+		  background-color: rgba(52, 58, 64, 0.9); /* semi-transparent fallback */
+		  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+		  transition: right 0.4s ease;
+		  padding: 80px 20px 20px 20px;
+		  z-index: 2000;
+		  color: white;
+		  overflow-y: auto;
+		  backdrop-filter: blur(6px); /* optional for extra blur on panel contents */
+		  position: fixed;
+		  overflow: hidden;
+		}
+	
+	/* Add this new ::before style for background blur image */
+	   .profile-panel::before {
+		  content: "";
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  background-image: url('images/5.jpg'); /* your image path */
+		  background-size: cover;
+		  background-position: center;
+		  filter: blur(8px);
+		  opacity: 0.6;
+		  z-index: -1;
+		  pointer-events: none;
+		}
+		.profile-panel.open {
 	      right: 0;
 	    }
 	    .profile-panel a {
@@ -91,9 +111,36 @@
 	    #mainContent {
 	      min-height: 400px;
 	    }
+	     /* Enable stacking context */
+		.sidebar,
+		.navbar {
+		  position: relative;
+		  z-index: 1;
+		  overflow: hidden;
+		}
+		
+		/* Sidebar background blur */
+		.sidebar::before {
+		  content: "";
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  background-image: url('images/5.jpg'); /* Update with actual path */
+		  background-size: cover;
+		  background-position: center;
+		  filter: blur(8px);
+		  z-index: -1;
+		  opacity: 0.6;
+		  pointer-events: none;
+		}
+		.navbar{
+			z-index: 2001;
+	}
 	  </style>
-	</head>
-	<body>
+</head>
+<body>
 	
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		  <div class="container-fluid">
