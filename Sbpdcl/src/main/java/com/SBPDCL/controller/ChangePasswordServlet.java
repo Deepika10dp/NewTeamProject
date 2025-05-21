@@ -59,7 +59,7 @@ public class ChangePasswordServlet extends HttpServlet {
 	                break;
 	        }
 
-	        RequestDispatcher rd = request.getRequestDispatcher(dashboardPage + "?page=change_password");
+	        RequestDispatcher rd = request.getRequestDispatcher(dashboardPage);
 	        rd.forward(request, response);
 	}
 
