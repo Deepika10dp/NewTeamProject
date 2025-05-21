@@ -36,13 +36,30 @@ public class DocumentVerificationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		 String appId = request.getParameter("app_id");
-	        String jeeRemarks = request.getParameter("jee_remarks");
+	    String appId = request.getParameter("appId");
+	    String jeeRemarks = request.getParameter("jee_remarks");
 
-	        service.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
+	    boolean idProofChecked = request.getParameter("doc_id_proof") != null;
+	    boolean addressFrontChecked = request.getParameter("doc_address_front") != null;
+	    boolean addressBackChecked = request.getParameter("doc_address_back") != null;
+	    boolean photoChecked = request.getParameter("doc_photo") != null;
+	    boolean ownership1Checked = request.getParameter("doc_ownership1") != null;
+	    boolean ownership2Checked = request.getParameter("doc_ownership2") != null;
 
-	        response.sendRedirect("jeeDashboard.jsp?message=Documents+verified+and+forwarded+to+MI");
+	    if (idProofChecked && addressFrontChecked && addressBackChecked && photoChecked 
+	        && ownership1Checked && ownership2Checked && jeeRemarks != null && !jeeRemarks.trim().isEmpty()) {
+
+	        boolean updateSuccess = service.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
+
+	        if (updateSuccess) {
+	            response.sendRedirect("jeeDashboard.jsp?message=Documents+verified+and+forwarded+to+MI");
+	        } else {
+	            response.sendRedirect("verify_documents.jsp?appId=" + appId + "&error=Failed+to+update+verification+status");
+	        }
+	    } else {
+	        response.sendRedirect("verify_documents.jsp?appId=" + appId + "&error=Please+verify+all+documents+and+enter+remarks");
+	    }
 	}
+
 
 }

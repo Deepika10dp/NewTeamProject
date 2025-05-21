@@ -188,6 +188,7 @@ public class NewConnectionDAO {
 		    }
 		    return list;
 		}  
+	  
 	 
 	  public boolean verifyDocumentsAndForwardToMI(String appId, String jeeRemarks) {
 		    // Updated query to include 'documents_verified' field

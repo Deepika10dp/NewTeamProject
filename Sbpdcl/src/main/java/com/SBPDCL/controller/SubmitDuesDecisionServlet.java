@@ -7,8 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+@SuppressWarnings("serial")
 @WebServlet("/SubmitDuesDecisionServlet")
-public class SubmitDuesStatusServlet extends HttpServlet {
+public class SubmitDuesDecisionServlet extends HttpServlet {
 
     private DuesService duesService = new DuesService();
 

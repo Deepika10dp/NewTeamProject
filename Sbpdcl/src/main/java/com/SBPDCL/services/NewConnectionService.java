@@ -28,6 +28,7 @@ public class NewConnectionService {
         // Call the DAO method to update the database
         return dao.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
     }
+   
 
 
     public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {

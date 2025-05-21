@@ -168,32 +168,32 @@
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
     <div style="text-align: center; width: 140px;">
       <h4>ID Proof</h4>
-      <img src="<%= formData.getIdProofFile() %>" alt="ID Proof" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+      <img src="DownloadFileServlet?file=<%= formData.getIdProofFile() %>" alt="ID Proof" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
     </div>
 
     <div style="text-align: center; width: 140px;">
       <h4>Address Proof (Front)</h4>
-      <img src="<%= formData.getAddressProofFront() %>" alt="Address Proof Front" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+      <img src="DownloadFileServlet?file=<%= formData.getAddressProofFront() %>" alt="Address Proof Front" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
     </div>
 
     <div style="text-align: center; width: 140px;">
       <h4>Address Proof (Last)</h4>
-      <img src="<%= formData.getAddressProofLast() %>" alt="Address Proof Last" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+      <img src="DownloadFileServlet?file=<%= formData.getAddressProofLast() %>" alt="Address Proof Last" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
     </div>
 
     <div style="text-align: center; width: 140px;">
       <h4>Photograph of Applicant</h4>
-      <img src="<%= formData.getPhoto() %>" alt="Photograph" style="width: 100px; height: 120px; object-fit: cover; border: 1px solid #ccc;" />
+      <img src="DownloadFileServlet?file=<%= formData.getPhoto() %>" alt="Photograph" style="width: 100px; height: 120px; object-fit: cover; border: 1px solid #ccc;" />
     </div>
 
     <div style="text-align: center; width: 140px;">
       <h4>Ownership Proof (First)</h4>
-      <img src="<%= formData.getOwnershipFirst() %>" alt="Ownership First" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+      <img src="DownloadFileServlet?file=<%= formData.getOwnershipFirst() %>" alt="Ownership First" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
     </div>
 
     <div style="text-align: center; width: 140px;">
       <h4>Ownership Proof (Second)</h4>
-      <img src="<%= formData.getOwnershipSecond() %>" alt="Ownership Second" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
+      <img src="DownloadFileServlet?file=<%= formData.getOwnershipSecond() %>" alt="Ownership Second" style="width: 120px; height: 160px; object-fit: cover; border: 1px solid #ccc;" />
     </div>
   </div>
 </div>
