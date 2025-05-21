@@ -205,6 +205,7 @@
 	            </thead>
 				   </thead>
 	            <tbody>
+			          						            	  
 				      <%
 				        for (NewConnectionRequest req : requests) {
 				        	String app_id =req.getApp_id();
@@ -242,9 +243,11 @@
 							        }
 							    %>
 						  </td>
-						  <td><input type="text" name="mi_remarks" class="form-control" value="<%= request.getParameter("mi_remarks") != null ? request.getParameter("mi_remarks") : "" %>"required></td>
+						  
+						  <td><input type="text" name="mi_remarks" required />
+				            <input type="hidden" name="app_id" value="<%= req.getApp_id() %>">
+				            <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" /></td>
 				          <td>
-				            <input type="hidden" name="appId" value="<%= req.getApp_id() %>">
 				            <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
 				          </td>
 				        </tr>

@@ -236,7 +236,8 @@ public class NewConnectionDAO {
 		}
 
 	  public boolean updateMIInspection(String app_id, String mi_remarks) {
-		    String sql ="UPDATE new_connection_requests SET status=?, current_stage=?, mi_remarks=? WHERE app_id=?";
+		  boolean updated = false;
+		    String sql ="UPDATE new_connection_requests SET status = ?, current_stage = ?, mi_remarks = ? WHERE app_id = ?";
 
 		    try (Connection con = DBConnection.getConnection();
 		         PreparedStatement ps = con.prepareStatement(sql)) {
@@ -251,7 +252,7 @@ public class NewConnectionDAO {
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    }
-		    return false;
+		    return updated;
 		}
 
 

@@ -99,23 +99,19 @@ public class MeterDAO {
 	        }
 	        return status;
 	    }
-	    public boolean isMeterDetailsFilled(String app_id) {
-	        boolean isFilled = false;
-	        try {
-	            Connection conn = DBConnection.getConnection();
-	            String query = "SELECT COUNT(*) FROM meter_details WHERE app_id = ?";
-	            PreparedStatement ps = conn.prepareStatement(query);
-	            ps.setString(1, app_id);
+	    public boolean isMeterDetailsFilled(String appId) {
+	        boolean filled = false;
+	        try (Connection con = DBConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement("SELECT * FROM meter_details WHERE app_id = ?")) {
+	            ps.setString(1, appId);
 	            ResultSet rs = ps.executeQuery();
-
-	            if (rs.next() && rs.getInt(1) > 0) {
-	                isFilled = true;
+	            if (rs.next()) {
+	                String meterType = rs.getString("meter_type");
+	                filled = (meterType != null && !meterType.trim().isEmpty());
 	            }
-
-	            conn.close();
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-	        return isFilled;
+	        return filled;
 	    }
 }
