@@ -149,10 +149,11 @@ public class NewConnectionDAO {
 		        if (rs.next()) {
 		            request = new NewConnectionRequest();
 		            request.setApp_id(rs.getString("app_id"));
-		            request.setSubmissionDate(rs.getTimestamp("created_at")); // ✅ Fixed: renamed to "created_at"
-		            request.setStatus(rs.getString("status"));                 // ✅ Ensure this matches DB
+		            request.setSubmissionDate(rs.getTimestamp("created_at")); 
+		            request.setStatus(rs.getString("status"));           
+		            
 		        } else {
-		            System.out.println("⚠️ No record found for appId: " + appId);
+		            System.out.println(" No record found for appId: " + appId);
 		        }
 
 		    } catch (Exception e) {
@@ -188,7 +189,51 @@ public class NewConnectionDAO {
 		    }
 		    return list;
 		}  
-	  
+	  public static NewConnectionRequest getApplicationDetailsByAppId(String appId) {
+	        NewConnectionRequest request = null;
+	        try (Connection conn = DBConnection.getConnection()) {
+	            String query = "SELECT * FROM new_connection_requests WHERE app_id = ?";
+	            PreparedStatement ps = conn.prepareStatement(query);
+	            ps.setString(1, appId);
+
+	            ResultSet rs = ps.executeQuery();
+	            if (rs.next()) {
+	                request = new NewConnectionRequest();
+	                request.setApp_id(rs.getString("app_id"));
+	                request.setConnectionType(rs.getString("connectionType"));
+	                request.setConsumerId(rs.getString("consumerId"));
+	                request.setMobile(rs.getString("mobile"));
+	                request.setEmail(rs.getString("email"));
+	                request.setHouseNo(rs.getString("houseNo"));
+	                request.setStreet(rs.getString("street"));
+	                request.setAddressLine1(rs.getString("addressLine1"));
+	                request.setAddressLine2(rs.getString("addressLine2"));
+	                request.setAddressLine3(rs.getString("addressLine3"));
+	                request.setCity(rs.getString("city"));
+	                request.setPincode(rs.getString("pincode"));
+	                request.setDistrict(rs.getString("district"));
+	                request.setBlock(rs.getString("block"));
+	                request.setPanchayat(rs.getString("panchayat"));
+	                request.setVillage(rs.getString("village"));
+	                request.setDivision(rs.getString("division"));
+	                request.setSubDivision(rs.getString("subDivision"));
+	                request.setSection(rs.getString("section"));
+	                request.setTariff(rs.getString("tariff"));
+	                request.setPhase(rs.getString("E_phase"));
+	                request.setLoad(rs.getString("E_load"));
+	                request.setGender(rs.getString("gender"));
+	                request.setApplicantName(rs.getString("applicantName"));
+	                request.setF_hName(rs.getString("f_hName"));
+	            	System.out.println("Application details found for App ID: " + appId);
+				} else {
+					System.out.println("No application found with appId: " + appId);
+			
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return request;
+	    }
 	 
 	  public boolean verifyDocumentsAndForwardToMI(String appId, String jeeRemarks) {
 		    // Updated query to include 'documents_verified' field

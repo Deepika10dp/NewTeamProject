@@ -1,13 +1,19 @@
 package com.SBPDCL.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.SBPDCL.DAO.NewConnectionDAO;
+import com.SBPDCL.bean.LocationNameBean;
+import com.SBPDCL.bean.NewConnectionRequest;
 import com.SBPDCL.services.NewConnectionService;
+import com.SBPDCL.util.LocationNameUtil;
 
 /**
  * Servlet implementation class DocumentVerificationServlet
@@ -29,9 +35,29 @@ public class DocumentVerificationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+        String appId = request.getParameter("appId");
+        System.out.println("appId: " + appId);
 
+        if (appId != null && !appId.trim().isEmpty()) {
+            NewConnectionRequest appData = service.getApplicationDetailsByAppId(appId);
+            if (appData != null) {
+                // Fetch location names using LocationNameUtil
+                LocationNameBean locationNames = LocationNameUtil.getLocationNames(appData);
+
+                request.setAttribute("details", appData);
+                request.setAttribute("locationNames", locationNames);
+                RequestDispatcher rd = request.getRequestDispatcher("verify_documents.jsp");
+                rd.forward(request, response);
+                return;
+            }
+        }
+
+        // If application not found
+        request.setAttribute("errorMessage", "No application details found. Please go back and try again.");
+        RequestDispatcher rd = request.getRequestDispatcher("verify_documents.jsp");
+        rd.forward(request, response);
+    
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

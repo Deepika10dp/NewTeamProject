@@ -233,10 +233,11 @@
 		        <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
 		    </form>
 		
-		    <form action="verify_documents.jsp" method="get" style="display:inline-block;">
-		        <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
-		        <button type="submit" class="btn btn-sm btn-success" <%= duesCleared ? "" : "disabled" %>>Verify Docs</button>
-		    </form>
+		   <form action="DocumentVerificationServlet" method="get" style="display:inline-block;">
+			    <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
+			    <button type="submit" class="btn btn-sm btn-success" <%= duesCleared ? "" : "disabled" %>>Verify Docs</button>
+		   </form>
+
 		<%
 		    }
 		%>

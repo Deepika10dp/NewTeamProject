@@ -24,6 +24,11 @@ public class NewConnectionService {
     public List<NewConnectionRequest> getApplicationsForJEE(String sectionId) {
         return new NewConnectionDAO().getRequestsForJEE(sectionId);
     }
+    public NewConnectionRequest getApplicationDetailsByAppId(String appId) {
+        return NewConnectionDAO.getApplicationDetailsByAppId(appId);
+    }
+
+   
     public boolean verifyDocumentsAndForwardToMI(String appId, String jeeRemarks) {
         // Call the DAO method to update the database
         return dao.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
