@@ -13,7 +13,8 @@ public class DuesService {
         return duesDAO.getDuesStatus(consumerId, mobile);
     }
 
-    public void updateDuesClearedInRequest(String consumerId, String mobile) {
-        duesDAO.updateDuesClearedStatusInRequest(consumerId, mobile);
+    public void updateFinalDuesStatus(String consumerId, String mobile, String finalStatus) {
+        duesDAO.updateFinalDuesStatus(consumerId, mobile, finalStatus);
     }
+
 }

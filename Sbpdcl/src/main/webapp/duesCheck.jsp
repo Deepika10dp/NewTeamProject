@@ -1,34 +1,87 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    String consumerId = request.getParameter("consumerId") != null ? request.getParameter("consumerId") : "";
-    String mobile = request.getParameter("mobile") != null ? request.getParameter("mobile") : "";
-    String status = (String) request.getAttribute("duesStatus"); // Comes from servlet if already checked
+    String consumerId = request.getAttribute("consumerId") != null ? (String) request.getAttribute("consumerId") : "";
+    String mobile = request.getAttribute("mobile") != null ? (String) request.getAttribute("mobile") : "";
+    String status = request.getAttribute("duesStatus") != null ? (String) request.getAttribute("duesStatus") : "";
 %>
 <html>
 <head>
     <title>Check Dues</title>
+    <style>
+        .container {
+            width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .status {
+            font-weight: bold;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .not-cleared {
+            color: red;
+        }
+        .cleared {
+            color: green;
+        }
+        input[type="submit"], button {
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #0056b3;
+        }
+        label {
+            font-weight: normal;
+        }
+    </style>
 </head>
 <body>
-    <div style="width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc;">
-        <h2>Check Dues - Consumer ID: <%= consumerId %></h2>
+    <div class="container">
+        <h2>Check Dues - Consumer ID: <%= request.getParameter("consumerId") %></h2>
+
+        <!-- Form to check dues -->
         <form action="CheckDuesServlet" method="post">
-            <label>Consumer ID</label><br>
-            <input type="text" name="consumerId" value="<%= consumerId %>" readonly required><br><br>
-
-            <label>Phone Number</label><br>
-            <input type="text" name="mobile" value="<%= mobile %>" readonly required><br><br>
-
-            <% if (status != null) { %>
-                <p><strong>Status:</strong> <%= status %></p>
-                <% if ("Cleared".equalsIgnoreCase(status)) { %>
-                    <label><input type="checkbox" name="duesCleared" value="yes" required> Confirm dues are cleared</label><br><br>
-                <% } else { %>
-                    <p style="color: red;">Dues are not cleared.</p>
-                <% } %>
-            <% } %>
-
-            <input type="submit" value="Submit">
+            <label>Consumer ID:</label><br>
+            <input type="text" name="consumerId" value="<%= request.getParameter("consumerId") %>" readonly><br><br>
+        
+            <label>Phone Number:</label><br>
+            <input type="text" name="mobile" value="<%= request.getParameter("mobile") %>" readonly><br><br>
+        
+            <input type="submit" value=" Check Dues">
         </form>
+
+        <!-- Dues status display -->
+        <% if (!status.isEmpty()) { %>
+            <p class="status">
+                Fetched Dues Status:
+                <% if ("Cleared".equalsIgnoreCase(status)) { %>
+                    <span class="cleared"> Cleared</span>
+                <% } else { %>
+                    <span class="not-cleared"> Not Cleared</span>
+                <% } %>
+            </p>
+
+            <!-- JEE decision form only visible after dues status is available -->
+            <form action="SubmitDuesDecisionServlet" method="post">
+                <input type="hidden" name="consumerId" value="<%= consumerId %>">
+                <input type="hidden" name="mobile" value="<%= mobile %>">
+
+                <p><strong>JEE Decision (Select One):</strong></p>
+                <label><input type="radio" name="finalDuesStatus" value="Cleared" required> Cleared</label><br>
+                <label><input type="radio" name="finalDuesStatus" value="Not Cleared"> Not Cleared</label><br><br>
+
+                <input type="submit" value="Submit Decision">
+            </form>
+        <% } %>
     </div>
 </body>
 </html>

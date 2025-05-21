@@ -7,8 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet("/CheckDuesServlet")
-public class CheckDuesServlet extends HttpServlet {
+@WebServlet("/SubmitDuesDecisionServlet")
+public class SubmitDuesStatusServlet extends HttpServlet {
 
     private DuesService duesService = new DuesService();
 
@@ -17,13 +17,11 @@ public class CheckDuesServlet extends HttpServlet {
 
         String consumerId = request.getParameter("consumerId");
         String mobile = request.getParameter("mobile");
+        String finalStatus = request.getParameter("finalDuesStatus"); // Cleared or Not Cleared
 
-        String duesStatus = duesService.getDuesStatus(consumerId, mobile);
+        duesService.updateFinalDuesStatus(consumerId, mobile, finalStatus);
 
-        request.setAttribute("consumerId", consumerId);
-        request.setAttribute("mobile", mobile);
-        request.setAttribute("duesStatus", duesStatus);
-
-        request.getRequestDispatcher("duesCheck.jsp").forward(request, response);
+        request.setAttribute("message", "✅ Decision updated for Consumer ID: " + consumerId + " as " + finalStatus);
+        request.getRequestDispatcher("jeeDashboard.jsp").forward(request, response);
     }
 }

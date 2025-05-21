@@ -197,6 +197,19 @@
     </div>
   </div>
 </div>
+	<!--  <div class="buttons">
+	    <button type="button" onclick="history.back()">Back</button>
+	    <button type="submit">Confirm & Submit</button>
+	</div>-->
+
     </form>
+    <form action="FinalSubmitServlet" method="post">
+    	<input type="submit" value="Final Submit" />
+	</form>
+	
+	<form action="form.html" method="get">
+	    <input type="submit" value="Back to Edit" />
+	</form>
+    
 </body>
 </html>

@@ -53,19 +53,25 @@ public class DuesDAO {
 	    }
 	
 
-		public void updateDuesClearedStatusInRequest(String consumerId, String mobile) {
-			// TODO Auto-generated method stub
-			 String query = "UPDATE new_connection_requests SET dues_cleared = 1 WHERE consumerId = ? AND mobile = ?";
-		        try (Connection con = DBConnection.getConnection();
-		             PreparedStatement ps = con.prepareStatement(query)) {
+		
+		public boolean updateFinalDuesStatus(String consumerId, String mobile, String finalStatus) {
+		    String query = "UPDATE new_connection_requests SET dues_cleared = ? WHERE consumerId = ? AND mobile = ?";
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(query)) {
 
-		            ps.setString(1, consumerId);
-		            ps.setString(2, mobile);
-		            ps.executeUpdate();
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
+		        int clearedValue = "Cleared".equalsIgnoreCase(finalStatus) ? 1 : 0;
+		        ps.setInt(1, clearedValue);
+		        ps.setString(2, consumerId);
+		        ps.setString(3, mobile);
+
+		        int rowsAffected = ps.executeUpdate();
+		        return rowsAffected > 0;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return false;
+		    }
 		}
+
 
 		
 	}
