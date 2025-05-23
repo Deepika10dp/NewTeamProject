@@ -73,7 +73,19 @@ public class AEEApprovalDAO {
 
             // If consumer not already in consumers table, insert
             if (!isConsumerExists(consumerId)) {
-                String insertQuery = "INSERT INTO consumers (consumer_id, app_id, consumer_number, name, phone_no, address) SELECT consumerId, app_id, ?, applicantName, mobile, addressLine1 FROM new_connection_requests WHERE app_id=?";
+                String insertQuery = "INSERT INTO consumers (consumer_id, app_id, consumer_number, name, phone_no, address, connection_type, email, houseNo, street, addressLine2, addressLine3, " +
+                		             "city, pincode, district, block, panchayat, village, division, subDivision, section," +
+                		             "tariff, E_phase, E_load, gender, f_hName, idProof, addressProof," +
+                		             "idProofFile, addressProofFront, addressProofLast, photo," +
+                		             "ownershipFirst, ownershipSecond, current_stage, created_at ," +
+                	                 "jee_remarks, mi_remarks, aee_remarks, dues_cleared, documents_verified, status)" +
+                		") SELECT consumerId, app_id, consumer_number, applicantName, mobile, addressLine1 email, houseNo, street, addressLine2, addressLine3," +
+                		                "city, pincode, district, block, panchayat, village, division, subDivision, section," +
+                		               "tariff, E_phase, E_load, gender, f_hName, idProof, addressProof," +
+                		              "idProofFile, addressProofFront, addressProofLast, photo," +
+                		              "ownershipFirst, ownershipSecond, current_stage, created_at," +
+                		               "jee_remarks, mi_remarks, aee_remarks, dues_cleared, documents_verified, status" +
+                		               "FROM new_connection_requests WHERE app_id=?";
                 PreparedStatement insertPs = con.prepareStatement(insertQuery);
                 insertPs.setString(1, consumerNumber);
                 insertPs.setString(2, appId);
