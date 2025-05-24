@@ -153,4 +153,5 @@ public class LocationDAO {
         
         return bean;
     }
+    
 }

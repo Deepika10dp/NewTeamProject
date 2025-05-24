@@ -248,8 +248,18 @@
 				            <input type="hidden" name="app_id" value="<%= req.getApp_id() %>">
 				            <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" /></td>
 				          <td>
-				            <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
-				          </td>
+  <%
+    if ("Forwarded".equalsIgnoreCase(req.getStatus())) {
+  %>
+    <span class="text-success">Forwarded to AEE</span>
+  <%
+    } else {
+  %>
+    <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
+  <%
+    }
+  %>
+</td>
 				        </tr>
 				      </form>
 				      <%

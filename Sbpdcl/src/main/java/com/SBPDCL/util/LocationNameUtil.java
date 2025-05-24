@@ -41,4 +41,6 @@ public class LocationNameUtil {
         
         return nameBean;
     }
+
+	
 }

@@ -150,7 +150,31 @@ public class NewConnectionDAO {
 		            request = new NewConnectionRequest();
 		            request.setApp_id(rs.getString("app_id"));
 		            request.setSubmissionDate(rs.getTimestamp("created_at")); 
-		            request.setStatus(rs.getString("status"));           
+		            request.setConsumerId(rs.getString("consumerId"));
+		            request.setStatus(rs.getString("status"));   
+		            request.setConnectionType(rs.getString("connectionType"));
+		            request.setMobile(rs.getString("mobile"));
+		            request.setEmail(rs.getString("email"));
+		            request.setHouseNo(rs.getString("houseNo"));
+		            request.setStreet(rs.getString("street"));
+		            request.setAddressLine1(rs.getString("addressLine1"));
+		            request.setAddressLine2(rs.getString("addressLine2"));
+		            request.setAddressLine3(rs.getString("addressLine3"));
+		            request.setCity(rs.getString("city"));
+		            request.setPincode(rs.getString("pincode"));
+		            request.setDistrict(rs.getString("district"));
+		            request.setBlock(rs.getString("block"));
+		            request.setPanchayat(rs.getString("panchayat"));
+		            request.setVillage(rs.getString("village"));
+		            request.setDivision(rs.getString("division"));
+		            request.setSubDivision(rs.getString("subDivision"));
+		            request.setSection(rs.getString("section"));
+		            request.setTariff(rs.getString("tariff"));
+		            request.setPhase(rs.getString("E_phase"));
+		            request.setLoad(rs.getString("E_load"));
+		            request.setGender(rs.getString("gender"));
+		            request.setApplicantName(rs.getString("applicantName"));
+		            request.setF_hName(rs.getString("f_hName"));
 		            
 		        } else {
 		            System.out.println(" No record found for appId: " + appId);
@@ -261,7 +285,7 @@ public class NewConnectionDAO {
 	  public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {
 		  List<NewConnectionRequest> list = new ArrayList<>();
 		    try (Connection con = DBConnection.getConnection()) {
-		        String query = "SELECT * FROM new_connection_requests WHERE current_stage='MI' AND section=?";
+		    	String query = "SELECT * FROM new_connection_requests WHERE (current_stage='MI' OR (current_stage='AEE' AND status='Pending AEE')) AND section=?";
 		        PreparedStatement ps = con.prepareStatement(query);
 		        ps.setString(1, sectionId);
 		        ResultSet rs = ps.executeQuery();
