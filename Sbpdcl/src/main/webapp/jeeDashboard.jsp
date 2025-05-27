@@ -179,7 +179,7 @@
     <div class="col-md-2 sidebar">
       <h5 class="text-center mb-4">Menu</h5>
       <a href="#" class="menu-link active" data-filter="all">All Applications</a>
-	  <a href="#" class="menu-link" data-filter="forwarded">Forwarded to MI Applications</a>
+	  <a href="#" class="menu-link" data-filter="forwarded">Forwarded Applications</a>
    	  <a href="#" class="menu-link" data-filter="pending-dues">Pending Dues</a>
 	  <a href="#" class="menu-link" data-filter="pending-docs">Pending Document Verification</a>
       
@@ -195,10 +195,10 @@
         <h5>Total Applications = <span id="totalApplications"><%= requests.size() %></span></h5>
         <table class="table table-striped table-bordered" id="applicationsTable">
           <thead class="table-dark">
-            <tr>
+            <tr style="text-align: center;">
               	<th>Application ID</th>
 		        <th>Applicant Name</th>
-		        <th>Mobile</th>
+		        <th>Mobile No</th>
 		        <th>Dues Cleared</th>
 		        <th>Documents Verified</th>
 		        <th>Actions</th>

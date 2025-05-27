@@ -188,109 +188,99 @@
 	      
 	    </div>
 	
-	    <!-- Main Content -->
-	    <div class="col-md-10 p-4">
-	
-	      <!-- Assigned Installations Table -->
-	      <div class="card mt-4">
-	        
-	        <div class="card-body">
-	          <table class="table table-bordered">
-	            <thead>
-	              <tr>
-	                <th>Application ID</th>
-	                <th>Customer Name</th>
-	                <th>Status</th>
-	                <th>Inspection Status</th>
-	                <th>Meter Details</th>
-	                <th>Remarks</th>
-	                <th>Update</th>
-	              </tr>
-	            </thead>
-				   </thead>
-	            <tbody>
-			          						            	  
-				      <%
-				        for (NewConnectionRequest req : requests) {
-				        	String app_id =req.getApp_id();
-				      %>
-				      <form action="MIInspectionServlet" method="post">
-				        <tr data-status="<%= req.getStatus() %>">
-				          <td><%= req.getApp_id() %></td>
-				          <td><%= req.getApplicantName()%></td>
-				          <td><%= req.getStatus() %></td>
-				          <td><%
-				          		MeterDAO meterDAO = new MeterDAO();
-				          String status = meterDAO.getConfirmationStatusByAppId(app_id); 
-				         	    if (status == null || status.equals("Pending")) { 
-							%>
-							    <a href="InspectionDetails.html?app_id=<%= app_id %>">Fill Inspection Details</a>
-							<% } else { %>
-							    <span><%= status %></span>
-							<% } %></td>
-									 <td>
-							    <%
-							        if ("Confirmed".equals(status)) {
-							            if (meterDAO.isMeterDetailsFilled(app_id)) {
-							    %>
-							                <span>Done</span>
-							    <%
-							            } else {
-							    %>
-							                <a href="Meter_details.html?app_id=<%= app_id %>">Fill Meter Details</a>
-							    <%
-							            }
-							        } else {
-							    %>
-							        <span>Waiting for confirmation</span>
-							    <%
-							        }
-							    %>
-						  </td>
-						 	 
-						<%
-						    String remarks = req.getMi_remarks();
-						    String currentStage = req.getCurrentStage();
-						   // String status = req.getStatus();
-						
-						    boolean isForwarded = "AEE".equalsIgnoreCase(currentStage) || "Complete".equalsIgnoreCase(currentStage);
-						%>
-						
-						<td>
-						  <% if (isForwarded) { %>
-						    <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" readonly class="form-control-plaintext" />
-						  <% } else { %>
-						    <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" required class="form-control" />
-						  <% } %>
-						
-						  <input type="hidden" name="app_id" value="<%= req.getApp_id() %>" />
-						  <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
-						</td>
-						
-						<td>
-						  <% if (isForwarded) { %>
-						    <span class="text-success fw-bold">Forwarded to AEE</span>
-						  <% } else { %>
-						    <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
-						  <% } %>
-						</td>
-
-						
-				
- 
-				        </tr>
-				      </form>
-				      <%
-				        }
-				      %>
-	            </tbody>
-	          </table>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	
+	<!-- Main Content -->
+<div class="col-md-10 p-4">
+  <!-- Assigned Installations Table -->
+  <div class="mt-4">
+    <h5 class="mb-3">Total Applications : <%= requests != null ? requests.size() : 0 %></h5>
+    <table class="table table-striped table-bordered" id="assignedInstallationsTable">
+      <thead class="table-dark">
+        <tr style="text-align: center;">
+          <th>Application ID</th>
+          <th>Customer Name</th>
+          <th>Status</th>
+          <th>Inspection Status</th>
+          <th>Meter Details</th>
+          <th>Remarks</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%
+          for (NewConnectionRequest req : requests) {
+            String app_id = req.getApp_id();
+        %>
+        <form action="MIInspectionServlet" method="post">
+          <tr data-status="<%= req.getStatus() %>">
+            <td><%= req.getApp_id() %></td>
+            <td><%= req.getApplicantName() %></td>
+            <td><%= req.getStatus() %></td>
+            <td>
+              <%
+                MeterDAO meterDAO = new MeterDAO();
+                String status = meterDAO.getConfirmationStatusByAppId(app_id); 
+                if (status == null || status.equals("Pending")) { 
+              %>
+                  <a href="InspectionDetails.html?app_id=<%= app_id %>">Fill Inspection Details</a>
+              <%
+                } else {
+              %>
+                  <span><%= status %></span>
+              <%
+                }
+              %>
+            </td>
+            <td>
+              <%
+                if ("Confirmed".equals(status)) {
+                  if (meterDAO.isMeterDetailsFilled(app_id)) {
+              %>
+                    <span>Done</span>
+              <%
+                  } else {
+              %>
+                    <a href="Meter_details.html?app_id=<%= app_id %>">Fill Meter Details</a>
+              <%
+                  }
+                } else {
+              %>
+                  <span>Waiting for confirmation</span>
+              <%
+                }
+              %>
+            </td>
+            <%
+              String remarks = req.getMi_remarks();
+              String currentStage = req.getCurrentStage();
+              boolean isForwarded = "AEE".equalsIgnoreCase(currentStage) || "Complete".equalsIgnoreCase(currentStage);
+            %>
+            <td>
+              <% if (isForwarded) { %>
+                <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" readonly class="form-control-plaintext" />
+              <% } else { %>
+                <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" required class="form-control" />
+              <% } %>
+              <input type="hidden" name="app_id" value="<%= req.getApp_id() %>" />
+              <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
+            </td>
+            <td>
+              <% if (isForwarded) { %>
+                <span class="text-success fw-bold">Forwarded to AEE</span>
+              <% } else { %>
+                <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
+              <% } %>
+            </td>
+          </tr>
+        </form>
+        <%
+          }
+        %>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+</div>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
