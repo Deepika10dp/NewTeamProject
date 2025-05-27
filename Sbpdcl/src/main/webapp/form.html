@@ -14,7 +14,7 @@
 		    background: url('https://images.unsplash.com/photo-1604079628040-fc720759f9a4?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
 		    background-size: cover;
 		    background-attachment: fixed;
-		    overflow: hidden; /* Important: prevent full page scroll */
+		    overflow: hidden;
 		}
         .form-wrapper {
             max-width: 1000px;
@@ -26,19 +26,22 @@
             animation: fadeIn 1s ease-in-out;
         }
         h2 {
-            color: #004080;
+            color: rgb(128,0,0);
             font-weight: 600;
         }
         label {
             font-weight: 500;
         }
-        .btn-primary {
-            background: linear-gradient(to right, #0066cc, #004080);
-            border: none;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(to right, #004080, #002855);
-        }
+       .btn-primary {
+		    background: linear-gradient(to right, #800000, #a52a2a);
+		    border: none;
+		    color: white;
+		    width: 200px;
+		}
+		
+		.btn-primary:hover {
+		    background: linear-gradient(to right, #5a0000, #800000);
+		}
         input, select, textarea {
             transition: box-shadow 0.3s ease;
         }
@@ -73,7 +76,7 @@
 		    display: flex;
 		    align-items: center;
 		    justify-content: center;
-		    padding: 0; /* Remove extra spacing */
+		    padding: 0; 
 		}
 	
 	    .background-container::before {
@@ -82,7 +85,7 @@
 	      top: 0; left: 0;
 	      width: 100%; height: 100%;
 	      background: url('images/3.jpg') no-repeat center center/cover;
-	      filter: blur(8px);
+	      filter: blur(6px);
 	      z-index: -1;
 	    }
 	
@@ -112,7 +115,7 @@
     <div class="container form-wrapper">
         <h2 class="text-center mb-4">New Connection Form</h2>
         <form id="connectionForm" action="NewConnectionServlet" method="post"  enctype="multipart/form-data" onsubmit="disableButton()">
-        <p class="text-danger">* Denotes Mandatory Fields (Please upload all documents in jpeg/jpg format. 
+        <p class="text-danger" style="text-align: center;">* Denotes Mandatory Fields (Please upload all documents in jpeg/jpg format. 
         Document size must be less than 200KB.)</p>
         <div class="row mb-3">
             <div class="col-md-3">
@@ -336,7 +339,7 @@
                   <input type="file" id="photoOwnerSecond" name="photoOwnerSecond" class="form-control" accept="image/jpeg, image/jpg" required>
             </div>
         </div>
-         <div class="text-left">
+         <div class="text-center">
         <button type="submit" class="btn btn-primary">Submit</button>
 	    </div>
 	    </form>
@@ -373,7 +376,7 @@
 		                    method: "POST",
 		                    dataType: "json",
 		                    success: function (response) {
-		                        $('#block').append('<option value="">--Select Block--</option>');
+		                      //  $('#block').append('<option value="">--Select Block--</option>');
 		                        $.each(response, function (i, item) {
 		                            $('#block').append('<option value="' + item.id + '">' + item.name + '</option>');
 		                        });
@@ -396,7 +399,7 @@
 		                    method: "POST",
 		                    dataType: "json",
 		                    success: function (response) {
-		                        $('#panchayat').append('<option value="">--Select Panchayat--</option>');
+		                       // $('#panchayat').append('<option value="">--Select Panchayat--</option>');
 		                        $.each(response, function (i, item) {
 		                            $('#panchayat').append('<option value="' + item.id + '">' + item.name + '</option>');
 		                        });
@@ -419,7 +422,7 @@
 		                    method: "POST",
 		                    dataType: "json", 
 		                    success: function (response) {
-		                        $('#village_ward').append('<option value="">--Select Village/Ward--</option>');
+		                       // $('#village_ward').append('<option value="">--Select Village/Ward--</option>');
 		                        $.each(response, function (i, item) {
 		                            $('#village_ward').append('<option value="' + item.id + '">' + item.name + '</option>');
 		                        });

@@ -10,7 +10,7 @@ public class AEEApprovalDAO {
     public List<NewConnectionRequest> getApplicationsForAEE(String sectionId) {
         List<NewConnectionRequest> list = new ArrayList<>();
         try (Connection con = DBConnection.getConnection()) {
-            String query = "SELECT * FROM new_connection_requests WHERE current_stage='AEE' AND section=?";
+            String query = "SELECT * FROM new_connection_requests WHERE (current_stage='AEE' OR (current_stage='Complete' AND status='Approved')) AND section=?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, sectionId);
             ResultSet rs = ps.executeQuery();
@@ -20,6 +20,7 @@ public class AEEApprovalDAO {
                 req.setApplicantName(rs.getString("applicantName"));
                 req.setMobile(rs.getString("mobile"));
                 req.setStatus(rs.getString("status"));
+                req.setAeeRemarks(rs.getString("aee_remarks"));
                 list.add(req);
             }
         } catch (Exception e) {
@@ -73,24 +74,27 @@ public class AEEApprovalDAO {
 
             // If consumer not already in consumers table, insert
             if (!isConsumerExists(consumerId)) {
-                String insertQuery = "INSERT INTO consumers (consumer_id, app_id, consumer_number, name, phone_no, address, connection_type, email, houseNo, street, addressLine2, addressLine3, " +
-                		             "city, pincode, district, block, panchayat, village, division, subDivision, section," +
-                		             "tariff, E_phase, E_load, gender, f_hName, idProof, addressProof," +
-                		             "idProofFile, addressProofFront, addressProofLast, photo," +
-                		             "ownershipFirst, ownershipSecond, current_stage, created_at ," +
-                	                 "jee_remarks, mi_remarks, aee_remarks, dues_cleared, documents_verified, status)" +
-                		") SELECT consumerId, app_id, consumer_number, applicantName, mobile, addressLine1 email, houseNo, street, addressLine2, addressLine3," +
-                		                "city, pincode, district, block, panchayat, village, division, subDivision, section," +
-                		               "tariff, E_phase, E_load, gender, f_hName, idProof, addressProof," +
-                		              "idProofFile, addressProofFront, addressProofLast, photo," +
-                		              "ownershipFirst, ownershipSecond, current_stage, created_at," +
-                		               "jee_remarks, mi_remarks, aee_remarks, dues_cleared, documents_verified, status" +
-                		               "FROM new_connection_requests WHERE app_id=?";
+            	String insertQuery = "INSERT INTO consumers (consumer_id, app_id, consumer_number, name, phone_no, address, connection_type, email, houseNo, street, addressLine2, addressLine3," +
+            		    "city, pincode, district, block, panchayat, village, division, subDivision, section," +
+            		    "tariff, E_phase, E_load, gender, f_hName, idProof, addressProof," +
+            		    "idProofFile, addressProofFront, addressProofLast, photo," +
+            		    "ownershipFirst, ownershipSecond, created_at) " +
+            		    "SELECT ?, app_id, ?, applicantName, mobile, addressLine1, connectionType, email, houseNo, street, addressLine2, addressLine3," +
+            		    "city, pincode, district, block, panchayat, village, division, subDivision, section," +
+            		    "tariff, E_phase, E_load, gender, f_hName, idProof, addressProof," +
+            		    "idProofFile, addressProofFront, addressProofLast, photo," +
+            		    "ownershipFirst, ownershipSecond, created_at " + // <-- fixed here (no comma)
+            		    "FROM new_connection_requests WHERE app_id=?";
+
                 PreparedStatement insertPs = con.prepareStatement(insertQuery);
-                insertPs.setString(1, consumerNumber);
-                insertPs.setString(2, appId);
+                insertPs.setString(1, consumerId);
+                insertPs.setString(2, consumerNumber);
+                insertPs.setString(3, appId);
+                System.out.println("Updated rows: " + updated);
+
                 insertPs.executeUpdate();
             }
+
 
             con.commit();
             success = updated > 0;

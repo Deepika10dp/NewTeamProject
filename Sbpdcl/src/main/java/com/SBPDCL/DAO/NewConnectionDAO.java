@@ -190,7 +190,7 @@ public class NewConnectionDAO {
 	  public List<NewConnectionRequest> getRequestsForJEE(String sectionId) {
 		    List<NewConnectionRequest> list = new ArrayList<>();
 		    try (Connection con = DBConnection.getConnection()) {
-		        String query = "SELECT * FROM new_connection_requests WHERE (current_stage='JEE' OR (current_stage='MI' AND status='Pending MI')) AND section=?";
+		        String query = "SELECT * FROM new_connection_requests WHERE  section=?";
 		        PreparedStatement ps = con.prepareStatement(query);
 		        ps.setString(1, sectionId);
 		        ResultSet rs = ps.executeQuery();
@@ -283,9 +283,10 @@ public class NewConnectionDAO {
 
 
 	  public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {
-		  List<NewConnectionRequest> list = new ArrayList<>();
+		    List<NewConnectionRequest> list = new ArrayList<>();
 		    try (Connection con = DBConnection.getConnection()) {
-		    	String query = "SELECT * FROM new_connection_requests WHERE (current_stage='MI' OR (current_stage='AEE' AND status='Pending AEE')) AND section=?";
+		        String query = "SELECT * FROM new_connection_requests " +
+		                       "WHERE section=? AND (current_stage='MI' OR current_stage='AEE' OR current_stage='Complete')";
 		        PreparedStatement ps = con.prepareStatement(query);
 		        ps.setString(1, sectionId);
 		        ResultSet rs = ps.executeQuery();
@@ -294,8 +295,10 @@ public class NewConnectionDAO {
 		            req.setApp_id(rs.getString("app_id"));
 		            req.setApplicantName(rs.getString("applicantName"));
 		            req.setStatus(rs.getString("status"));
+		            req.setMi_remarks(rs.getString("mi_remarks"));
 		            req.setAddressLine1(rs.getString("addressLine1"));
-		            // set more fields as needed
+		            req.setCurrentStage(rs.getString("current_stage"));
+		            // Add more fields if needed
 		            list.add(req);
 		        }
 		    } catch (Exception e) {
@@ -305,13 +308,12 @@ public class NewConnectionDAO {
 		}
 
 	  public boolean updateMIInspection(String app_id, String mi_remarks) {
-		  boolean updated = false;
-		    String sql ="UPDATE new_connection_requests SET status = ?, current_stage = ?, mi_remarks = ? WHERE app_id = ?";
+		    String sql = "UPDATE new_connection_requests SET status = ?, current_stage = ?, mi_remarks = ? WHERE app_id = ?";
 
 		    try (Connection con = DBConnection.getConnection();
 		         PreparedStatement ps = con.prepareStatement(sql)) {
 
-		    	ps.setString(1, "Pending AEE");
+		        ps.setString(1, "Pending AEE");
 		        ps.setString(2, "AEE");
 		        ps.setString(3, mi_remarks);
 		        ps.setString(4, app_id);
@@ -321,8 +323,7 @@ public class NewConnectionDAO {
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    }
-		    return updated;
+		    return false; // No need for 'updated' variable
 		}
-
 
 }

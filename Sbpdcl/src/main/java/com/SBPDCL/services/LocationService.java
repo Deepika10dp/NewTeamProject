@@ -38,5 +38,7 @@ public class LocationService {
     public LocationNameBean getAllLocationNames(int districtId, int blockId, int panchayatId, int villageId, int divisionId, int subDivisionId, int sectionId) {
         return dao.getLocationNames(districtId, blockId, panchayatId, villageId, divisionId, subDivisionId, sectionId);
     }
-    
+    public String getSectionNameById(String sectionId) {
+        return dao.getSectionNameById(sectionId);
+    }
 }

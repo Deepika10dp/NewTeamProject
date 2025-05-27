@@ -20,12 +20,17 @@ public class MIInspectionServlet extends HttpServlet {
 		String app_id = request.getParameter("app_id");
         String mi_remarks = request.getParameter("mi_remarks");
         NewConnectionService service = new NewConnectionService();
-        boolean updated = service. updateMIInspection(app_id, mi_remarks);
-        if (updated) {
-            response.sendRedirect("miDashboard.jsp?success=true");
+        if (app_id != null && mi_remarks != null) {
+            boolean updated = service.updateMIInspection(app_id, mi_remarks);
+            if (updated) {
+                response.sendRedirect("miDashboard.jsp?success=true");
+            } else {
+                response.sendRedirect("miDashboard.jsp?error=true");
+            }
         } else {
-            response.sendRedirect("miDashboard.jsp?error=true");
+            response.sendRedirect("miDashboard.jsp?error=invalid");
         }
+
 	}
 
 }

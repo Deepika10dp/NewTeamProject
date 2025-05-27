@@ -1,9 +1,10 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.SBPDCL.bean.User,javax.servlet.http.HttpSession" %>
-<%@page import="java.util.List"%>
-<%@page import="com.SBPDCL.bean.NewConnectionRequest"%>
-<%@page import="com.SBPDCL.services.AEEApprovalService"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.SBPDCL.bean.NewConnectionRequest" %>
+<%@ page import="com.SBPDCL.services.AEEApprovalService" %>
+<%@ page import="com.SBPDCL.services.LocationService" %> 
+
 <%
     User user = (User) session.getAttribute("user");
     if (user == null || user.getRoleId() != 3) {
@@ -19,13 +20,16 @@
 
     String userId = (String) sess.getAttribute("user_id");
     String pageParam = request.getParameter("page");
-%>
 
-<%
-	String sectionId = (String) session.getAttribute("section_id");
+    String sectionId = (String) session.getAttribute("section_id");
     AEEApprovalService service = new AEEApprovalService();
     List<NewConnectionRequest> applications = service.getAEEApplications(sectionId);
+
+    LocationService locationService = new LocationService();
+    String sectionName = locationService.getSectionNameById(sectionId);
 %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,7 +158,7 @@
 	<!-- Profile Panel -->
 	<div class="profile-panel" id="profilePanel">
 	  <p><strong>Name:</strong> <%= user.getName() %></p>
-	  <p><strong>Section:</strong> East Division</p>
+	  <p><strong>Section:</strong> <%= sectionName %></p>
 	  <p><strong>ID:</strong> <%= userId %></p>
 	  <p><a href="#" onclick="openChangePasswordModal(event)">Change Password</a></p>
 	  <p><a href="LogoutServlet">Logout</a></p>
@@ -203,27 +207,38 @@
 	              </tr>
 	            </thead>
 	            <tbody>
-				        <%
-				            for(NewConnectionRequest req : applications) {
-				        %>
-				        <form action="AEEApprovalServlet" method="post">
-				            <tr>
-				                <td><%= req.getApp_id() %></td>
-				                <td><%= req.getApplicantName() %></td>
-				                <td><%= req.getMobile() %></td>
-				                <td><%= req.getStatus() %></td>
-				                <td>
-				                    <input type="text" name="aeeRemarks" required />
-				                    <input type="hidden" name="appId" value="<%= req.getApp_id() %>" />
-				                    <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
-				                </td>
-				                <td><input type="submit" value="Approve & Generate Consumer No" /></td>
-				            </tr>
-				        </form>
-				        <%
-				            }
-				        %>
-	            </tbody>
+					<%
+					    for (NewConnectionRequest req : applications) {
+					%>
+					<tr>
+					    <td><%= req.getApp_id() %></td>
+					    <td><%= req.getApplicantName() %></td>
+					    <td><%= req.getMobile() %></td>
+					    <td><%= req.getStatus() %></td>
+					    <td>
+					        <% if ("Pending AEE".equals(req.getStatus())) { %>
+					            <form action="AEEApprovalServlet" method="post" style="margin:0;">
+					                <input type="text" name="aeeRemarks" value="<%= req.getAeeRemarks() != null ? req.getAeeRemarks() : "" %>" required />
+					                <input type="hidden" name="appId" value="<%= req.getApp_id() %>" />
+					                <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
+					        </td>
+					        <td>
+					                <input type="submit" value="Approve & Generate Consumer No" />
+					            </form>
+					        <% } else { %>
+					            <input type="text" value="<%= req.getAeeRemarks() != null ? req.getAeeRemarks() : "" %>" readonly />
+					        </td>
+					        <td>
+					            Connection Approved
+					        </td>
+					        <% } %>
+					</tr>
+					<%
+					    }
+					%>
+				</tbody>
+
+
 	          </table>
 	        </div>
 	      </div>

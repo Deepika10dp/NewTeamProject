@@ -153,5 +153,19 @@ public class LocationDAO {
         
         return bean;
     }
-    
+    public String getSectionNameById(String sectionId) {
+        String sectionName = "";
+        try (Connection con = DBConnection.getConnection()) {
+            String sql = "SELECT name FROM section WHERE id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, sectionId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                sectionName = rs.getString("name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sectionName;
+    }
 }

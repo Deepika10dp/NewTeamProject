@@ -3,6 +3,7 @@
 <%@page import="java.util.List"%>
 <%@page import="com.SBPDCL.bean.NewConnectionRequest"%>
 <%@page import="com.SBPDCL.services.NewConnectionService"%>
+<%@ page import="com.SBPDCL.services.LocationService" %> 
 <%@page import="com.SBPDCL.DAO.MeterDAO"%>
 
 <%
@@ -20,11 +21,13 @@
 
     String userId = (String) sess.getAttribute("user_id");
     String pageParam = request.getParameter("page");
-%>
-<%
+    
     String sectionId = (String) session.getAttribute("section_id");
     NewConnectionService service = new NewConnectionService();
     List<NewConnectionRequest> requests = service.getApplicationsForMI(sectionId);
+    
+    LocationService locationService = new LocationService();
+    String sectionName = locationService.getSectionNameById(sectionId);
 %>
 
 <!DOCTYPE html>
@@ -153,6 +156,7 @@
 	  <p><strong>Name:</strong> <%= user.getName() %></p>
 	  <p><strong>Role:</strong> Meter Installer</p>
 	  <p><strong>ID:</strong> <%= userId %></p>
+	  <p><strong>Section:</strong> <%= sectionName %></p>
 	  <p><a href="#" onclick="openChangePasswordModal(event)">Change Password</a></p>
 	  <p><a href="LogoutServlet">Logout</a></p>
 	
@@ -243,23 +247,37 @@
 							        }
 							    %>
 						  </td>
-						  
-						  <td><input type="text" name="mi_remarks" required />
-				            <input type="hidden" name="app_id" value="<%= req.getApp_id() %>">
-				            <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" /></td>
-				          <td>
-  <%
-    if ("Forwarded".equalsIgnoreCase(req.getStatus())) {
-  %>
-    <span class="text-success">Forwarded to AEE</span>
-  <%
-    } else {
-  %>
-    <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
-  <%
-    }
-  %>
-</td>
+						 	 
+						<%
+						    String remarks = req.getMi_remarks();
+						    String currentStage = req.getCurrentStage();
+						   // String status = req.getStatus();
+						
+						    boolean isForwarded = "AEE".equalsIgnoreCase(currentStage) || "Complete".equalsIgnoreCase(currentStage);
+						%>
+						
+						<td>
+						  <% if (isForwarded) { %>
+						    <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" readonly class="form-control-plaintext" />
+						  <% } else { %>
+						    <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" required class="form-control" />
+						  <% } %>
+						
+						  <input type="hidden" name="app_id" value="<%= req.getApp_id() %>" />
+						  <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
+						</td>
+						
+						<td>
+						  <% if (isForwarded) { %>
+						    <span class="text-success fw-bold">Forwarded to AEE</span>
+						  <% } else { %>
+						    <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
+						  <% } %>
+						</td>
+
+						
+				
+ 
 				        </tr>
 				      </form>
 				      <%

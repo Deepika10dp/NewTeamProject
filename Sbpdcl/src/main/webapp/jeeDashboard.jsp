@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.SBPDCL.bean.User,javax.servlet.http.HttpSession" %>
-    <%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@page import="com.SBPDCL.bean.NewConnectionRequest"%>
+<%@ page import="com.SBPDCL.services.LocationService" %> 
 <%@page import="com.SBPDCL.services.NewConnectionService"%>
 
 <%
@@ -19,11 +20,13 @@
 
     String userId = (String) sess.getAttribute("user_id");
     String pageParam = request.getParameter("page");
-%>
-<%
+
     String sectionId = (String) session.getAttribute("section_id");
     NewConnectionService service = new NewConnectionService();
     List<NewConnectionRequest> requests = service.getApplicationsForJEE(sectionId);
+    
+    LocationService locationService = new LocationService();
+    String sectionName = locationService.getSectionNameById(sectionId);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -150,7 +153,7 @@
 <!-- Profile Panel -->
 <div class="profile-panel" id="profilePanel">
   <p><strong>Name:</strong> <%= user.getName() %></p>
-  <p><strong>Section:</strong> East Division</p>
+  <p><strong>Section:</strong> <%= sectionName %></p>
   <p><strong>ID:</strong> <%= userId %></p>
   <p><a href="#" onclick="openChangePasswordModal(event)">Change Password</a></p>
   <p><a href="LogoutServlet">Logout</a></p>
@@ -205,9 +208,11 @@
           		<%
 				    for (NewConnectionRequest r : requests) {
 				    	boolean duesCleared = Boolean.TRUE.equals(r.getDues_cleared());  // assumed getter
+				    	boolean docsVerified = Boolean.TRUE.equals(r.getDocuments_verified());
 
-				    	boolean docsVerified = "MI".equals(r.getCurrentStage()) || 
-			                       (r.getStatus() != null && r.getStatus().contains("Pending MI"));
+
+				    	//boolean docsVerified = "MI".equals(r.getCurrentStage()) || 
+			                     //  (r.getStatus() != null && r.getStatus().contains("Pending MI"));
 
 				%>
 				    <tr data-dues="<%= duesCleared %>" 
@@ -220,29 +225,29 @@
 				        <td><%= docsVerified ? "Yes" : "No" %></td>
 				        <td>
 				        
-			<%
-		    if (docsVerified) {
-		%>
-		    <span class="badge bg-success">Forwarded</span>
-		<%
-		    } else {
-		%>
-		    <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
-		        <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
-		        <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
-		        <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
-		    </form>
-		
-		   <form action="DocumentVerificationServlet" method="get" style="display:inline-block;">
-			    <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
-			    <button type="submit" class="btn btn-sm btn-success" <%= duesCleared ? "" : "disabled" %>>Verify Docs</button>
-		   </form>
-
-		<%
-		    }
-		%>
-</td>
-				    </tr>
+								<%
+							    if (docsVerified) {
+							%>
+							    <span class="badge bg-success">Forwarded</span>
+							<%
+							    } else {
+							%>
+							    <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
+							        <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
+							        <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
+							        <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
+							    </form>
+							
+							   <form action="DocumentVerificationServlet" method="get" style="display:inline-block;">
+								    <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
+								    <button type="submit" class="btn btn-sm btn-success" <%= duesCleared ? "" : "disabled" %>>Verify Docs</button>
+							   </form>
+					
+							<%
+							    }
+							%>
+					</td>
+				  </tr>
 				<% } %>
           </tbody>
         </table>
