@@ -4,6 +4,7 @@
 <%@ page import="com.SBPDCL.bean.NewConnectionRequest" %>
 <%@ page import="com.SBPDCL.services.AEEApprovalService" %>
 <%@ page import="com.SBPDCL.services.LocationService" %> 
+<%@ page import="java.util.ArrayList" %> 
 
 <%
     User user = (User) session.getAttribute("user");
@@ -24,6 +25,23 @@
     String sectionId = (String) session.getAttribute("section_id");
     AEEApprovalService service = new AEEApprovalService();
     List<NewConnectionRequest> applications = service.getAEEApplications(sectionId);
+    
+    String statusParam = request.getParameter("status");
+    if (statusParam == null) {
+        statusParam = "all";
+    }
+
+    List<NewConnectionRequest> filteredApplications = new ArrayList<>();
+    for (NewConnectionRequest req : applications) {
+        String status = req.getStatus();
+        if ("pending".equalsIgnoreCase(statusParam) && "Pending AEE".equalsIgnoreCase(status)) {
+            filteredApplications.add(req);
+        } else if ("approved".equalsIgnoreCase(statusParam) && !"Pending AEE".equalsIgnoreCase(status)) {
+            filteredApplications.add(req);
+        } else if ("all".equalsIgnoreCase(statusParam)) {
+            filteredApplications.add(req);
+        }
+    }
 
     LocationService locationService = new LocationService();
     String sectionName = locationService.getSectionNameById(sectionId);
@@ -71,9 +89,9 @@
       align-items: center;
       color: white;
       position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 1060;
+      top: 12px;
+      right: 12px;
+      z-index: 2002;
     }
 
     .profile-toggle span {
@@ -155,6 +173,7 @@
   </style>
 </head>
 <body>
+	
 	<!-- Profile Panel -->
 	<div class="profile-panel" id="profilePanel">
 	  <p><strong>Name:</strong> <%= user.getName() %></p>
@@ -172,7 +191,7 @@
 	    <button class="profile-toggle" onclick="toggleProfile()">
 	      <span id="profileName"><%= user.getName() %></span>
 	      <i class="bi bi-person-circle ms-2" style="font-size: 1.8rem;"></i>
-	    </button>
+	 </button>
 	  </div>
 	</nav>
 	
@@ -181,73 +200,65 @@
 	
 	    <!-- Sidebar -->
 	    <div class="col-md-2 sidebar p-3">
-	      <h5 class="text-center">Menu</h5>
-	      <a href="#">All Applications</a>
-	      <a href="#">Pending Applications</a>
-	      <a href="#">Approved Applications</a>
-	      
-	    </div>
+		  <h5 class="text-center">Menu</h5>
+		  <a href="aeeDashboard.jsp?status=all">All Applications</a>
+		  <a href="aeeDashboard.jsp?status=pending">Pending Applications</a>
+		  <a href="aeeDashboard.jsp?status=approved">Approved Applications</a>
+		</div>
 	
-	    <!-- Main Content -->
-	    <div class="col-md-10 p-4">
-	      <div class="card mt-4">
-	        <div class="card-header">
-	          Recent Applications
-	        </div>
-	        <div class="card-body">
-	          <table class="table table-striped">
-	            <thead>
-	              <tr>
-	                <th>Application ID</th>
-		            <th>Applicant Name</th>
-		            <th>Mobile</th>
-		            <th>Status</th>
-		            <th>Remarks</th>
-		            <th>Action</th>
-	              </tr>
-	            </thead>
-	            <tbody>
-					<%
-					    for (NewConnectionRequest req : applications) {
-					%>
-					<tr>
-					    <td><%= req.getApp_id() %></td>
-					    <td><%= req.getApplicantName() %></td>
-					    <td><%= req.getMobile() %></td>
-					    <td><%= req.getStatus() %></td>
-					    <td>
-					        <% if ("Pending AEE".equals(req.getStatus())) { %>
-					            <form action="AEEApprovalServlet" method="post" style="margin:0;">
-					                <input type="text" name="aeeRemarks" value="<%= req.getAeeRemarks() != null ? req.getAeeRemarks() : "" %>" required />
-					                <input type="hidden" name="appId" value="<%= req.getApp_id() %>" />
-					                <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
-					        </td>
-					        <td>
-					                <input type="submit" value="Approve & Generate Consumer No" />
-					            </form>
-					        <% } else { %>
-					            <input type="text" value="<%= req.getAeeRemarks() != null ? req.getAeeRemarks() : "" %>" readonly />
-					        </td>
-					        <td>
-					            Connection Approved
-					        </td>
-					        <% } %>
-					</tr>
-					<%
-					    }
-					%>
-				</tbody>
-
-
-	          </table>
-	        </div>
-	      </div>
-	
-	    </div>
-	  </div>
-	</div>
-	
-	
+<!-- Main Content -->
+<div class="col-md-10 p-4">
+  <div>
+    <h5>Total Applications = <span id="totalApplications"><%= filteredApplications.size() %></span></h5>
+    <table class="table table-striped table-bordered" id="applicationsTable">
+      <thead class="table-dark">
+        <tr style="text-align: center;">
+          <th>Application ID</th>
+          <th>Applicant Name</th>
+          <th>Mobile</th>
+          <th>Status</th>
+          <th style="width: 180px;">Remarks</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%
+          for (NewConnectionRequest req : filteredApplications) {
+        %>
+        <tr>
+          <td><%= req.getApp_id() %></td>
+          <td><%= req.getApplicantName() %></td>
+          <td><%= req.getMobile() %></td>
+          <td><%= req.getStatus() %></td>
+          <td>
+            <% if ("Pending AEE".equals(req.getStatus())) { %>
+              <form action="AEEApprovalServlet" method="post" style="margin:0;">
+                <input type="text" name="aeeRemarks" class="form-control form-control-sm" 
+                       value="<%= req.getAeeRemarks() != null ? req.getAeeRemarks() : "" %>" required />
+                <input type="hidden" name="appId" value="<%= req.getApp_id() %>" />
+                <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
+          </td>
+          <td>
+                <button type="submit" class="btn btn-sm btn-success">Approve & Generate Consumer No</button>
+                </form>
+            <% } else { %>
+              <input type="text" class="form-control form-control-sm" 
+                     value="<%= req.getAeeRemarks() != null ? req.getAeeRemarks() : "" %>" readonly />
+          </td>
+          <td>
+              <span class="badge bg-success">Connection Approved</span>
+          </td>
+            <% } %>
+        </tr>
+        <%
+          }
+        %>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+</div>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	

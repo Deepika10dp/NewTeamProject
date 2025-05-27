@@ -187,27 +187,24 @@
 	        <a href="MeterDetails.jsp">View Meter Details</a>
 	      
 	    </div>
-	
 	    <!-- Main Content -->
 	    <div class="col-md-10 p-4">
 	
 	      <!-- Assigned Installations Table -->
-	      <div class="card mt-4">
-	        
-	        <div class="card-body">
-	          <table class="table table-bordered">
-	            <thead>
-	              <tr>
-	                <th>Application ID</th>
-	                <th>Customer Name</th>
-	                <th>Status</th>
-	                <th>Inspection Status</th>
-	                <th>Meter Details</th>
-	                <th>Remarks</th>
-	                <th>Update</th>
-	              </tr>
-	            </thead>
-				   </thead>
+	      <div class="mt-4">
+			    <h5 class="mb-3">Total Applications : <%= requests != null ? requests.size() : 0 %></h5>
+			    <table class="table table-striped table-bordered" id="assignedInstallationsTable">
+			      <thead class="table-dark">
+			        <tr style="text-align: center;">
+			          <th>Application ID</th>
+			          <th>Customer Name</th>
+			          <th>Status</th>
+			          <th>Inspection Status</th>
+			          <th>Meter Details</th>
+			          <th>Remarks</th>
+			          <th>Update</th>
+			        </tr>
+			      </thead>
 	            <tbody>
 			          						            	  
 				      <%
@@ -295,9 +292,6 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
-	
-	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 function checkRemarks() {

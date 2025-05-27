@@ -197,19 +197,28 @@
     </div>
   </div>
 </div>
-	<!--  <div class="buttons">
-	    <button type="button" onclick="history.back()">Back</button>
-	    <button type="submit">Confirm & Submit</button>
-	</div>-->
-
-    </form>
-    <form action="FinalSubmitServlet" method="post">
-    	<input type="submit" value="Final Submit" />
-	</form>
 	
-	<form action="form.html" method="get">
-	    <input type="submit" value="Back to Edit" />
-	</form>
-    
+    <div class="buttons" style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+        <a href="form.html" style="
+            background-color: #28a745;
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            line-height: 38px;
+        ">Back to Edit</a>
+        <button type="submit" style="
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        ">Final Submit</button>
+    </div>
+</form>    
 </body>
 </html>
