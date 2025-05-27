@@ -248,37 +248,43 @@
 							    %>
 						  </td>
 						 	 
-						<%
-						    String remarks = req.getMi_remarks();
-						    String currentStage = req.getCurrentStage();
-						   // String status = req.getStatus();
-						
-						    boolean isForwarded = "AEE".equalsIgnoreCase(currentStage) || "Complete".equalsIgnoreCase(currentStage);
-						%>
-						
-						<td>
-						  <% if (isForwarded) { %>
-						    <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" readonly class="form-control-plaintext" />
-						  <% } else { %>
-						    <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" required class="form-control" />
-						  <% } %>
-						
-						  <input type="hidden" name="app_id" value="<%= req.getApp_id() %>" />
-						  <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
-						</td>
-						
-						<td>
-						  <% if (isForwarded) { %>
-						    <span class="text-success fw-bold">Forwarded to AEE</span>
-						  <% } else { %>
-						    <button type="submit" class="btn btn-sm btn-primary">Verify & Forward to AEE</button>
-						  <% } %>
-						</td>
+					<%
+					    String remarks = req.getMi_remarks();
+					    String currentStage = req.getCurrentStage();
+					
+					    boolean isForwarded = "AEE".equalsIgnoreCase(currentStage) || "Complete".equalsIgnoreCase(currentStage);
+					    boolean isApproved = remarks != null && remarks.toLowerCase().contains("approved");
+					    boolean isPending = "pending".equalsIgnoreCase(remarks);
+					    boolean isRejected = "rejected".equalsIgnoreCase(remarks);
+					%>
+					
+					<td>
+					    <% if (isForwarded || isApproved || isRejected) { %>
+					        <!-- Read-only for approved, rejected, or forwarded -->
+					        <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" readonly class="form-control-plaintext" />
+					    <% } else if (isPending) { %>
+					        <!-- Editable only if pending -->
+					        <input type="text" name="mi_remarks" id="miRemarks" value="<%= remarks != null ? remarks : "" %>" required class="form-control" oninput="checkRemarks()" />
+					    <% } else { %>
+					        <!-- Default case (new or blank remarks) -->
+					        <input type="text" name="mi_remarks" id="miRemarks" value="" required class="form-control" oninput="checkRemarks()" />
+					    <% } %>
+					
+					    <input type="hidden" name="app_id" value="<%= req.getApp_id() %>" />
+					    <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
+					</td>
+					
+					<td>
+					    <% if (isForwarded) { %>
+					        <span class="text-success fw-bold">Forwarded to AEE</span>
+					    <% } else { %>
+					        <button type="submit" name="action" value="save" class="btn btn-sm btn-secondary">Save Remarks</button>
+					        <button type="submit" name="action" value="forward" id="forwardBtn" class="btn btn-sm btn-primary" <%= !isApproved ? "disabled" : "" %>>Verify & Forward to AEE</button>
+					    <% } %>
+					</td>
 
-						
-				
- 
-				        </tr>
+
+				    </tr>
 				      </form>
 				      <%
 				        }
@@ -293,6 +299,13 @@
 	
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+function checkRemarks() {
+    const remarks = document.getElementById("miRemarks").value.toLowerCase();
+    const forwardBtn = document.getElementById("forwardBtn");
+    forwardBtn.disabled = !remarks.includes("approved");
+}
+</script>
 	<script>
 	  function toggleProfile() {
 	    const panel = document.getElementById("profilePanel");
@@ -352,6 +365,7 @@
 	  <script>
 	    alert("<%= msg.replaceAll("\"", "\\\\\"") %>");
 	  </script>
+	
 	<%
 	    }
 	%>
