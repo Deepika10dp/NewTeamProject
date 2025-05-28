@@ -46,7 +46,11 @@ public class NewConnectionService {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
-
+	public boolean saveOnlyMIRemarks(String app_id, String mi_remarks) throws ClassNotFoundException {
+        return dao.saveOnlyMIRemarks(app_id, mi_remarks);
+    }
+	public boolean forwardToAEE(String app_id) throws ClassNotFoundException {
+		return dao.forwardToAEE(app_id);
+		
+	}
 }
