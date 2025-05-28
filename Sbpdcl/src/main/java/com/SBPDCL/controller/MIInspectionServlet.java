@@ -17,10 +17,6 @@ public class MIInspectionServlet extends HttpServlet {
         super();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().append("Served at: ").append(request.getContextPath());
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String app_id = request.getParameter("app_id");
         String mi_remarks = request.getParameter("mi_remarks");
@@ -33,26 +29,45 @@ public class MIInspectionServlet extends HttpServlet {
             return;
         }
 
-        boolean updated = service.updateMIInspection(app_id, mi_remarks);
-
-        if (!updated) {
-            response.sendRedirect("miDashboard.jsp?error=update_failed");
-            return;
-        }
-
         String remarksLower = mi_remarks.toLowerCase();
 
+        // Save or forward logic
         if ("save".equalsIgnoreCase(action)) {
-            // Just save remarks, no forwarding
-            response.sendRedirect("miDashboard.jsp?success=remarks_saved");
-        } else if ("forward".equalsIgnoreCase(action)) {
-            // Only forward if remarks contain "approved"
-            if (remarksLower.contains("approved")) {
-                // Forward logic here (for now just redirect success)
-                response.sendRedirect("miDashboard.jsp?success=forwarded_to_AEE");
+            // Save remarks without changing status
+            boolean saved = false;
+			try {
+				saved = service.saveOnlyMIRemarks(app_id, mi_remarks);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            if (saved) {
+                response.sendRedirect("miDashboard.jsp?success=remarks_saved");
             } else {
-                // Do not forward if not approved
-                response.sendRedirect("miDashboard.jsp?error=not_approved");
+                response.sendRedirect("miDashboard.jsp?error=save_failed");
+            }
+        } else if ("forward".equalsIgnoreCase(action)) {
+            if (remarksLower.contains("rejected") || remarksLower.contains("pending")) {
+                // Don't allow forward if rejected or pending
+                response.sendRedirect("miDashboard.jsp?error=not_forwarded_invalid_remarks");
+            } else if (remarksLower.contains("approved")) {
+                // Update remarks and status, then forward
+                boolean updated = service.updateMIInspection(app_id, mi_remarks);
+                boolean forwarded = false;
+				try {
+					forwarded = service.forwardToAEE(app_id);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                if (updated && forwarded) {
+                    response.sendRedirect("miDashboard.jsp?success=forwarded_to_AEE");
+                } else {
+                    response.sendRedirect("miDashboard.jsp?error=forward_failed");
+                }
+            } else {
+                // Default case — not approved
+                response.sendRedirect("miDashboard.jsp?error=remarks_not_approved");
             }
         } else {
             response.sendRedirect("miDashboard.jsp?error=invalid_action");
