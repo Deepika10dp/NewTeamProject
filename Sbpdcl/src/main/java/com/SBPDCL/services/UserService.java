@@ -21,7 +21,7 @@ public class UserService {
         user.setRoleId(4); 
         boolean isRegistered = UserDAO.registerConsumer(user);
         if (isRegistered) {
-            return user;  // return the user object
+            return user; 
         } else {
             return null;
         }

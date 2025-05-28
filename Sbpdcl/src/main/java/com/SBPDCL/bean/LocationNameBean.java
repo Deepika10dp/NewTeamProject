@@ -1,5 +1,4 @@
 package com.SBPDCL.bean;
-
 public class LocationNameBean {
     private String districtName;
     private String blockName;
@@ -8,8 +7,6 @@ public class LocationNameBean {
     private String divisionName;
     private String subDivisionName;
     private String sectionName;
-
-    // Getter and setter methods
     public String getDistrictName() {
         return districtName;
     }
@@ -52,7 +49,6 @@ public class LocationNameBean {
     public void setSectionName(String sectionName) {
         this.sectionName = sectionName;
     }
-
     @Override
     public String toString() {
         return "LocationNameBean [districtName=" + districtName + ", blockName=" + blockName + ", panchayatName="

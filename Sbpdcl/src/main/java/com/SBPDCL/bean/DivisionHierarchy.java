@@ -1,5 +1,4 @@
 package com.SBPDCL.bean;
-
 public class DivisionHierarchy {
 	 private Division division;
 	    private SubDivision subdivision;
@@ -26,8 +25,5 @@ public class DivisionHierarchy {
 		public String toString() {
 			return "DivisionHierarchy [division=" + division + ", subdivision=" + subdivision + ", section=" + section
 					+ "]";
-		}
-	
-
-   
+		} 
 }

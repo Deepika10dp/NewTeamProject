@@ -1,9 +1,7 @@
 package com.SBPDCL.bean;
-
 public class Role {
 	 private int id;
 	 private String roleName;
-
 	 public int getId() { 
 		 return id; 
 	 }

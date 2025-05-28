@@ -43,7 +43,6 @@ public class NewConnectionService {
         return dao.updateMIInspection(app_id, mi_remarks);
     }
 	public boolean checkDuesCleared(String consumerId, String mobile) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	public boolean saveOnlyMIRemarks(String app_id, String mi_remarks) throws ClassNotFoundException {

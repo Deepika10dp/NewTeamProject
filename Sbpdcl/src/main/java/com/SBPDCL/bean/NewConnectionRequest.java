@@ -1,8 +1,6 @@
 package com.SBPDCL.bean;
-
 import java.sql.Date;
 import java.sql.Timestamp;
-
 public class NewConnectionRequest {
 		 private String app_id;
 		 private String connectionType;
@@ -30,30 +28,22 @@ public class NewConnectionRequest {
 		 private String applicantName;
 		 private String f_hName;
 		 private String idProof;
-		 private String addressProof;
-		 
+		 private String addressProof;		 
 		 private String idProofFile;
 		 private String addressProofFront;
 		 private String addressProofLast;
 		 private String photo;
 		 private String ownershipFirst;
-		 private String ownershipSecond;
-		
+		 private String ownershipSecond;		
 		 private Timestamp submissionDate;
 		 private String status;
 		 private String currentStage;
 		 private String jeeRemarks;
 		 private String mi_remarks;
 		 private String aeeRemarks;
-		 private String inspectionStatus;
-		 
+		 private String inspectionStatus;		 
 		 private String dues_cleared;
-		 private String documents_verified;
-
-		 
-		 
-		
-		
+		 private String documents_verified;	
 		public String getDues_cleared() {
 			return dues_cleared;
 		}
