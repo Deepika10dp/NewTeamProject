@@ -21,12 +21,9 @@ import com.SBPDCL.util.LocationNameUtil;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 20 * 1024 * 1024)
 public class NewConnectionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
-    // Define permanent upload directory outside server deploy folder
     private static final String PERMANENT_UPLOAD_DIR = "C:\\SBPDCLUploads";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Use permanent folder for uploads
         String uploadPath = PERMANENT_UPLOAD_DIR;
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
@@ -34,8 +31,6 @@ public class NewConnectionServlet extends HttpServlet {
         }
 
         String app_id = "APP" + System.currentTimeMillis();
-
-        // Collect form data
         NewConnectionRequest formData = new NewConnectionRequest();
         formData.setApp_id(app_id);
         formData.setConnectionType(request.getParameter("connectionType"));
@@ -64,20 +59,14 @@ public class NewConnectionServlet extends HttpServlet {
         formData.setF_hName(request.getParameter("f_hName"));
         formData.setIdProof(request.getParameter("idProof"));
         formData.setAddressProof(request.getParameter("addressProof"));
-
-        // Save uploaded files with app ID prefix into permanent directory
         formData.setIdProofFile(saveFile(request.getPart("documentFile"), uploadPath, app_id + "_idProof"));
         formData.setAddressProofFront(saveFile(request.getPart("frontPage"), uploadPath, app_id + "_frontPage"));
         formData.setAddressProofLast(saveFile(request.getPart("lastPage"), uploadPath, app_id + "_lastPage"));
         formData.setPhoto(saveFile(request.getPart("photo"), uploadPath, app_id + "_photo"));
         formData.setOwnershipFirst(saveFile(request.getPart("photoOwnerFirst"), uploadPath, app_id + "_owner1"));
         formData.setOwnershipSecond(saveFile(request.getPart("photoOwnerSecond"), uploadPath, app_id + "_owner2"));
-
-        // Store form data in session (for back/edit flow)
         HttpSession session = request.getSession();
         session.setAttribute("formData", formData);
-
-        // Fetch location names (assuming LocationNameUtil.getLocationNames is implemented)
         LocationNameBean locationNames = LocationNameUtil.getLocationNames(formData);
 
         request.setAttribute("formData", formData);
@@ -98,8 +87,6 @@ public class NewConnectionServlet extends HttpServlet {
 
             System.out.println("Saving file to: " + fullPath);
             part.write(fullPath);
-
-            // Store only fileName (not full path) to use in image URL later
             return fileName;
         }
         return null;

@@ -30,15 +30,12 @@ public class MIInspectionServlet extends HttpServlet {
         }
 
         String remarksLower = mi_remarks.toLowerCase();
-
-        // Save or forward logic
         if ("save".equalsIgnoreCase(action)) {
             // Save remarks without changing status
             boolean saved = false;
 			try {
 				saved = service.saveOnlyMIRemarks(app_id, mi_remarks);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             if (saved) {
@@ -57,7 +54,6 @@ public class MIInspectionServlet extends HttpServlet {
 				try {
 					forwarded = service.forwardToAEE(app_id);
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
                 if (updated && forwarded) {
