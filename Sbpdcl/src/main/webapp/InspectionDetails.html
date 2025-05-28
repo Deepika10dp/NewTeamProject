@@ -4,62 +4,108 @@
   <title>Inspection Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {
-      font-family: Arial;
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
+    /* Background image and blur effect for entire page */
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
     }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('images/3.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(8px);
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
     input, select, textarea {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
       box-sizing: border-box;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
     input[type=submit] {
       background-color: #007bff;
       color: white;
       border: none;
       cursor: pointer;
-      margin-top: 15px;
+      margin-top: 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      padding: 12px 0;
+      transition: background-color 0.3s;
     }
-    h2 {
-    	text-align: center;
+
+    input[type=submit]:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <h2>Inspection Details Form</h2>
-  <form action="InspectionDetailsServlet" method="post">
-  	Application ID:
-  	<input type="text" name="app_id" value="" required>
-  	
-    Inspector Name:
-    <input type="text" name="inspector_name" required>
+  <div class="container">
+    <h2>Inspection Details Form</h2>
+    <form action="InspectionDetailsServlet" method="post">
+      <label>Application ID:</label>
+      <input type="text" name="app_id" required>
 
-    Inspection Date:
-    <input type="date" name="inspection_date" required>
+      <label>Inspector Name:</label>
+      <input type="text" name="inspector_name" required>
 
-    Site Address:
-    <textarea name="address" required></textarea>
+      <label>Inspection Date:</label>
+      <input type="date" name="inspection_date" required>
 
-    Site Status:
-    <select name="site_status" required>
-      <option value="Select">---Select---</option>
-      <option value="Safe">Safe</option>
-      <option value="Unsafe">Unsafe</option>
-      <option value="Needs Changes">Needs Changes</option>
-    </select>
+      <label>Site Address:</label>
+      <textarea name="address" required></textarea>
 
-    Confirmation Status:
-    <select name="confirmation_status" required>
-      <option value="Select">---Select---</option>
-      <option value="Confirmed">Confirmed</option>
-      <option value="Pending">Pending</option>
-      <option value="Rejected">Rejected</option>
-    </select>
+      <label>Site Status:</label>
+      <select name="site_status" required>
+        <option value="Select">---Select---</option>
+        <option value="Safe">Safe</option>
+        <option value="Unsafe">Unsafe</option>
+        <option value="Needs Changes">Needs Changes</option>
+      </select>
 
-    <input type="submit" value="Submit">
-  </form>
+      <label>Confirmation Status:</label>
+      <select name="confirmation_status" required>
+        <option value="Select">---Select---</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Pending">Pending</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
 </body>
 </html>

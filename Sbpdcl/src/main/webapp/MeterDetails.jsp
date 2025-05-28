@@ -1,31 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details of Installed Meter</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Details of Installed Meter</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Blurred background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/3.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(8px);
+      z-index: -1;
+    }
+
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
+    /* Center the container */
+    .center-container {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+  </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow rounded-4">
-                    <div class="card-body">
-                        <h4 class="card-title text-center mb-4">Meter Details</h4>
-                        <form action="FetchMeterServlet" method="get">
-                            <div class="mb-3">
-                                <label for="app_id" class="form-label">Enter Application ID</label>
-                                <input type="text" class="form-control" id="app_id" name="app_id" placeholder="Enter Application ID" required>
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+  <div class="container center-container">
+    <div class="row justify-content-center w-100">
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow rounded-4">
+          <div class="card-body">
+            <h4 class="card-title text-center mb-4">Meter Details</h4>
+            <form action="FetchMeterServlet" method="get">
+              <div class="mb-3">
+                <label for="app_id" class="form-label">Enter Application ID</label>
+                <input type="text" class="form-control" id="app_id" name="app_id" placeholder="Enter Application ID" required>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>
