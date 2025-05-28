@@ -24,8 +24,6 @@
             align-items: center;
             position: relative;
         }
-
-        /* Full-page blurred background image */
         body::before {
             content: "";
             position: absolute;
@@ -113,7 +111,6 @@
 <body>
     <div class="container">
         <h2>Check Dues - Consumer ID: <%= request.getParameter("consumerId") %></h2>
-
         <!-- Form to check dues -->
         <form action="CheckDuesServlet" method="post">
 
