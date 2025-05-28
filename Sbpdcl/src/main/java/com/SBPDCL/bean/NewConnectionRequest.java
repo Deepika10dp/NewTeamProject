@@ -47,20 +47,23 @@ public class NewConnectionRequest {
 		 private String aeeRemarks;
 		 private String inspectionStatus;
 		 
-		 private Boolean dues_cleared;
-		 private Boolean documents_verified;
+		 private String dues_cleared;
+		 private String documents_verified;
+
 		 
 		 
-		public Boolean getDues_cleared() {
+		
+		
+		public String getDues_cleared() {
 			return dues_cleared;
 		}
-		public void setDues_cleared(Boolean dues_cleared) {
+		public void setDues_cleared(String dues_cleared) {
 			this.dues_cleared = dues_cleared;
 		}
-		public Boolean getDocuments_verified() {
+		public String getDocuments_verified() {
 			return documents_verified;
 		}
-		public void setDocuments_verified(Boolean documents_verified) {
+		public void setDocuments_verified(String documents_verified) {
 			this.documents_verified = documents_verified;
 		}
 		public String getCurrentStage() {
@@ -318,7 +321,7 @@ public class NewConnectionRequest {
 					+ ", addressProofLast=" + addressProofLast + ", photo=" + photo + ", ownershipFirst="
 					+ ownershipFirst + ", ownershipSecond=" + ownershipSecond + ", submissionDate=" + submissionDate
 					+ ", status=" + status + ", currentStage=" + currentStage + ", jeeRemarks=" + jeeRemarks
-					+ ", miRemarks=" + mi_remarks + ", aeeRemarks=" + aeeRemarks + ", inspectionStatus="
+					+ ", mi_remarks=" + mi_remarks + ", aeeRemarks=" + aeeRemarks + ", inspectionStatus="
 					+ inspectionStatus + ", dues_cleared=" + dues_cleared + ", documents_verified=" + documents_verified
 					+ "]";
 		}

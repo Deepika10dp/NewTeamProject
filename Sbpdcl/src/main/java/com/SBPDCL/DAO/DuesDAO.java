@@ -53,24 +53,22 @@ public class DuesDAO {
 	    }
 	
 
-		
-		public boolean updateFinalDuesStatus(String consumerId, String mobile, String finalStatus) {
-		    String query = "UPDATE new_connection_requests SET dues_cleared = ? WHERE consumerId = ? AND mobile = ?";
-		    try (Connection con = DBConnection.getConnection();
-		         PreparedStatement ps = con.prepareStatement(query)) {
+	    public boolean updateFinalDuesStatus(String appId, String finalStatus) {
+	        String query = "UPDATE new_connection_requests SET dues_cleared = ? WHERE app_id = ?";
+	        try (Connection con = DBConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(query)) {
 
-		        int clearedValue = "Cleared".equalsIgnoreCase(finalStatus) ? 1 : 0;
-		        ps.setInt(1, clearedValue);
-		        ps.setString(2, consumerId);
-		        ps.setString(3, mobile);
+	            ps.setString(1, finalStatus);  // "Cleared" or "Not Cleared"
+	            ps.setString(2, appId);        // Update based only on app_id
 
-		        int rowsAffected = ps.executeUpdate();
-		        return rowsAffected > 0;
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        return false;
-		    }
-		}
+	            int rowsAffected = ps.executeUpdate();
+	            return rowsAffected > 0;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
 
 
 		
