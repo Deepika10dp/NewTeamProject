@@ -285,7 +285,6 @@ public class NewConnectionDAO {
 		    }
 		}
 
-
 	  public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {
 		    List<NewConnectionRequest> list = new ArrayList<>();
 		    try (Connection con = DBConnection.getConnection()) {
@@ -302,7 +301,6 @@ public class NewConnectionDAO {
 		            req.setMi_remarks(rs.getString("mi_remarks"));
 		            req.setAddressLine1(rs.getString("addressLine1"));
 		            req.setCurrentStage(rs.getString("current_stage"));
-		            // Add more fields if needed
 		            list.add(req);
 		        }
 		    } catch (Exception e) {
@@ -327,7 +325,7 @@ public class NewConnectionDAO {
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    }
-		    return false; // No need for 'updated' variable
+		    return false;
 		}
 	  public boolean saveOnlyMIRemarks(String app_id, String mi_remarks) throws ClassNotFoundException {
 	        String sql = "UPDATE new_connection_requests SET mi_remarks = ? WHERE app_id = ?";
