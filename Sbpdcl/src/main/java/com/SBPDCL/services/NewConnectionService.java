@@ -29,11 +29,10 @@ public class NewConnectionService {
     }
 
    
-    public boolean verifyDocumentsAndForwardToMI(String appId, String jeeRemarks) {
-        // Call the DAO method to update the database
-        return dao.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
+    public boolean verifyDocuments(String appId, String jeeRemarks, String verificationStatus) {
+        return dao.verifyDocuments(appId, jeeRemarks, verificationStatus);
     }
-   
+
 
 
     public List<NewConnectionRequest> getApplicationsForMI(String sectionId) {

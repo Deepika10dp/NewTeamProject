@@ -4,7 +4,10 @@
     String consumerId = request.getAttribute("consumerId") != null ? (String) request.getAttribute("consumerId") : "";
     String mobile = request.getAttribute("mobile") != null ? (String) request.getAttribute("mobile") : "";
     String status = request.getAttribute("duesStatus") != null ? (String) request.getAttribute("duesStatus") : "";
+    String appId = request.getParameter("appId") != null ? request.getParameter("appId") : "";
+
 %>
+
 <html>
 <head>
     <title>Check Dues</title>
@@ -56,7 +59,7 @@
         
             <label>Phone Number:</label><br>
             <input type="text" name="mobile" value="<%= request.getParameter("mobile") %>" readonly><br><br>
-        
+        	 <input type="hidden" name="appId" value="<%= appId %>">
             <input type="submit" value=" Check Dues">
         </form>
 
@@ -73,15 +76,15 @@
 
             <!-- JEE decision form only visible after dues status is available -->
             <form action="SubmitDuesDecisionServlet" method="post">
-                <input type="hidden" name="consumerId" value="<%= consumerId %>">
-                <input type="hidden" name="mobile" value="<%= mobile %>">
+			    <input type="hidden" name="appId" value="<%= appId %>">
+			
+			    <p><strong>JEE Decision (Select One):</strong></p>
+			    <label><input type="radio" name="finalDuesStatus" value="Cleared" required> Cleared</label><br>
+			    <label><input type="radio" name="finalDuesStatus" value="Not Cleared"> Not Cleared</label><br><br>
+			
+			    <input type="submit" value="Submit Decision">
+			</form>
 
-                <p><strong>JEE Decision (Select One):</strong></p>
-                <label><input type="radio" name="finalDuesStatus" value="Cleared" required> Cleared</label><br>
-                <label><input type="radio" name="finalDuesStatus" value="Not Cleared"> Not Cleared</label><br><br>
-
-                <input type="submit" value="Submit Decision">
-            </form>
         <% } %>
     </div>
 </body>

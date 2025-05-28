@@ -177,14 +177,14 @@
 
     <!-- Sidebar Menu -->
     <div class="col-md-2 sidebar">
-      <h5 class="text-center mb-4">Menu</h5>
-      <a href="#" class="menu-link active" data-filter="all">All Applications</a>
+	  <h5 class="text-center mb-4">Menu</h5>
+	  <a href="#" class="menu-link active" data-filter="all">All Applications</a>
 	  <a href="#" class="menu-link" data-filter="forwarded">Forwarded Applications</a>
-   	  <a href="#" class="menu-link" data-filter="pending-dues">Pending Dues</a>
+	  <a href="#" class="menu-link" data-filter="pending-dues">Pending Dues</a>
 	  <a href="#" class="menu-link" data-filter="pending-docs">Pending Document Verification</a>
-      
-      
-    </div>
+	  <a href="#" class="menu-link" data-filter="rejected">Rejected Applications</a>
+	</div>
+
 
     <!-- Main Content -->
     <div class="col-md-10 p-4">
@@ -204,52 +204,88 @@
 		        <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
-          		<%
+         <tbody>
+				<%
 				    for (NewConnectionRequest r : requests) {
-				    	boolean duesCleared = Boolean.TRUE.equals(r.getDues_cleared());  // assumed getter
-				    	boolean docsVerified = Boolean.TRUE.equals(r.getDocuments_verified());
-
-
-				    	//boolean docsVerified = "MI".equals(r.getCurrentStage()) || 
-			                     //  (r.getStatus() != null && r.getStatus().contains("Pending MI"));
-
+				        // Get raw status strings from DB (expected values: Cleared, Approved, Pending, etc.)
+				        String duesClearedRaw = r.getDues_cleared();
+				        String docsVerifiedRaw = r.getDocuments_verified();
+				
+				        // Handle possible null or empty values safely
+				        String duesCleared = (duesClearedRaw == null || duesClearedRaw.trim().isEmpty()) ? "Pending" : duesClearedRaw.trim();
+				        String docsVerified = (docsVerifiedRaw == null || docsVerifiedRaw.trim().isEmpty()) ? "Pending" : docsVerifiedRaw.trim();
+				
+				        // Normalize to lowercase for CSS class and comparison
+				        String duesClearedLower = duesCleared.toLowerCase();
+				        String docsVerifiedLower = docsVerified.toLowerCase();
+				
+				        // For badge colors and action logic, compare ignoring case
+				        boolean isDuesCleared = "cleared".equalsIgnoreCase(duesCleared);
+				        boolean isDocsApproved = "approved".equalsIgnoreCase(docsVerified);
+				
+				        // Capitalize first letter, rest lowercase for display
+				        String duesClearedFormatted = duesCleared.substring(0, 1).toUpperCase() + duesCleared.substring(1).toLowerCase();
+				        String docsVerifiedFormatted = docsVerified.substring(0, 1).toUpperCase() + docsVerified.substring(1).toLowerCase();
 				%>
-				    <tr data-dues="<%= duesCleared %>" 
-					    data-docs="<%= docsVerified %>" 
-					    data-status="<%= docsVerified ? "Forwarded" : "Pending" %>">
+				    <tr 
+				        data-dues="<%= duesClearedLower %>" 
+				        data-docs="<%= docsVerifiedLower %>" 
+				        data-status="<%= 
+							    "approved".equalsIgnoreCase(docsVerified) ? "forwarded" : 
+							    "rejected".equalsIgnoreCase(docsVerified) ? "rejected" : 
+							    "pending" %>">
+				        
 				        <td><%= r.getApp_id() %></td>
 				        <td><%= r.getApplicantName() %></td>
 				        <td><%= r.getMobile() %></td>
-				        <td><%= duesCleared ? "Yes" : "No" %></td>
-				        <td><%= docsVerified ? "Yes" : "No" %></td>
+				
+				        <!-- Dues Cleared Badge -->
 				        <td>
-				        
-								<%
-							    if (docsVerified) {
-							%>
-							    <span class="badge bg-success">Forwarded</span>
-							<%
-							    } else {
-							%>
-							    <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
-							        <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
-							        <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
-							        <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
-							    </form>
-							
-							   <form action="DocumentVerificationServlet" method="get" style="display:inline-block;">
-								    <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
-								    <button type="submit" class="btn btn-sm btn-success" <%= duesCleared ? "" : "disabled" %>>Verify Docs</button>
-							   </form>
-					
-							<%
-							    }
-							%>
-					</td>
-				  </tr>
+				            <span class="badge 
+				                <%= "cleared".equalsIgnoreCase(duesCleared) ? "bg-success" : 
+				                     "not cleared".equalsIgnoreCase(duesCleared) ? "bg-danger" : "bg-warning text-dark" %>">
+				                <%= duesClearedFormatted %>
+				            </span>
+				        </td>
+				
+				        <!-- Documents Verified Badge -->
+				        <td>
+				            <span class="badge 
+				                <%= "approved".equalsIgnoreCase(docsVerified) ? "bg-success" : 
+				                     "rejected".equalsIgnoreCase(docsVerified) ? "bg-danger" : "bg-warning text-dark" %>">
+				                <%= docsVerifiedFormatted %>
+				            </span>
+				        </td>
+				
+				        <!-- Action Buttons -->
+				        <td>
+				           <% if ("approved".equalsIgnoreCase(docsVerified)) { %>
+						    	<span class="badge bg-success">Forwarded</span>
+						   <% } else if ("rejected".equalsIgnoreCase(docsVerified)) { %>
+						    	<span class="badge bg-danger">Rejected</span>
+						   <% } else { %>
+				                <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
+								    <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
+								    <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
+								    <input type="hidden" name="appId" value="<%= r.getApp_id() %>" /> <!-- Add this -->
+								    <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
+								</form>
+
+				
+				                <form action="DocumentVerificationServlet" method="get" style="display:inline-block;">
+				                    <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
+				                    <button type="submit" class="btn btn-sm btn-success" <%= isDuesCleared ? "" : "disabled" %>>
+				                        Verify Docs
+				                    </button>
+				                </form>
+				            <% } %>
+				        </td>
+				    </tr>
 				<% } %>
-          </tbody>
+			</tbody>
+
+
+
         </table>
       </div>
     </div>
@@ -273,38 +309,43 @@
   const totalSpan = document.getElementById('totalApplications');
 
   menuLinks.forEach(link => {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      menuLinks.forEach(l => l.classList.remove('active'));
-      this.classList.add('active');
+	  link.addEventListener('click', function (e) {
+	    e.preventDefault();
 
-      const filter = this.getAttribute('data-filter');
-      let count = 0;
+	    // Remove 'active' from all, add to clicked
+	    menuLinks.forEach(l => l.classList.remove('active'));
+	    this.classList.add('active');
 
-      rows.forEach(row => {
-        const status = row.getAttribute('data-status');
-        const dues = row.getAttribute('data-dues');
-        const docs = row.getAttribute('data-docs');
+	    const filter = this.getAttribute('data-filter');
+	    let count = 0;
 
-        let show = false;
+	    rows.forEach(row => {
+	      const status = row.getAttribute('data-status'); // forwarded/rejected/pending
+	      const dues = row.getAttribute('data-dues');     // cleared/pending
+	      const docs = row.getAttribute('data-docs');     // approved/rejected/pending
 
-        if (filter === 'all') {
-          show = true;
-        } else if (filter === 'forwarded') {
-          show = (status === 'Forwarded');
-        } else if (filter === 'pending-dues') {
-          show = (dues === 'false');
-        } else if (filter === 'pending-docs') {
-          show = (docs === 'false');
-        }
+	      let show = false;
 
-        row.style.display = show ? '' : 'none';
-        if (show) count++;
-      });
+	      if (filter === 'all') {
+	        show = true;
+	      } else if (filter === 'forwarded') {
+	        show = (status === 'forwarded');
+	      } else if (filter === 'rejected') {
+	        show = (status === 'rejected');
+	      } else if (filter === 'pending-dues') {
+	        show = (dues !== 'cleared');
+	      } else if (filter === 'pending-docs') {
+	        show = (docs === 'pending');
+	      }
 
-      totalSpan.textContent = count;
-    });
-  });
+	      row.style.display = show ? '' : 'none';
+	      if (show) count++;
+	    });
+
+	    totalSpan.textContent = count;
+	  });
+	});
+
   
  
   function openChangePasswordModal(event) {

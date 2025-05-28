@@ -199,8 +199,8 @@ public class NewConnectionDAO {
 		            req.setApp_id(rs.getString("app_id"));
 		            req.setApplicantName(rs.getString("applicantName"));
 		            req.setMobile(rs.getString("mobile"));
-		            req.setDues_cleared(rs.getBoolean("dues_cleared"));
-		            req.setDocuments_verified(rs.getBoolean("documents_verified"));
+		            req.setDues_cleared(rs.getString("dues_cleared"));
+		            req.setDocuments_verified(rs.getString("documents_verified"));
 		            req.setConsumerId(rs.getString("consumerId"));
 		            req.setStatus(rs.getString("status"));
 		            req.setCurrentStage(rs.getString("current_stage"));
@@ -259,25 +259,29 @@ public class NewConnectionDAO {
 	        return request;
 	    }
 	 
-	  public boolean verifyDocumentsAndForwardToMI(String appId, String jeeRemarks) {
-		    // Updated query to include 'documents_verified' field
-		    String query = "UPDATE new_connection_requests SET status='Pending MI', current_stage='MI', jee_remarks=?, documents_verified=1 WHERE app_id=?";
+	  public boolean verifyDocuments(String appId, String jeeRemarks, String verificationStatus) {
+		    String query;
 		    
+		    if ("Approved".equalsIgnoreCase(verificationStatus)) {
+		        query = "UPDATE new_connection_requests SET status='Pending MI', current_stage='MI', jee_remarks=?, documents_verified='approved' WHERE app_id=?";
+		    } else if ("Rejected".equalsIgnoreCase(verificationStatus)) {
+		        query = "UPDATE new_connection_requests SET status='Rejected', current_stage='JEE', jee_remarks=?, documents_verified='rejected' WHERE app_id=?";
+		    } else {
+		        return false;
+		    }
+
 		    try (Connection con = DBConnection.getConnection(); 
 		         PreparedStatement ps = con.prepareStatement(query)) {
 
-		        // Set the parameters for the prepared statement
 		        ps.setString(1, jeeRemarks);
 		        ps.setString(2, appId);
 		        
-		        // Execute the update and check how many rows were affected
 		        int rowsUpdated = ps.executeUpdate();
-		        
-		        // Return true if at least one row was updated
-		        return rowsUpdated > 0;  
+		        return rowsUpdated > 0;
+
 		    } catch (Exception e) {
 		        e.printStackTrace();
-		        return false;  // Return false if there's an error
+		        return false;
 		    }
 		}
 

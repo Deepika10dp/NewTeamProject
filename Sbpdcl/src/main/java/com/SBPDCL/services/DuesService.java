@@ -13,8 +13,9 @@ public class DuesService {
         return duesDAO.getDuesStatus(consumerId, mobile);
     }
 
-    public void updateFinalDuesStatus(String consumerId, String mobile, String finalStatus) {
-        duesDAO.updateFinalDuesStatus(consumerId, mobile, finalStatus);
+    public boolean updateFinalDuesStatus(String appId, String finalStatus) {
+        return duesDAO.updateFinalDuesStatus(appId, finalStatus);
     }
+
 
 }

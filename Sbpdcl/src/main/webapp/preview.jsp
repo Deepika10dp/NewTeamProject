@@ -199,7 +199,7 @@
 </div>
 	
     <div class="buttons" style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
-        <a href="form.html" style="
+        <a  href="javascript:history.back()" style="
             background-color: #28a745;
             color: white;
             padding: 12px 24px;

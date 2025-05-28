@@ -64,6 +64,7 @@ public class DocumentVerificationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String appId = request.getParameter("appId");
 	    String jeeRemarks = request.getParameter("jee_remarks");
+	    String verificationStatus = request.getParameter("verification_status"); // New parameter from radio/select
 
 	    boolean idProofChecked = request.getParameter("doc_id_proof") != null;
 	    boolean addressFrontChecked = request.getParameter("doc_address_front") != null;
@@ -72,20 +73,36 @@ public class DocumentVerificationServlet extends HttpServlet {
 	    boolean ownership1Checked = request.getParameter("doc_ownership1") != null;
 	    boolean ownership2Checked = request.getParameter("doc_ownership2") != null;
 
-	    if (idProofChecked && addressFrontChecked && addressBackChecked && photoChecked 
-	        && ownership1Checked && ownership2Checked && jeeRemarks != null && !jeeRemarks.trim().isEmpty()) {
+	    boolean allDocumentsChecked = idProofChecked && addressFrontChecked && addressBackChecked &&
+	                                  photoChecked && ownership1Checked && ownership2Checked;
 
-	        boolean updateSuccess = service.verifyDocumentsAndForwardToMI(appId, jeeRemarks);
-
-	        if (updateSuccess) {
-	            response.sendRedirect("jeeDashboard.jsp?message=Documents+verified+and+forwarded+to+MI");
+	    if (jeeRemarks != null && !jeeRemarks.trim().isEmpty() && verificationStatus != null) {
+	        if ("Approved".equalsIgnoreCase(verificationStatus) && allDocumentsChecked) {
+	            // Only approve if all docs checked
+	            boolean success = service.verifyDocuments(appId, jeeRemarks, verificationStatus);
+	            if (success) {
+	                response.sendRedirect("jeeDashboard.jsp?message=Documents+approved+and+forwarded+to+MI");
+	            } else {
+	                response.sendRedirect("verify_documents.jsp?appId=" + appId + "&error=Failed+to+approve");
+	            }
+	        } else if ("Rejected".equalsIgnoreCase(verificationStatus)) {
+	            // Allow rejection even if some docs are not checked
+	            boolean success = service.verifyDocuments(appId, jeeRemarks, verificationStatus);
+	            if (success) {
+	                response.sendRedirect("jeeDashboard.jsp?message=Application+Rejected+Successfully");
+	            } else {
+	                response.sendRedirect("verify_documents.jsp?appId=" + appId + "&error=Failed+to+reject+application");
+	            }
 	        } else {
-	            response.sendRedirect("verify_documents.jsp?appId=" + appId + "&error=Failed+to+update+verification+status");
+	            // Either trying to approve without all docs or invalid status
+	            response.sendRedirect("verify_documents.jsp?appId=" + appId + "&error=For+approval,+all+documents+must+be+verified");
 	        }
 	    } else {
-	        response.sendRedirect("verify_documents.jsp?appId=" + appId + "&error=Please+verify+all+documents+and+enter+remarks");
+	        response.sendRedirect("verify_documents.jsp?appId=" + appId + "&error=Please+enter+remarks+and+select+verification+status");
 	    }
 	}
+
+
 
 
 }
