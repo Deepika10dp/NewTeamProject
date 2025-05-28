@@ -70,28 +70,21 @@ public class NewConnectionDAO {
 		    PreparedStatement ps = null;
 		    
 		    try {
-		        // Establish connection
 		        con = DBConnection.getConnection();
-		        
-		        // Begin transaction if needed
 		        con.setAutoCommit(false);
-
-		        // Define query for updating status
 		        String query = "UPDATE new_connection_requests SET status = ?, current_stage = ? WHERE app_id = ?";
 		        ps = con.prepareStatement(query);
-		        
-		        // Set parameters
-		        ps.setString(1, "Submitted"); // assuming 'Submitted' is the status
+		        ps.setString(1, "Submitted"); 
 		        ps.setString(2, "JEE");
 		        ps.setString(3, appId);
 
 		        int rowsUpdated = ps.executeUpdate();
 
 		        if (rowsUpdated > 0) {
-		            con.commit(); // commit if successful
+		            con.commit(); 
 		            result = true;
 		        } else {
-		            con.rollback(); // rollback if no rows updated
+		            con.rollback(); 
 		        }
 
 		    } catch (Exception e) {
@@ -204,8 +197,6 @@ public class NewConnectionDAO {
 		            req.setConsumerId(rs.getString("consumerId"));
 		            req.setStatus(rs.getString("status"));
 		            req.setCurrentStage(rs.getString("current_stage"));
-		           
-		            // set more fields as needed
 		            list.add(req);
 		        }
 		    } catch (Exception e) {
@@ -327,7 +318,7 @@ public class NewConnectionDAO {
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    }
-		    return false; // No need for 'updated' variable
+		    return false; 
 		}
 	  public boolean saveOnlyMIRemarks(String app_id, String mi_remarks) throws ClassNotFoundException {
 	        String sql = "UPDATE new_connection_requests SET mi_remarks = ? WHERE app_id = ?";
