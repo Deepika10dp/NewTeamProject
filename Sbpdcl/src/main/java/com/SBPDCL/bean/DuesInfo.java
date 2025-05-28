@@ -1,12 +1,9 @@
 package com.SBPDCL.bean;
-
-public class DuesInfo {
-		
+public class DuesInfo {		
 		private String consumerId;
 		private String moblie;
 	    private String dues_amount;
-	    private String dues_status;
-	    
+	    private String dues_status;	    
 	    public String getConsumerId() {
 			return consumerId;
 		}
@@ -35,6 +32,5 @@ public class DuesInfo {
 		public String toString() {
 			return "DuesInfo [consumerId=" + consumerId + ", moblie=" + moblie + ", dues_amount=" + dues_amount
 					+ ", dues_status=" + dues_status + "]";
-		}
-		
+		}		
 }

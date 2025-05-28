@@ -1,10 +1,6 @@
-
 package com.SBPDCL.bean;
-
 import java.sql.Date;
-
-public class Meter {
-	
+public class Meter {	
 	 private String meter_id;
 	 private String app_id;
 	 private String meter_type;
@@ -14,10 +10,7 @@ public class Meter {
 	 private Date inspection_date;
 	 private String address;
 	 private String site_status;
-	 private String confirmation_status;
-	 
-	 
-	 
+	 private String confirmation_status; 
 	public String getMeter_id() {
 		return meter_id;
 	}
@@ -86,7 +79,4 @@ public class Meter {
 				+ ", inspection_date=" + inspection_date + ", address=" + address + ", site_status=" + site_status
 				+ ", confirmation_status=" + confirmation_status + "]";
 	}
-	
-	 
-
 }

@@ -1,5 +1,4 @@
 package com.SBPDCL.bean;
-
 public class User {
 	private String userId;
 	private String name;
@@ -7,8 +6,7 @@ public class User {
     private String phoneNo;
     private int roleId;
     private String roleName; 
-    private String sectionId;
-    
+    private String sectionId;   
     public String getSectionId() {
 		return sectionId;
 	}
