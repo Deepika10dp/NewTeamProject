@@ -305,21 +305,29 @@ public class NewConnectionDAO {
 	  public boolean updateMIInspection(String app_id, String mi_remarks) {
 		    String sql = "UPDATE new_connection_requests SET status = ?, current_stage = ?, mi_remarks = ? WHERE app_id = ?";
 
+		    String status = "Pending AEE";
+		    String currentStage = "AEE";
+
+		    if (mi_remarks != null && mi_remarks.toLowerCase().contains("rejected")) {
+		        status = "Rejected";
+		        currentStage = "MI";
+		    }
+
 		    try (Connection con = DBConnection.getConnection();
 		         PreparedStatement ps = con.prepareStatement(sql)) {
 
-		        ps.setString(1, "Pending AEE");
-		        ps.setString(2, "AEE");
+		        ps.setString(1, status);
+		        ps.setString(2, currentStage);
 		        ps.setString(3, mi_remarks);
 		        ps.setString(4, app_id);
 
-		        int rows = ps.executeUpdate();
-		        return rows > 0;
+		        return ps.executeUpdate() > 0;
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    }
-		    return false; 
+		    return false;
 		}
+
 	  public boolean saveOnlyMIRemarks(String app_id, String mi_remarks) throws ClassNotFoundException {
 	        String sql = "UPDATE new_connection_requests SET mi_remarks = ? WHERE app_id = ?";
 	        try (Connection conn = DBConnection.getConnection();
@@ -333,7 +341,7 @@ public class NewConnectionDAO {
 	        return false;
 	    }
 	  public boolean forwardToAEE(String app_id) throws ClassNotFoundException {
-		    String sql = "UPDATE new_connection_requests SET status = 'Forwarded to AEE' WHERE app_id = ?";
+		    String sql = "UPDATE new_connection_requests SET status = 'Pending AEE' WHERE app_id = ?";
 		    try (Connection conn = DBConnection.getConnection();
 		         PreparedStatement ps = conn.prepareStatement(sql)) {
 		        ps.setString(1, app_id);
@@ -343,4 +351,5 @@ public class NewConnectionDAO {
 		    }
 		    return false;
 		}
+	 
 }

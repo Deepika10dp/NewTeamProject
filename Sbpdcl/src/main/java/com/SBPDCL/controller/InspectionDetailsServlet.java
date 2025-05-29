@@ -2,10 +2,7 @@ package com.SBPDCL.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,5 +42,3 @@ public class InspectionDetailsServlet extends HttpServlet {
         response.sendRedirect("miDashboard.jsp?message=Inspection Details saved successfully");
     }
 }
-
-	  
