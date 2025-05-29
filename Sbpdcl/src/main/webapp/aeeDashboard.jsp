@@ -239,7 +239,7 @@
                 <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
           </td>
           <td>
-                <button type="submit" class="btn btn-sm btn-success">Approve & Generate Consumer No</button>
+                <button type="submit" class="btn btn-sm btn-primary">Approve & Generate Consumer No</button>
                 </form>
             <% } else { %>
               <input type="text" class="form-control form-control-sm" 
