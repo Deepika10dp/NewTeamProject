@@ -5,27 +5,45 @@
 <%@page import="com.SBPDCL.services.NewConnectionService"%>
 <%@ page import="com.SBPDCL.services.LocationService" %> 
 <%@page import="com.SBPDCL.DAO.MeterDAO"%>
-
+<%@ page import="java.util.ArrayList" %> 
 <%
     User user = (User) session.getAttribute("user");
     if (user == null || user.getRoleId() != 2) {
         response.sendRedirect("unauthorized.jsp");
         return;
     }
-
     HttpSession sess = request.getSession(false);
     if (sess == null || sess.getAttribute("user_id") == null) {
         response.sendRedirect("index.html");
         return;
     }
-
     String userId = (String) sess.getAttribute("user_id");
-    String pageParam = request.getParameter("page");
-    
+    String pageParam = request.getParameter("page");  
     String sectionId = (String) session.getAttribute("section_id");
     NewConnectionService service = new NewConnectionService();
-    List<NewConnectionRequest> requests = service.getApplicationsForMI(sectionId);
-    
+    List<NewConnectionRequest> requests = service.getApplicationsForMI(sectionId);   
+    String filter = request.getParameter("filter");
+    if (filter != null && !filter.isEmpty()) {
+        List<NewConnectionRequest> filteredRequests = new ArrayList<>();
+        for (NewConnectionRequest req : requests) {
+            String status = req.getStatus().toLowerCase();
+            switch (filter) {
+                case "pending_mi":
+                    if ("pending mi".equalsIgnoreCase(status)) filteredRequests.add(req);
+                    break;
+                case "rejected":
+                    if ("rejected".equalsIgnoreCase(status)) filteredRequests.add(req);
+                    break;
+                case "pending_aee":
+                    if ("pending aee".equalsIgnoreCase(status)) filteredRequests.add(req);
+                    break;
+                case "connection_approved":
+                    if ("connection approved".equalsIgnoreCase(status)) filteredRequests.add(req);
+                    break;
+            }
+        }
+        requests = filteredRequests;
+    }    
     LocationService locationService = new LocationService();
     String sectionName = locationService.getSectionNameById(sectionId);
 %>
@@ -81,19 +99,17 @@
 	  right: -320px;
 	  width: 300px;
 	  height: 100%;
-	  background-color: rgba(52, 58, 64, 0.9); /* semi-transparent fallback */
+	  background-color: rgba(52, 58, 64, 0.9);
 	  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 	  transition: right 0.4s ease;
 	  padding: 80px 20px 20px 20px;
 	  z-index: 2000;
 	  color: white;
 	  overflow-y: auto;
-	  backdrop-filter: blur(6px); /* optional for extra blur on panel contents */
+	  backdrop-filter: blur(6px);
 	  position: fixed;
 	  overflow: hidden;
 	}
-	
-	/* Add this new ::before style for background blur image */
 	.profile-panel::before {
 	  content: "";
 	  position: absolute;
@@ -101,7 +117,7 @@
 	  left: 0;
 	  width: 100%;
 	  height: 100%;
-	  background-image: url('images/5.jpg'); /* your image path */
+	  background-image: url('images/5.jpg'); 
 	  background-size: cover;
 	  background-position: center;
 	  filter: blur(8px);
@@ -119,15 +135,12 @@
       text-decoration: underline;
       cursor: pointer;
     }
-	    /* Enable stacking context */
 	.sidebar,
 	.navbar {
 	  position: relative;
 	  z-index: 1;
 	  overflow: hidden;
 	}
-	
-	/* Sidebar background blur */
 	.sidebar::before {
 	  content: "";
 	  position: absolute;
@@ -135,7 +148,7 @@
 	  left: 0;
 	  width: 100%;
 	  height: 100%;
-	  background-image: url('images/5.jpg'); /* Update with actual path */
+	  background-image: url('images/5.jpg');
 	  background-size: cover;
 	  background-position: center;
 	  filter: blur(8px);
@@ -146,12 +159,9 @@
 	.navbar{
 		z-index: 2001;
 	}
-	
-   
   </style>
 </head>
 <body>
-	<!-- Profile Panel -->
 	<div class="profile-panel" id="profilePanel">
 	  <p><strong>Name:</strong> <%= user.getName() %></p>
 	  <p><strong>Role:</strong> Meter Installer</p>
@@ -163,7 +173,6 @@
 	  <div id="profileContent"></div>
 	</div>
 	
-	<!-- Navbar -->
 	<nav class="navbar navbar-dark bg-dark">
 	  <div class="container-fluid">
 	    <span class="navbar-brand mb-0 h1">Meter Installer Dashboard</span>
@@ -176,22 +185,20 @@
 	
 	<div class="container-fluid">
 	  <div class="row">
-	
-	    <!-- Sidebar -->
 	    <div class="col-md-2 sidebar p-3">
 	      <h5 class="text-center">Menu</h5>
 	      <a href="miDashboard.jsp">Dashboard Home</a>
 	      <a href="InspectionDetails.html">Fill Inspection Details</a>
 	      <a href="Meter_details.html">Fill Meter Details</a>
 	      <a href="FetchInspectionDetails.html">View Inspection Details</a>
-	        <a href="MeterDetails.jsp">View Meter Details</a>
-	      
+	      <a href="MeterDetails.jsp">View Meter Details</a>
+	      <a href="miDashboard.jsp?filter=pending_mi">Pending Applications</a>
+		  <a href="miDashboard.jsp?filter=rejected">Rejected Applications</a>
+		  <a href="miDashboard.jsp?filter=pending_aee">Forwarded to AEE Applications</a>
+		  <a href="miDashboard.jsp?filter=connection_approved">Connection Approved Applications</a>	      
 	    </div>
-	    <!-- Main Content -->
+	    
 	    <div class="col-md-10 p-4">
-	
-	      <!-- Assigned Installations Table -->
-	      <div class="mt-4">
 			    <h5 class="mb-3">Total Applications : <%= requests != null ? requests.size() : 0 %></h5>
 			    <table class="table table-striped table-bordered" id="assignedInstallationsTable">
 			      <thead class="table-dark">
@@ -205,8 +212,7 @@
 			          <th>Update</th>
 			        </tr>
 			      </thead>
-	            <tbody>
-			          						            	  
+	            <tbody>			          						            	  
 				      <%
 				        for (NewConnectionRequest req : requests) {
 				        	String app_id =req.getApp_id();
@@ -257,20 +263,15 @@
 					
 					<td>
 					    <% if (isForwarded || isApproved || isRejected) { %>
-					        <!-- Read-only for approved, rejected, or forwarded -->
 					        <input type="text" name="mi_remarks" value="<%= remarks != null ? remarks : "" %>" readonly class="form-control-plaintext" />
 					    <% } else if (isPending) { %>
-					        <!-- Editable only if pending -->
 					        <input type="text" name="mi_remarks" id="miRemarks" value="<%= remarks != null ? remarks : "" %>" required class="form-control" oninput="checkRemarks()" />
 					    <% } else { %>
-					        <!-- Default case (new or blank remarks) -->
 					        <input type="text" name="mi_remarks" id="miRemarks" value="" required class="form-control" oninput="checkRemarks()" />
-					    <% } %>
-					
+					    <% } %>					
 					    <input type="hidden" name="app_id" value="<%= req.getApp_id() %>" />
 					    <input type="hidden" name="userId" value="<%= req.getConsumerId() %>" />
-					</td>
-					
+					</td>					
 					<td>
 					    <% if (isForwarded) { %>
 					        <span class="text-success fw-bold">Forwarded to AEE</span>
@@ -279,8 +280,6 @@
 					        <button type="submit" name="action" value="forward" id="forwardBtn" class="btn btn-sm btn-primary" <%= !isApproved ? "disabled" : "" %>>Verify & Forward to AEE</button>
 					    <% } %>
 					</td>
-
-
 				    </tr>
 				      </form>
 				      <%
@@ -292,15 +291,13 @@
 	      </div>
 	    </div>
 	  </div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
 function checkRemarks() {
     const remarks = document.getElementById("miRemarks").value.toLowerCase();
     const forwardBtn = document.getElementById("forwardBtn");
     forwardBtn.disabled = !remarks.includes("approved");
 }
-</script>
-	<script>
 	  function toggleProfile() {
 	    const panel = document.getElementById("profilePanel");
 	    panel.classList.toggle("open");
@@ -350,21 +347,17 @@ function checkRemarks() {
 		      console.error(error);
 		    });
 		}
-	</script>
-	
+</script>	
 	<%
 	    String msg = (String) request.getAttribute("msg");
 	    if (msg != null) {
 	%>
 	  <script>
 	    alert("<%= msg.replaceAll("\"", "\\\\\"") %>");
-	  </script>
-	
+	  </script>	
 	<%
 	    }
 	%>
-	
-	<!-- Change Password Modal -->
 	<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered">
 	    <div class="modal-content bg-light">
