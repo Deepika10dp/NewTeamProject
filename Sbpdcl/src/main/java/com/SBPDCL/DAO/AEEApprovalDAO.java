@@ -12,7 +12,7 @@ public class AEEApprovalDAO {
 
     public List<NewConnectionRequest> getApplicationsForAEE(String sectionId) {
         List<NewConnectionRequest> list = new ArrayList<>();
-        String query = "SELECT * FROM new_connection_requests WHERE (current_stage='AEE' OR (current_stage='Complete' AND status='Approved')) AND section=?";
+        String query = "SELECT * FROM new_connection_requests WHERE (current_stage='AEE' OR (current_stage='Complete' AND status='Connection Approved')) AND section=?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
 
@@ -102,7 +102,7 @@ public class AEEApprovalDAO {
             con.setAutoCommit(false);
 
             // Step 1: Update new_connection_requests
-            String updateQuery = "UPDATE new_connection_requests SET status='Approved', current_stage='Complete', aee_remarks=?, consumer_number=? WHERE app_id=?";
+            String updateQuery = "UPDATE new_connection_requests SET status='Connection Approved', current_stage='Complete', aee_remarks=?, consumer_number=? WHERE app_id=?";
             try (PreparedStatement ps = con.prepareStatement(updateQuery)) {
                 ps.setString(1, remarks);
                 ps.setString(2, consumerNumber);
