@@ -45,11 +45,25 @@ public class NewConnectionService {
 	public boolean checkDuesCleared(String consumerId, String mobile) {
 		return false;
 	}
-	public boolean saveOnlyMIRemarks(String app_id, String mi_remarks) throws ClassNotFoundException {
-        return dao.saveOnlyMIRemarks(app_id, mi_remarks);
-    }
-	public boolean forwardToAEE(String app_id) throws ClassNotFoundException {
-		return dao.forwardToAEE(app_id);
-		
+	public boolean saveOnlyMIRemarks(String appId, String remarks, String status) throws ClassNotFoundException {
+	    boolean remarksSaved = dao.saveOnlyMIRemarks(appId, remarks);
+
+	    if ("Rejected".equalsIgnoreCase(status)) {
+	        try {
+	            boolean statusUpdated = dao.rejectedStatus(appId);
+	            return remarksSaved && statusUpdated;
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	    return remarksSaved;
 	}
+	public boolean forwardToAEE(String app_id) throws ClassNotFoundException {
+		return dao.forwardToAEE(app_id);	
+	}
+	/*public boolean rejectedStatus(String app_id) throws ClassNotFoundException {
+		return dao.rejectedStatus(app_id);	
+	}*/
+	
 }
