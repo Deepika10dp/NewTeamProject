@@ -205,7 +205,7 @@
 			          <th>Update</th>
 			        </tr>
 			      </thead>
-	            <tbody>
+	                <tbody>
 			          						            	  
 				      <%
 				        for (NewConnectionRequest req : requests) {
