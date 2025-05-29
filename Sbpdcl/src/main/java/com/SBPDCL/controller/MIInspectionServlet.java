@@ -1,11 +1,10 @@
+
 package com.SBPDCL.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 import com.SBPDCL.services.NewConnectionService;
 
@@ -29,44 +28,56 @@ public class MIInspectionServlet extends HttpServlet {
             return;
         }
 
-        String remarksLower = mi_remarks.toLowerCase();
-        if ("save".equalsIgnoreCase(action)) {
-            // Save remarks without changing status
-            boolean saved = false;
-			try {
-				saved = service.saveOnlyMIRemarks(app_id, mi_remarks);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-            if (saved) {
-                response.sendRedirect("miDashboard.jsp?success=remarks_saved");
-            } else {
-                response.sendRedirect("miDashboard.jsp?error=save_failed");
-            }
-        } else if ("forward".equalsIgnoreCase(action)) {
-            if (remarksLower.contains("rejected") || remarksLower.contains("pending")) {
-                // Don't allow forward if rejected or pending
-                response.sendRedirect("miDashboard.jsp?error=not_forwarded_invalid_remarks");
-            } else if (remarksLower.contains("approved")) {
-                // Update remarks and status, then forward
-                boolean updated = service.updateMIInspection(app_id, mi_remarks);
-                boolean forwarded = false;
-				try {
-					forwarded = service.forwardToAEE(app_id);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-                if (updated && forwarded) {
-                    response.sendRedirect("miDashboard.jsp?success=forwarded_to_AEE");
+        String remarksLower = mi_remarks.toLowerCase().trim();
+
+        try {
+            if ("save".equalsIgnoreCase(action)) {
+                boolean saved = service.saveOnlyMIRemarks(app_id, mi_remarks, remarksLower);
+                if (saved) {
+                    response.sendRedirect("miDashboard.jsp?success=remarks_saved");
                 } else {
-                    response.sendRedirect("miDashboard.jsp?error=forward_failed");
+                    response.sendRedirect("miDashboard.jsp?error=save_failed");
                 }
+
+            } else if ("forward".equalsIgnoreCase(action)) {
+                boolean updatedRemarks = service.saveOnlyMIRemarks(app_id, mi_remarks, remarksLower);
+
+                if (remarksLower.contains("rejected")) {
+                    boolean rejected = service.saveOnlyMIRemarks(app_id, mi_remarks, remarksLower);
+                    if (updatedRemarks && rejected) {
+                        response.sendRedirect("miDashboard.jsp?success=rejected");
+                    } else {
+                        response.sendRedirect("miDashboard.jsp?error=rejection_failed");
+                    }
+
+                } else if (remarksLower.contains("approved")) {
+                    boolean forwarded = service.forwardToAEE(app_id);
+                    if (updatedRemarks && forwarded) {
+                        response.sendRedirect("miDashboard.jsp?success=forwarded_to_aee");
+                    } else {
+                        response.sendRedirect("miDashboard.jsp?error=forward_failed");
+                    }
+
+                } else if (remarksLower.contains("pending")) {
+                    // Don't forward or change status
+                    if (updatedRemarks) {
+                        response.sendRedirect("miDashboard.jsp?success=pending_saved");
+                    } else {
+                        response.sendRedirect("miDashboard.jsp?error=pending_failed");
+                    }
+
+                } else {
+                    // Invalid remark: not approved/rejected/pending
+                    response.sendRedirect("miDashboard.jsp?error=invalid_remarks");
+                }
+
             } else {
-                // Default case — not approved
-                response.sendRedirect("miDashboard.jsp?error=remarks_not_approved");
+                response.sendRedirect("miDashboard.jsp?error=invalid_action");
             }
-        } else {
-            response.sendRedirect("miDashboard.jsp?error=invalid_action");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("miDashboard.jsp?error=server_error");
         }
     }
 }
