@@ -1,3 +1,4 @@
+
 package com.SBPDCL.DAO;
 
 import java.sql.Connection;
@@ -332,18 +333,6 @@ public class NewConnectionDAO {
 	        }
 	        return false;
 	    }
-	  public boolean forwardToAEE(String app_id) throws ClassNotFoundException {
-		    String sql = "UPDATE new_connection_requests SET status = 'Forwarded to AEE' WHERE app_id = ?";
-		    try (Connection conn = DBConnection.getConnection();
-		         PreparedStatement ps = conn.prepareStatement(sql)) {
-		        ps.setString(1, app_id);
-		        return ps.executeUpdate() > 0;
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		    return false;
-
-	  }
 	  public boolean rejectedStatus(String app_id) throws ClassNotFoundException {
 		    String sql = "UPDATE new_connection_requests SET status = 'Rejected' WHERE app_id = ?";
 		    try (Connection conn = DBConnection.getConnection();

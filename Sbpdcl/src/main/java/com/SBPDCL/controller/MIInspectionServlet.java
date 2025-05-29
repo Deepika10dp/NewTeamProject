@@ -1,3 +1,4 @@
+
 package com.SBPDCL.controller;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class MIInspectionServlet extends HttpServlet {
                 }
 
             } else if ("forward".equalsIgnoreCase(action)) {
-                boolean updatedRemarks = service.saveOnlyMIRemarks(app_id, mi_remarks, remarksLower);
+                boolean updatedRemarks = service. updateMIInspection(app_id, mi_remarks);
 
                 if (remarksLower.contains("rejected")) {
                     boolean rejected = service.saveOnlyMIRemarks(app_id, mi_remarks, remarksLower);
@@ -49,15 +50,7 @@ public class MIInspectionServlet extends HttpServlet {
                         response.sendRedirect("miDashboard.jsp?error=rejection_failed");
                     }
 
-                } else if (remarksLower.contains("approved")) {
-                    boolean forwarded = service.forwardToAEE(app_id);
-                    if (updatedRemarks && forwarded) {
-                        response.sendRedirect("miDashboard.jsp?success=forwarded_to_aee");
-                    } else {
-                        response.sendRedirect("miDashboard.jsp?error=forward_failed");
-                    }
-
-                } else if (remarksLower.contains("pending")) {
+                }else if (remarksLower.contains("pending")) {
                     // Don't forward or change status
                     if (updatedRemarks) {
                         response.sendRedirect("miDashboard.jsp?success=pending_saved");

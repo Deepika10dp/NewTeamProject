@@ -211,8 +211,8 @@
 			          <th>Remarks</th>
 			          <th>Update</th>
 			        </tr>
-			      </thead>
-	            <tbody>			          						            	  
+			      </thead>		          						            	  
+	                <tbody>
 				      <%
 				        for (NewConnectionRequest req : requests) {
 				        	String app_id =req.getApp_id();
