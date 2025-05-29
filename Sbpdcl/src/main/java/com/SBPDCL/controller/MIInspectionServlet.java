@@ -39,7 +39,7 @@ public class MIInspectionServlet extends HttpServlet {
                 }
 
             } else if ("forward".equalsIgnoreCase(action)) {
-                boolean updatedRemarks = service.saveOnlyMIRemarks(app_id, mi_remarks, remarksLower);
+                boolean updatedRemarks = service. updateMIInspection(app_id, mi_remarks);
 
                 if (remarksLower.contains("rejected")) {
                     boolean rejected = service.saveOnlyMIRemarks(app_id, mi_remarks, remarksLower);
