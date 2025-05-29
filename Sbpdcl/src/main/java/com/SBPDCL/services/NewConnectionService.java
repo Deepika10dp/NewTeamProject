@@ -58,12 +58,5 @@ public class NewConnectionService {
 	        }
 	    }
 	    return remarksSaved;
-	}
-	public boolean forwardToAEE(String app_id) throws ClassNotFoundException {
-		return dao.forwardToAEE(app_id);	
-	}
-	/*public boolean rejectedStatus(String app_id) throws ClassNotFoundException {
-		return dao.rejectedStatus(app_id);	
-	}*/
-	
+	}	
 }
