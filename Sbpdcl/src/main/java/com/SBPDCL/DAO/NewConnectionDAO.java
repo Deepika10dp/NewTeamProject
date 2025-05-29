@@ -342,6 +342,7 @@ public class NewConnectionDAO {
 		        e.printStackTrace();
 		    }
 		    return false;
+
 	  }
 	  public boolean rejectedStatus(String app_id) throws ClassNotFoundException {
 		    String sql = "UPDATE new_connection_requests SET status = 'Rejected' WHERE app_id = ?";
