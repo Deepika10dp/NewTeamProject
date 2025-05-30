@@ -119,16 +119,8 @@
 
             <label>Phone Number:</label>
             <input type="text" name="mobile" value="<%= request.getParameter("mobile") %>" readonly>
-
+			 <input type="hidden" name="appId" value="<%= appId %>">
             <input type="submit" value="Check Dues">
-
-            <label>Consumer ID:</label><br>
-            <input type="text" name="consumerId" value="<%= request.getParameter("consumerId") %>" readonly><br><br>
-        
-            <label>Phone Number:</label><br>
-            <input type="text" name="mobile" value="<%= request.getParameter("mobile") %>" readonly><br><br>
-        	 <input type="hidden" name="appId" value="<%= appId %>">
-            <input type="submit" value=" Check Dues">
 
         </form>
 
