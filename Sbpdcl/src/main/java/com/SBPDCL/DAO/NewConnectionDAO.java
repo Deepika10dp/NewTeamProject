@@ -145,7 +145,8 @@ public class NewConnectionDAO {
 		            request.setApp_id(rs.getString("app_id"));
 		            request.setSubmissionDate(rs.getTimestamp("created_at")); 
 		            request.setConsumerId(rs.getString("consumerId"));
-		            request.setStatus(rs.getString("status"));   
+		            request.setStatus(rs.getString("status"));
+		            request.setConsumer_number(rs.getString("consumer_number")); 
 		            request.setConnectionType(rs.getString("connectionType"));
 		            request.setMobile(rs.getString("mobile"));
 		            request.setEmail(rs.getString("email"));

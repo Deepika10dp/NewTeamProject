@@ -44,6 +44,13 @@ public class NewConnectionRequest {
 		 private String inspectionStatus;		 
 		 private String dues_cleared;
 		 private String documents_verified;	
+		 private String consumer_number;	
+		public String getConsumer_number() {
+			return consumer_number;
+		}
+		public void setConsumer_number(String consumer_number) {
+			this.consumer_number = consumer_number;
+		}
 		public String getDues_cleared() {
 			return dues_cleared;
 		}
@@ -313,7 +320,7 @@ public class NewConnectionRequest {
 					+ ", status=" + status + ", currentStage=" + currentStage + ", jeeRemarks=" + jeeRemarks
 					+ ", mi_remarks=" + mi_remarks + ", aeeRemarks=" + aeeRemarks + ", inspectionStatus="
 					+ inspectionStatus + ", dues_cleared=" + dues_cleared + ", documents_verified=" + documents_verified
-					+ "]";
+					+ ", consumer_number=" + consumer_number + "]";
 		}
 		public void setSubmissionDate(Date date) {
 			

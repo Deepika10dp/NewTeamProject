@@ -67,7 +67,19 @@
                     <div class="col-md-6"><strong>Application ID:</strong> <%= app.getApp_id() %></div>
                     <div class="col-md-6"><strong>Consumer ID:</strong> <%= app.getConsumerId() %></div>
                 </div>
-
+				<% 
+			    // Show Consumer Number only if connection is approved
+			    if ("Connection Approved".equalsIgnoreCase(app.getStatus()) 
+			        && app.getConsumer_number() != null 
+			        && !app.getConsumer_number().isEmpty()) { 
+				%>
+			    <div class="row mb-3">
+			        <div class="col-md-6">
+			            <strong>Consumer Number:</strong> <%= app.getConsumer_number() %>
+			        </div>
+			    </div>
+				<% } %>
+				
                 <!-- 3-Column Layout for All Remaining Details -->
                 <div class="row mb-3">
                     <div class="col-md-4"><strong>Connection Type:</strong> <%= app.getConnectionType() %></div>
