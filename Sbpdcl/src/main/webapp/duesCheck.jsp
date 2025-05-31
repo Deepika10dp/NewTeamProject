@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    String consumerId = request.getAttribute("consumerId") != null ? (String) request.getAttribute("consumerId") : "";
-    String mobile = request.getAttribute("mobile") != null ? (String) request.getAttribute("mobile") : "";
-    String status = request.getAttribute("duesStatus") != null ? (String) request.getAttribute("duesStatus") : "";
-    String appId = request.getParameter("appId") != null ? request.getParameter("appId") : "";
-
+	String status = request.getAttribute("duesStatus") != null ? ((String) request.getAttribute("duesStatus")).trim() : "";
+	String consumerId = request.getAttribute("consumerId") != null ? (String) request.getAttribute("consumerId") : "";
+	String mobile = request.getAttribute("mobile") != null ? (String) request.getAttribute("mobile") : "";
+	String appId = request.getAttribute("appId") != null ? (String) request.getAttribute("appId") : "";
 %>
 
 <!DOCTYPE html>
@@ -119,27 +118,25 @@
 
             <label>Phone Number:</label>
             <input type="text" name="mobile" value="<%= request.getParameter("mobile") %>" readonly>
-			 <input type="hidden" name="appId" value="<%= appId %>">
+			<input type="hidden" name="appId" value="<%= request.getParameter("appId") %>">
             <input type="submit" value="Check Dues">
 
         </form>
 
         <!-- Dues status display -->
         <% if (!status.isEmpty()) { %>
-            <p class="status">
-                Fetched Dues Status:
-                <% if ("Cleared".equalsIgnoreCase(status)) { %>
-                    <span class="cleared">Cleared</span>
-                <% } else { %>
-                    <span class="not-cleared">Not Cleared</span>
-                <% } %>
-            </p>
+	    <p class="status">
+	        Fetched Dues Status:
+	        <% if ("Cleared".equalsIgnoreCase(status)) { %>
+	            <span class="cleared">Cleared</span>
+	        <% } else { %>
+	            <span class="not-cleared">Not Cleared</span>
+	        <% } %>
+	    </p>
 
-            <form class="decision-form" action="SubmitDuesDecisionServlet" method="post">
-                <input type="hidden" name="consumerId" value="<%= consumerId %>">
-                <input type="hidden" name="mobile" value="<%= mobile %>">
-
-            <form action="SubmitDuesDecisionServlet" method="post">
+           <form class="decision-form" action="SubmitDuesDecisionServlet" method="post">
+			    <input type="hidden" name="consumerId" value="<%= consumerId %>">
+			    <input type="hidden" name="mobile" value="<%= mobile %>">
 			    <input type="hidden" name="appId" value="<%= appId %>">
 			
 			    <p><strong>JEE Decision (Select One):</strong></p>
@@ -147,7 +144,8 @@
 			    <label><input type="radio" name="finalDuesStatus" value="Not Cleared"> Not Cleared</label><br><br>
 			
 			    <input type="submit" value="Submit Decision">
-			</form>
+		   </form>
+
 
         <% } %>
     </div>

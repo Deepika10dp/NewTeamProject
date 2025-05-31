@@ -37,6 +37,8 @@ public class DuesDAO {
 
 	        try (Connection con = DBConnection.getConnection()) {
 	            String sql = "SELECT dues_status FROM dues WHERE consumerId = ? AND mobile = ?";
+	            System.out.println("Fetched from DB: " + status);
+
 	            PreparedStatement ps = con.prepareStatement(sql);
 	            ps.setString(1, consumerId);
 	            ps.setString(2, mobile);
@@ -67,9 +69,5 @@ public class DuesDAO {
 	            e.printStackTrace();
 	            return false;
 	        }
-	    }
-
-
-
-		
+	    }	
 	}

@@ -16,18 +16,16 @@ public class SubmitDuesDecisionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String appId = request.getParameter("appId"); // Get Application ID
-        String finalStatus = request.getParameter("finalDuesStatus"); // "Cleared" or "Not Cleared"
-        System.out.println("SubmitDuesDecisionServlet - appId: " + appId + ", finalStatus: " + finalStatus);
+    	 String appId = request.getParameter("appId");
+         String finalStatus = request.getParameter("finalDuesStatus");
 
-        boolean result = duesService.updateFinalDuesStatus(appId, finalStatus);
+         boolean result = duesService.updateFinalDuesStatus(appId, finalStatus);
 
-        if (result) {
-            request.setAttribute("message", "✅ Dues status updated for Application ID: " + appId + " as " + finalStatus);
-        } else {
-            request.setAttribute("message", "❌ Failed to update dues status for Application ID: " + appId);
-        }
-
-        request.getRequestDispatcher("jeeDashboard.jsp").forward(request, response);
+         if (result) {
+             response.sendRedirect("jeeDashboard.jsp"); 
+         } else {
+             request.setAttribute("message", "Failed to update dues status for Application ID: " + appId);
+             request.getRequestDispatcher("jeeDashboard.jsp").forward(request, response);
+         }
     }
 }

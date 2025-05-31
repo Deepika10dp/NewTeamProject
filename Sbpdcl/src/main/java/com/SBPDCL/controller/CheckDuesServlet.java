@@ -20,6 +20,7 @@ public class CheckDuesServlet extends HttpServlet {
         String appId = request.getParameter("appId");
         String duesStatus = duesService.getDuesStatus(consumerId, mobile);
         System.out.println("CheckDuesServlet - consumerId: " + consumerId + ", mobile: " + mobile + ", appId: " + appId);
+        System.out.println("Final dues status from DAO: " + duesStatus);
 
         request.setAttribute("consumerId", consumerId);
         request.setAttribute("mobile", mobile);

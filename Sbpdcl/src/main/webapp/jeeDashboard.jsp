@@ -204,88 +204,70 @@
 		        <th>Actions</th>
             </tr>
           </thead>
-         <tbody>
+		  <tbody>
 				<%
 				    for (NewConnectionRequest r : requests) {
-				        // Get raw status strings from DB (expected values: Cleared, Approved, Pending, etc.)
 				        String duesClearedRaw = r.getDues_cleared();
 				        String docsVerifiedRaw = r.getDocuments_verified();
 				
-				        // Handle possible null or empty values safely
-				        String duesCleared = (duesClearedRaw == null || duesClearedRaw.trim().isEmpty()) ? "Pending" : duesClearedRaw.trim();
-				        String docsVerified = (docsVerifiedRaw == null || docsVerifiedRaw.trim().isEmpty()) ? "Pending" : docsVerifiedRaw.trim();
+				        String duesCleared = (duesClearedRaw == null || duesClearedRaw.trim().isEmpty()) ? "pending" : duesClearedRaw.trim().toLowerCase();
+				        String docsVerified = (docsVerifiedRaw == null || docsVerifiedRaw.trim().isEmpty()) ? "pending" : docsVerifiedRaw.trim().toLowerCase();
 				
-				        // Normalize to lowercase for CSS class and comparison
-				        String duesClearedLower = duesCleared.toLowerCase();
-				        String docsVerifiedLower = docsVerified.toLowerCase();
+				        boolean isDuesCleared = "cleared".equals(duesCleared);
+				        boolean isDocsApproved = "approved".equals(docsVerified);
 				
-				        // For badge colors and action logic, compare ignoring case
-				        boolean isDuesCleared = "cleared".equalsIgnoreCase(duesCleared);
-				        boolean isDocsApproved = "approved".equalsIgnoreCase(docsVerified);
-				
-				        // Capitalize first letter, rest lowercase for display
-				        String duesClearedFormatted = duesCleared.substring(0, 1).toUpperCase() + duesCleared.substring(1).toLowerCase();
-				        String docsVerifiedFormatted = docsVerified.substring(0, 1).toUpperCase() + docsVerified.substring(1).toLowerCase();
+				        String duesClearedFormatted = duesCleared.substring(0, 1).toUpperCase() + duesCleared.substring(1);
+				        String docsVerifiedFormatted = docsVerified.substring(0, 1).toUpperCase() + docsVerified.substring(1);
 				%>
-				    <tr 
-				        data-dues="<%= duesClearedLower %>" 
-				        data-docs="<%= docsVerifiedLower %>" 
-				        data-status="<%= 
-							    "approved".equalsIgnoreCase(docsVerified) ? "forwarded" : 
-							    "rejected".equalsIgnoreCase(docsVerified) ? "rejected" : 
-							    "pending" %>">
-				        
-				        <td><%= r.getApp_id() %></td>
-				        <td><%= r.getApplicantName() %></td>
-				        <td><%= r.getMobile() %></td>
+				<tr
+				    data-dues="<%= duesCleared %>"
+				    data-docs="<%= docsVerified %>"
+				    data-status="<%= "approved".equals(docsVerified) ? "forwarded" : "rejected".equals(docsVerified) ? "rejected" : "pending" %>">
 				
-				        <!-- Dues Cleared Badge -->
-				        <td>
-				            <span class="badge 
-				                <%= "cleared".equalsIgnoreCase(duesCleared) ? "bg-success" : 
-				                     "not cleared".equalsIgnoreCase(duesCleared) ? "bg-danger" : "bg-warning text-dark" %>">
-				                <%= duesClearedFormatted %>
-				            </span>
-				        </td>
+				    <td><%= r.getApp_id() %></td>
+				    <td><%= r.getApplicantName() %></td>
+				    <td><%= r.getMobile() %></td>
 				
-				        <!-- Documents Verified Badge -->
-				        <td>
-				            <span class="badge 
-				                <%= "approved".equalsIgnoreCase(docsVerified) ? "bg-success" : 
-				                     "rejected".equalsIgnoreCase(docsVerified) ? "bg-danger" : "bg-warning text-dark" %>">
-				                <%= docsVerifiedFormatted %>
-				            </span>
-				        </td>
+				    <td>
+				        <span class="badge
+				            <%= "cleared".equals(duesCleared) ? "bg-success" :
+				                "not cleared".equals(duesCleared) ? "bg-danger" : "bg-warning text-dark" %>">
+				            <%= duesClearedFormatted %>
+				        </span>
+				    </td>
 				
-				        <!-- Action Buttons -->
-				        <td>
-				           <% if ("approved".equalsIgnoreCase(docsVerified)) { %>
-						    	<span class="badge bg-success">Forwarded</span>
-						   <% } else if ("rejected".equalsIgnoreCase(docsVerified)) { %>
-						    	<span class="badge bg-danger">Rejected</span>
-						   <% } else { %>
-				                <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
-								    <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
-								    <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
-								    <input type="hidden" name="appId" value="<%= r.getApp_id() %>" /> <!-- Add this -->
-								    <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
-								</form>
-
+				    <td>
+				        <span class="badge
+				            <%= "approved".equals(docsVerified) ? "bg-success" :
+				                "rejected".equals(docsVerified) ? "bg-danger" : "bg-warning text-dark" %>">
+				            <%= docsVerifiedFormatted %>
+				        </span>
+				    </td>
 				
-				                <form action="DocumentVerificationServlet" method="get" style="display:inline-block;">
-				                    <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
-				                    <button type="submit" class="btn btn-sm btn-success" <%= isDuesCleared ? "" : "disabled" %>>
-				                        Verify Docs
-				                    </button>
-				                </form>
-				            <% } %>
-				        </td>
-				    </tr>
+				    <td>
+				        <% if ("approved".equals(docsVerified)) { %>
+				            <span class="badge bg-success">Forwarded</span>
+				        <% } else if ("rejected".equals(docsVerified)) { %>
+				            <span class="badge bg-danger">Rejected</span>
+				        <% } else { %>
+				            <form action="duesCheck.jsp" method="get" style="display:inline-block; margin-right:5px;">
+				                <input type="hidden" name="consumerId" value="<%= r.getConsumerId() %>" />
+				                <input type="hidden" name="mobile" value="<%= r.getMobile() %>" />
+				                <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
+				                <button type="submit" class="btn btn-sm btn-primary">Check Dues</button>
+				            </form>
+				
+				            <form action="DocumentVerificationServlet" method="get" style="display:inline-block;">
+				                <input type="hidden" name="appId" value="<%= r.getApp_id() %>" />
+				                <button type="submit" class="btn btn-sm btn-success" <%= isDuesCleared ? "" : "disabled" %>>
+				                    Verify Docs
+				                </button>
+				            </form>
+				        <% } %>
+				    </td>
+				</tr>
 				<% } %>
-			</tbody>
-
-
-
+		  </tbody>
         </table>
       </div>
     </div>
